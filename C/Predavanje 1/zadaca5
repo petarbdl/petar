@@ -1,0 +1,99 @@
+/* Напиши програм кој  го дава следниот излез */
+#include <stdio.h>
+
+int main()
+{
+   int i;
+   char tip;
+   printf("Vnesite go tipot na crtez\n");
+   scanf("%c", &tip);
+   /*So switch case se obrabotuva podatokot shto go vnesuva korisnikot*/
+   switch (tip) {
+   /*Ako korisnikot vnesi "a" so for ciklus se crta na izlez prviot primer */
+   case 'a':
+       printf("Go izbravte prviot primer\n");
+       for(i=0;i<7;i++)
+       {
+           if(i==0 || i==6)
+           {
+               printf("*****\n");
+           }
+           else
+           {
+               printf("*   *\n");
+           }
+       }
+       break;
+       /*Ako korisnikot vnesi "b" so for ciklus se crta na izlez vtoriot primer */
+   case 'b':
+       printf("Go izbravte vtoriot primer\n");
+       for(i=0;i<7;i++)
+       {
+           if(i==0 || i==6)
+           {
+               printf("  ***  \n");
+           }
+           else
+               if(i==1 || i==5)
+               {
+                   printf(" *   * \n");
+               }
+           else
+               {
+                   printf("*     *\n");
+               }
+       }
+       break;
+       /*Ako korisnikot vnesi "c" so for ciklus se crta na izlez tretiot primer */
+   case 'c':
+       printf("Go izbravte tretiot primer\n");
+       for(i=0;i<7;i++)
+       {
+           if(i==1)
+           {
+               printf("  ***  \n");
+           }
+           else
+               if(i==2)
+               {
+                   printf("*******\n");
+               }
+           else
+               {
+                   printf("   *   \n");
+               }
+       }
+       break;
+       /*Ako korisnikot vnesi "d" so for ciklus se crta na izlez cetvrtiot primer */
+   case 'd':
+       printf("Go izbravte cetvrtiot primer\n");
+       for(i=0;i<7;i++)
+       {
+           if(i==0 || i==6)
+           {
+               printf("   *   \n");
+           }
+           else
+               if(i==1 || i==5)
+               {
+                   printf("  * *  \n");
+               }
+           else
+                   if(i==2 || i==4)
+                   {
+                       printf(" *   * \n");
+                   }
+           else
+                   {
+                       printf("*     *\n");
+                   }
+       }
+       break;
+       /*Sekoj ostanat karakter se tretira kako pogreshen vlez*/
+   default:
+       printf("Vnesovte nevaliden tip na crtez\n");
+       break;
+
+   }
+    return 0;
+}
