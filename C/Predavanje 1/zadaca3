@@ -1,0 +1,20 @@
+/* Напиши програм кој ги печати броевите од 1 до 4 на иста линија */
+#include <stdio.h>
+
+int main()
+{
+    /* Zadavam promenlivi za broevite od 1 do 4(za uslovot so specifikatori za konverzacija) */
+    int brojPrv=1, brojVtor=2, brojTret=3, brojCetvrt=4, brojac=1;
+    /* Uslov pod a) */
+    printf("1 2 3 4\n");
+    /* Uslov pod b) (eden nacin) */
+    printf("%d %d %d %d\n", brojPrv, brojVtor, brojTret, brojCetvrt);
+    /* Uslov pod b) (vtor nacin) */
+    printf("%d %d %d %d\n", brojac, brojac+1, brojac+2, brojac+3);
+    /* Uslov pod c) */
+    printf("1 ");
+    printf("2 ");
+    printf("3 ");
+    printf("4\n");
+    return 0;
+}
