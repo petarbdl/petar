@@ -1,0 +1,17 @@
+/*Напиши програм кој внесува 4 цели броја и ја испечатува нивната сума. */
+#include <stdio.h>
+
+int main()
+{
+    /* Zadavam promenlivi za cetirite celi broevi */
+    int brojPrv, brojVtor, brojTret, brojCetvrt;
+    printf("Vnesite gi cetirite celi broevi\n");
+    /* So scanf gi smestuvam celite broevi, shto korisnikot gi vnesuva, vo soodvetnite promenlivi */
+    scanf("%d", &brojPrv);
+    scanf("%d", &brojVtor);
+    scanf("%d", &brojTret);
+    scanf("%d", &brojCetvrt);
+    /*Pecatenje na sumata na izlez*/
+    printf("Nivnata suma e %d\n", brojPrv + brojVtor + brojTret + brojCetvrt);
+    return 0;
+}
