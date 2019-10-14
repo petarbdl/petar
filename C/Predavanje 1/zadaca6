@@ -1,0 +1,26 @@
+/* Напиши програм кој внесува петцифрен број, 
+ * ги распределува сите цифри на бројот во посебни променливи
+ *  и ги печати секоја од цифрите со растојание една од дуга од три празни места */
+#include <stdio.h>
+
+int main()
+{
+    int cifra1, cifra2, cifra3, cifra4, cifra5, broj;
+    printf("Vnesete pet cifren broj\n");
+    scanf("%d", &broj);
+    /*So modul na vneseniot broj ja dobivame negovata posledna cifra i ja vnesuvame vo promenliva*/
+    cifra1=broj%10;
+    /*So delenje na vneseniot broj ja brishime poslednata negova cifra*/
+    broj/=10;
+    /*Ova go pravime 4 pati, bidejkji znaeme kolku cifri ima vneseniot broj*/
+    cifra2=broj%10;
+    broj/=10;
+    cifra3=broj%10;
+    broj/=10;
+    cifra4=broj%10;
+    broj/=10;
+    cifra5=broj;
+    /* Na kraj gi pecatime promenlivite vo tocen redosled */
+    printf("%d   %d   %d   %d   %d\n", cifra5, cifra4, cifra3, cifra2, cifra1);
+    return 0;
+}
