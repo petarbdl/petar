@@ -1,0 +1,21 @@
+/* Напиши програм кој вчитува три цели броја и пресметува нивна целобројна средна вредност, сума и производ */
+#include <stdio.h>
+
+int main()
+{
+    /* Zadavam promenlivi za trite broevi shto korisnikot ke gi vnese */
+    int brojPrv, brojVtor, brojTret, suma=0;
+    printf("Vnesite gi trite broja\n");
+    /* Skeniranje na vnesenite broevi i smestuvanje vo soodvetnite promenlivi */
+    scanf("%d", &brojPrv);
+    scanf("%d", &brojVtor);
+    scanf("%d", &brojTret);
+    suma = brojPrv+brojVtor+brojTret;
+    /* Presmetuvanje na sredna vrednost i pecatenje */
+    printf("Srednata vrednost e %d\n", suma/3);
+    /* Presmetuvanje na suma i pecatenje */
+    printf("Sumata e %d\n", suma);
+    /* Presmetuvanje na proizvod i pecatenje */
+    printf("Proizvodot e %d\n", brojPrv*brojVtor*brojTret);
+    return 0;
+}
