@@ -1,0 +1,14 @@
+/*Во примерот p03_01.c,
+ *  во наредбата printf наместо спецификаторот за конверзија  %f, поставете го спецификаторот %d. Што се случува и зошто?*/
+
+#include <stdio.h>
+
+int main()
+{
+    /* Ja tretira memorijata shto go pretstavuva float kako int memorija,
+     *  bidejki float i int se cuvaat razlicno vo memorijata se dobiva nekoj random broj */
+    float result; /* Rezultat od delenje */
+    result = 7.0 / 22.0;
+    printf("Rezultatot e %d\n", result);
+    return (0);
+}
