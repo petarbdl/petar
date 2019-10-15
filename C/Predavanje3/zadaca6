@@ -1,0 +1,19 @@
+/*Напишете програма која од стандардниот влез зема 5 букви и ги испечатува по следниот редослед:
+ * прво петтата, па третата, па втората, па првата, па четвртата буква*/
+
+#include <stdio.h>
+
+int main()
+{
+    char bukva1, bukva2, bukva3, bukva4, bukva5;
+    printf("Vnesete 5 bukvi\n");
+
+    scanf("%c", &bukva1);
+    scanf("%c", &bukva2);
+    scanf("%c", &bukva3);
+    scanf("%c", &bukva4);
+    scanf("%c", &bukva5);
+
+    printf("%c%c%c%c%c\n", bukva5, bukva3, bukva2, bukva1, bukva4);
+    return 0;
+}
