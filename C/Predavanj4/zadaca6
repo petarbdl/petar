@@ -1,0 +1,28 @@
+/*Напиши програма која пресметува сума на внесени броеви од тастатура се додека не се внесе -1*/
+
+#include <stdio.h>
+
+/* pocnuva izvrshuvanjeto */
+
+int main()
+{
+    int broj;/*Brojot shto go vnesuva korisnikot*/
+    int suma = 0; /*Promenliva za cuvanje na sumata od broevite*/
+    printf("Vnesi broj\n");
+    scanf("%d", &broj);
+    while(broj != -1)
+    {
+        suma+=broj;
+        printf("Vnesi broj\n");
+        scanf("%d", &broj);
+        /*Sledniov uslov e staven za na korisnikot da mu se dade do znaenje deka vnesil -1 */
+        if(broj==-1)
+        {
+            printf("Vnesovte -1 na vlez, programot ke zavrshi\n");
+            break;
+        }
+    }
+    printf("Sumata e: %d\n", suma);
+    return 0;
+} /* kraj na fukncijata main */
+
