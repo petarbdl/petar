@@ -1,0 +1,16 @@
+/*Напиши 4 начини за да ја зголемиш вредноста на променливата x за 1.*/
+
+#include <stdio.h>
+
+int main()
+{
+    printf("Vnesi vrednost za X\n");
+    int x;
+    scanf("%d", &x);
+    printf("%d\n", ++x);
+    printf("%d\n", x+=1);
+    printf("%d\n", x=x+1);
+    x++;
+    printf("%d\n", x);
+return (0);
+}
