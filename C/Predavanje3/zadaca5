@@ -1,0 +1,16 @@
+/*Напиши програма која внесува радиус на круг и испечатува негова плоштина и периметар. За вредност на пи да се земе 3.14.*/
+
+#include <stdio.h>
+/* Ja definiram pi kako konstanta za ednastavna upotreba vo zadacata */
+#define PI 3.14
+
+int main()
+{
+    int radius;
+    printf("Vnesete radius na krugot\n");
+    scanf_s("%d", &radius);
+    /* Se presmetuva perimetarot i ploshtinata vo printf komandata bez koristenje na promenlivi za niv */
+    printf("Area e ednakva na: %.2f\n", PI * radius * radius);
+    printf("Perimetar e ednakov na: %.2f\n", 2 * PI * radius);
+    return 0;
+}
