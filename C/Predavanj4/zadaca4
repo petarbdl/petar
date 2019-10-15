@@ -1,0 +1,19 @@
+/*Напиши програма која ја пресметува сумата на броевите од 1 до десет*/
+
+#include <stdio.h>
+
+/* pocnuva izvrshuvanjeto */
+
+int main()
+{
+    int brojac = 10; /* Zadavanje vrednost dese na promenlivata brojac, za da ja koristam vo while ciklusot i so nea da go presmetam zbirot*/
+    int suma = 0; /* Ovaa promenliva sluzi za cuvanje na zbirot od broevite vo while ciklusot*/
+    while(brojac > 0)
+    {
+        suma+=brojac;
+        brojac --;
+    }
+    printf("Sumata e : %d\n", suma);
+return 0;
+
+} /* kraj na fukncijata main */
