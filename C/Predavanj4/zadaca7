@@ -1,0 +1,21 @@
+/*Напиши програма која пресметува сума на внесени броеви од тастатура се додека не се внесе карактер ‘n’*/
+#include <stdio.h>
+int main()
+{
+  int broj;
+  int suma=0;
+  char c='d';
+  while(c=='d')
+  {
+
+      printf("Vnesi broj\n");
+      scanf_s("%d", &broj);
+      suma+=broj;
+
+      printf("Ushte?\n");
+      scanf(" %c", &c);
+
+  }
+  printf("Sumata e %d\n", suma);
+  return 0;
+}
