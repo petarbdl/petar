@@ -1,0 +1,32 @@
+/* Напиши програм кој вчитува два цели броја и одредува дали се парни или непарни */
+
+#include <stdio.h>
+
+int main()
+{
+    /* Dve promenlivi za broevite shto ke gi vnese korisnikot */
+    int broj1, broj2;
+    printf("Vnesite dva celi broevi\n");
+    /* Se skenira vlezot od korisnikot i se inicijaliziraat prethodno zadadenite promenlivi */
+    scanf("%d", &broj1);
+    scanf("%d", &broj2);
+    /* So ednostavni if else uslovi i so barenje na modul od 2, se proveruva dali prviot broj e naren ili neparen */
+    if(broj1 % 2 == 0)
+    {
+        printf("%d e paren broj\n", broj1);
+    }
+    else
+    {
+        printf("%d e neparen broj\n", broj1);
+    }
+    /* So ednostavni if else uslovi i so barenje na modul od 2, se proveruva dali vtoriot broj e paren ili neparen */
+    if(broj2 % 2 == 0 )
+    {
+        printf("%d e paren broj\n", broj2);
+    }
+    else
+    {
+        printf("%d e neparen broj\n", broj2);
+    }
+    return 0;
+}
