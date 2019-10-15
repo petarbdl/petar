@@ -1,0 +1,46 @@
+/*Една стоковна куќа продава 5 производи чии цени се дадени во долната табела
+Да се напише програм кој чита серија од парови броеви за:
+а) број на производ
+б) количина продадена во текот на денот
+Програмот треба да ја користи switch наредбата за да ја одреди цената за секој  производ. 
+Програмот треба да ја пресмета и испечати вкупната продадена вредност за секој од производите посебно, 
+како и вкупната сума за сите производи продадени во текот на денот.
+*/
+
+#include <stdio.h>
+int main()
+{
+    int brojac=0, kolicina;
+    char brProizvod;
+    float cena1=50.5, cena2=45.6, cena3=32.8, cena4=65.3, cena5=20.0, sumaProizvodEden, sumaProizvodDva, sumaProizvodTri, sumaProizvodCetiri, sumaProizvodPet;
+    while (brojac<5)
+    {
+        printf("Vnesi broj na proizvod\n");
+        scanf(" %c", &brProizvod);
+        printf("Vnesi kolicina na proizvod\n");
+        scanf("%d", &kolicina);
+        switch(brProizvod)
+        {
+        case '1':
+            sumaProizvodEden=cena1*kolicina;
+            break;
+        case '2':
+            sumaProizvodDva=cena2*kolicina;
+            break;
+        case '3':
+            sumaProizvodTri=cena3*kolicina;
+            break;
+        case '4':
+            sumaProizvodCetiri=cena4*kolicina;
+            break;
+        case '5':
+            sumaProizvodPet=cena5*kolicina;
+        default :
+            break;
+        }
+        brojac++;
+    }
+printf(" Suma proizvod 1 e: %.1f \n Suma proizvod 2 e: %.1f\n Suma proizvod 3 e: %.1f\n Suma proizvod 4 e: %.1f\n Suma proizvod 5 e: %.1f\n", sumaProizvodEden, sumaProizvodDva, sumaProizvodTri, sumaProizvodCetiri, sumaProizvodPet);
+
+return 0;
+}
