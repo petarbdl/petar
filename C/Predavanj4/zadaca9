@@ -1,0 +1,24 @@
+/*.      Една голема хемиска компанија ги плаќа своите продавачи делумно и на процент. 
+ * Продавачите земаат плата од 200 евра плус 9% од вкупната нивна продажба за тој месец. 
+ * На пример, ако некој продавач продал роба вредна 5000 евра, тогаш добива 200 евра плус 9% од 5000, 
+ * значи вкупно 650 евра. Напиши програма која за внесен месечен промет му ја пресметува платата на вработениот.
+*/
+
+#include <stdio.h>
+int main()
+{
+    double promet, plata, procent;
+    int proverka=0;
+    while(proverka != -1)
+    {
+    printf("Vnesi promet vo evra (-1 za kraj)\n");
+    scanf("%lf", &promet);
+    proverka = (int) promet;
+    if(proverka==-1)
+        break;
+    procent=(promet/100)*9;
+    plata=200+procent;
+    printf("Platata e %.2lf\n", plata);
+    }
+    return 0;
+}
