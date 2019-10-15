@@ -1,0 +1,32 @@
+/* Напиши програм кој како влез зема два цели броја и ги споредува. Потоа го испечатува поголемиот 
+ * број проследен со коментарот e pogolem od
+ * и го испечатува и помалиот број.
+ *  Ако броевите се еднакви, програмот треба да испечати Broevite se ednakvi */
+
+#include <stdio.h>
+
+int main()
+{
+    /* Dve promenlivi za broevite shto ke gi vnese korisnikot */
+    int broj1, broj2;
+    printf("Vnesite dva celi broevi\n");
+    /* Se skenira vlezot od korisnikot i se inicijaliziraat prethodno zadadenite promenlivi */
+    scanf("%d", &broj1);
+    scanf("%d", &broj2);
+    /* So ednostavni if else uslovi se proveruva koj broj e pogolem i se pecati rezultatot na izlezot */
+    if(broj1 > broj2)
+    {
+        printf("%d e pogolem od %d\n", broj1, broj2);
+    }
+    else
+        if(broj1<broj2)
+        {
+            printf("%d e pogolem od %d\n", broj2, broj1);
+        }
+    else
+        {
+            printf("Broevite se ednakvi\n");
+        }
+    
+    return 0;
+}
