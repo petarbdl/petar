@@ -1,0 +1,36 @@
+/*Модифицирај го програмот p04_02.c така да наместо да е предефинирана вредноста на променливата counter,
+ *  треба на корисникот да му се овозможи тој да внесе колку ученици има во класот*/
+
+#include <stdio.h>
+
+/* pocnuva izvrshuvanjeto */
+
+int main()
+{
+    int counter; /* brojach na vneseni oceni */
+       int grade;   /* vrednost na ocena */
+       int total;   /* suma na ocenite vneseni od korisnikot */
+       int average; /* sredna vrednost na ocenite */
+       printf("Vnesi go brojot na ucenici vo klasot\n");
+       int brUcenici; /* Broj an ucenici vo klasot */
+       scanf("%d", &brUcenici);
+       /* inicijalizacija */
+       total = 0;   /* inicijaliziraj total */
+       int brojac=brUcenici;
+
+       /* procesiranje */
+       while ( brojac > 0 ) {     /* povtori 10 pati */
+          printf( "Vnesi ocena: " ); /* prompt za vlez */
+          scanf( "%d", &grade );     /* chitaj ocena od korisnikot */
+          total = total + grade;     /* dodaj ja ocenata na total */
+          brojac --;     /* zgolemi go brojachot */
+       } /* kraj na while */
+
+       /* zavrshna faza */
+       average = total / brUcenici; /* celobrojno delenje */
+
+       printf( "Srednata vrednost na klasot e %d\n", average ); /* pechati rezultat */
+return 0;
+
+} /* kraj na fukncijata main */
+
