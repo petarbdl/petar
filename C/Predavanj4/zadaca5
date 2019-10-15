@@ -1,0 +1,22 @@
+/*Напиши програма која за внесени десет броја, го пресметува нивниот производ*/
+
+#include <stdio.h>
+
+/* pocnuva izvrshuvanjeto */
+
+int main()
+{
+    int brojac = 10; /* Counter za while ciklusot*/
+    int broj; /*Broj shto go vnesuva korisnikot*/
+    int suma = 1; /* Ovaa promenliva sluzi za cuvanje na zbirot od broevite vo while ciklusot*/
+    while(brojac > 0)
+    {
+        printf("Vnesi broj:\n");
+        scanf("%d", &broj);
+        suma*=broj;
+        brojac --;
+    }
+    printf("Proizvodot e : %d\n", suma);
+return 0;
+
+} /* kraj na fukncijata main */
