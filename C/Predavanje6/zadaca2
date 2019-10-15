@@ -1,0 +1,25 @@
+/*1.	Напиши програм кој конвертира целобројни фарантхајтови температури од
+ *  0-212 степени во децимални цезлиусови температури со 3 цифри прецизност. Да се користи формулата:
+celsius = 5.0 /9.0 * (fahrenheit - 32).
+Излезот да се испечати во две десно порамнети колони од по 10 карактери,
+а целзиусовите вредности треба да се предводени од знак и за позитивни и за негативни вредности.
+*/
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+    int den,mesec,godina;
+    char meseci[12][1000]=
+    { "Januari","Februari","Mart","April","Maj",
+     "Juni","Juli","Avgust","Septemvri","Oktomvri","Noemvri","Dekemvri" };
+    printf("Vnesite datum,za kraj -1\n");
+    while(1)
+    {
+       printf("Vnesite datum, za kraj -1\n");
+       scanf("%d%*c%d%*c%d", &den, &mesec, &godina);
+       int broj=mesec-1;
+       printf("%d %s %d\n",den, meseci[broj],godina);
+    }
+    return 0;
+}
