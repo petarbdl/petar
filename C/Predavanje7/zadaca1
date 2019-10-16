@@ -1,0 +1,37 @@
+/*Напиши програма која внесува 10 цели броеви и и ги доделува на функцијата
+ *  paren која враќа 1 ако бројот е парен и 0 ако бројот не е парен.*/
+#include <stdio.h>
+#define GOLEMINA 10
+void paren(int niza[]);
+int main()
+{
+    printf("Vnesite 10 broevi\n");
+    int brojac=0;
+    int broevi[GOLEMINA];
+    int broj;
+    while(brojac < 10)
+    {
+        scanf("%d", &broj);
+        broevi[brojac]=broj;
+        brojac++;
+    }
+   paren(broevi);
+    return 0;
+}
+void paren (int niza[])
+{
+    int i;
+    for(i=0;i<GOLEMINA;i++)
+    {
+        if(niza[i] % 2 == 0)
+        {
+            printf("Brojot %d e paren\n", niza[i]);
+
+        }
+        else
+        {
+            printf("Brojot %d e neparen\n", niza[i]);
+
+        }
+    }
+}
