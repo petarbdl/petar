@@ -1,0 +1,36 @@
+/*Напиши програм кој вчитува вредности за температури за секој ден од месецот
+ *  и наоѓа средна месечна температура. Да се земе предвид дека различни месеци имаат различен број на денови.*/
+
+#include <stdio.h>
+#define EOL 'KRAJ'
+
+float sredna_mesecna_temp(int niza[], int golemina);
+
+int main()
+{
+    int tDen, brojac=0;
+    int tempDenovi[100];
+    printf("Vnesite gi temperaturite na sekoj den od mesecot, 1000 za kraj\n");
+    while(1)
+    {
+        scanf("%d", &tDen);
+        if(tDen==1000)
+        {
+            break;
+        }
+        tempDenovi[brojac]=tDen;
+        ++brojac;
+    }
+    printf("Sredna mesecna temperatura: %.2f\n", sredna_mesecna_temp(tempDenovi,brojac));
+    return 0;
+}
+float sredna_mesecna_temp(int niza[], int golemina)
+{
+    float suma=0;
+    int i;
+    for(i=0;i<golemina;i++)
+    {
+        suma+=niza[i];
+    }
+    return suma/golemina;
+}
