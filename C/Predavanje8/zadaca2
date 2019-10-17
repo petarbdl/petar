@@ -1,0 +1,49 @@
+/*Прости броеви се броеви кои се деливи само со себе си и со бројот 1. Напиши програм кој внесува n елементи во низа. 
+ * Да се овозможи функционалност да имаме променлив број на елементи во низата.
+ *  Во почетокот сите елементи да се иницијализираат на 1.
+ *  Потоа да се напише функција prosti која секој елемент од низата чиј индекс е прост број, го 
+поставува на 0. На крај од така добиената низа да се најде начин да се испечатат простите броеви до n*/
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+int* prost(int niza[],int golemina);
+/* pochetok na izvrshuvanjeto */
+int main()
+{
+    int n, i, broj;
+    printf("Vnesite go n\n");
+    scanf("%d", &n);
+    int *niza;
+    niza=(int*) malloc(n*sizeof (int*));
+    for(i=0;i<n;i++)
+    {
+        niza[i]=1;
+    }
+    niza=prost(niza,n);
+    for(i=0;i<n;i++)
+    {
+        printf("%d\n", niza[i]);
+    }
+    return 0; /* uspeshen kraj */
+} /* kraj main */
+
+int* prost(int niza[], int golemina)
+{
+    int i;
+    niza[2]=0;
+    niza[3]=0;
+    niza[5]=0;
+    niza[7]=0;
+    for(i=5;i<golemina;i++)
+    {
+        if(i%2==0 || i%3==0 || i%5==0 || i%7==0)
+        {
+            continue;
+        }
+        else
+        {
+            niza[i]=0;
+        }
+    }
+    return niza;
+}
