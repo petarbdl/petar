@@ -1,0 +1,42 @@
+/*Палиндроми се низи од букви што се читаат исто и оддесно на лево и одлево на десно. 
+ * На пример зборот “radar” е палиндром. Да се напише програм во кој внесуваме низа од карактери.
+ *  Треба да имаме функција palindrom која враќа вредност 1 ако стрингот е палиндром или 0 инаку.*/
+#include <stdio.h>
+#include <string.h>
+int palindrom(int poc, int kraj, char *str);
+/* pochetok na izvrshuvanjeto */
+int main()
+{
+    char string[10];
+    int pocetok=0,kraj,rezultat;
+    printf("Vnesite zbor\n");
+    fgets(string,sizeof (string),stdin);
+    int dol = strlen(string);
+    kraj=dol-2;
+    rezultat=palindrom(pocetok,kraj,string);
+    if(rezultat)
+    {
+        printf("Zborot %s e palindrom\n", string);
+    }
+    else
+    {
+        printf("Zborot %s ne e palindrom\n", string);
+    }
+    return 0; /* uspeshen kraj */
+} /* kraj main */
+int palindrom(int poc, int kraj, char *str)
+{
+    if(str[poc]!=str[kraj])
+    {
+        return 0;
+    }
+    else
+        if(poc>=kraj)
+        {
+            return 1;
+        }
+    else
+        {
+            return palindrom(++poc,--kraj,str);
+        }
+}
