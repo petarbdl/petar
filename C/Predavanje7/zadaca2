@@ -1,0 +1,20 @@
+/*Напиши програма која на функцијата vreme и доделува три целобројни аргументи, час, минута и секунда 
+ * и како резултат го враќа бројот на секунди до 12 часот.
+ *  Имено, ако е 11 часот 59 минути и 58 секунди, тогаш има уште 2 секунди до 12 часот.*/
+#include <stdio.h>
+
+int vreme(int h, int m, int s);
+int main()
+{
+    int sat,min,sec, rezultat;
+    printf("Vnesite vreme vo format HH:MM:SS\n");
+    scanf("%d:%d:%d", &sat,&min,&sec);
+    rezultat=vreme(sat,min,sec);
+    printf("Preostanati sekundi od denot: %d sekundi\n",rezultat);
+    return 0;
+}
+int vreme (int h, int m, int s)
+{
+    int secVoDen=24*60*60;
+    return secVoDen-(h*60*60+m*60+s);
+}
