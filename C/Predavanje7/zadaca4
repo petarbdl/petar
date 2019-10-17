@@ -1,0 +1,26 @@
+/*Напиши програма во која дефинираш функција nzd за пресметување на најголемиот заеднички делител на два броја*/
+#include <stdio.h>
+
+int NZD(int broj1, int broj2);
+
+int main()
+{
+    int broj1, broj2, nzd;
+    printf("Vnesite broj\n");
+    scanf("%d,%d", &broj1, &broj2);
+    nzd=NZD(broj1,broj2);
+    printf("NZD na %d i %d e %d\n", broj1,broj2,nzd);
+    return 0;
+}
+int NZD (int broj1, int broj2)
+{
+    int i, nzd=0;
+    for(i=1;i<=broj1 && i<=broj2;i++)
+    {
+        if(broj1%i==0 && broj2%i==0)
+        {
+            nzd=i;
+        }
+    }
+    return nzd;
+}
