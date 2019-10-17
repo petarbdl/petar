@@ -1,0 +1,107 @@
+/*Да се напише програма која во главната функција внесува број на редици и колони на дводимензионална матрица. 
+ * Во функцијата vnesiMatrica внесува елементи, а преку функцијата pechatiMatrica ги печати елементите во табеларна форма.
+а) Да се напишат итеративни верзии на двете функции.
+б) Да се напишат рекурзивни верзии на двете функции.
+*/
+#include <stdio.h>
+#include <stdlib.h>
+
+int** vnesiMatrica(int r, int c, int **m);
+void pecatiMatrica(int r, int c, int **m);
+int** vnesiMatricaR(int p,int r, int c, int **m);
+void pecatiMatricaR(int p,int r, int c, int **m);
+/* pochetok na izvrshuvanjeto */
+int main()
+{
+    int row=0, colum=0, i, p=0,j=0;
+
+    printf("Vnesite broj za redica i kolona vo format nXm\n");
+    scanf("%dX%d", &row, &colum);
+    int **matrica;
+    matrica = malloc(sizeof (int*)*row);
+    for(i=0;i<row;i++)
+    {
+        matrica[i]=malloc(sizeof (int*)*colum);
+    }
+    int **m;
+    m = malloc(sizeof (int*)*row);
+    for(i=0;i<row;i++)
+    {
+        m[i]=malloc(sizeof (int*)*colum);
+    }
+    m=vnesiMatricaR(p,row,colum,matrica);
+    //m=vnesiMatrica(row,colum,matrica);
+    //pecatiMatrica(row, colum, m);
+    pecatiMatricaR(p,row,colum,m);
+    return 0; /* uspeshen kraj */
+} /* kraj main */
+/*Iteraticna verzija za vnesiMatrica*/
+int** vnesiMatrica(int r, int c, int **m)
+{
+    int i, j;
+
+    printf("Vnesite gi elementite na matricata\n");
+    for(i=0;i<r;i++)
+    {
+        for(j=0;j<c;j++)
+        {
+            scanf("%d", &m[i][j]);
+        }
+    }
+    printf("Matricata e vnesena\n");
+    return m;
+}
+/*Iteraticna verzija za pecatiMatrica*/
+void pecatiMatrica(int r, int c, int **m)
+{
+    int i,j;
+    for(i=0;i<r;i++)
+    {
+        for(j=0;j<c;j++)
+        {
+            printf("%d  ", m[i][j]);
+        }
+        printf("\n");
+    }
+    printf("Matricata e ispecatena\n");
+}
+/*rekurzivno za vnesi matrica*/
+int** vnesiMatricaR(int p, int r, int c, int **m)
+{
+    int j;
+    if(p>r)
+    {
+        return m;
+    }
+    else
+        if(p<r)
+        {
+        for(j=0;j<c;j++)
+        {
+        printf("Vnesi go sledniot element\n");
+        scanf("%d", &m[p][j]);
+        }
+
+        }
+    return vnesiMatricaR(++p,r,c,m);
+}
+/*REkurzivno pecatenje na matrica*/
+void pecatiMatricaR(int p, int r, int c, int **m)
+{
+    int j;
+    if(p>r)
+    {
+        printf("\n");
+    }
+    else
+        if(p<=r)
+        {
+        for(j=0;j<c;j++)
+        {
+        printf("%d", m[p][j]);
+        }
+        printf("\n");
+
+        }
+   pecatiMatricaR(++p,r,c,m);
+}
