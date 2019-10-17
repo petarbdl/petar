@@ -1,0 +1,31 @@
+/*Напиши програма која на функцијата obratno и доделува цел број. Оваа функција го враќа бројот 
+напишан со обратни цифри, т.е. ако сме ја повикале функцијата со параметарот 1243, треба да врати 3421*/
+#include <stdio.h>
+
+void obratno(int broj);
+
+int main()
+{
+    int broj;
+    printf("Vnesite broj\n");
+    scanf("%d", &broj);
+    obratno(broj);
+    return 0;
+}
+void obratno (int broj)
+{
+
+    int digit;
+    printf("Brojot %d vo obraten redosled e ", broj);
+    while(broj != 0)
+    {
+        digit=broj%10;
+        broj/=10;
+        printf("%d", digit);
+        if(broj==0)
+        {
+            printf("\n");
+        }
+    }
+
+}
