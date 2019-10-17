@@ -1,0 +1,27 @@
+/*Напиши итеративна верзија на функцијата за фибоначиеви броеви*/
+#include <stdio.h>
+#include <stdlib.h>
+int fibbonaci(int broj);
+
+int main()
+{
+    int broj;
+    printf("Vnesite broj\n");
+    scanf("%d", &broj);
+    printf("Brojot na pozicija %d vo nizata na Fibbonaci e %d\n", broj, fibbonaci(broj));
+    return 0;
+}
+int fibbonaci (int broj)
+{
+    int i;
+    /*Dinamicki alociranje na memorijata na nizata*/
+    int *niza;
+    niza = (int*) malloc(sizeof (int)*(broj+2));
+    niza[0]=0;
+    niza[1]=1;
+    for(i=2;i<=broj;i++)
+    {
+        niza[i]=niza[i-1]+niza[i-2];
+    }
+    return niza[broj];
+}
