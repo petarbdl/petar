@@ -1,0 +1,21 @@
+/*Напиши рекурзивна верзија на функцијата за пресметување најголем заеднички делител*/
+#include <stdio.h>
+
+int NZD(int broj1, int broj2);
+
+int main()
+{
+    int broj1, broj2, nzd;
+    printf("Vnesite broj\n");
+    scanf("%d,%d", &broj1, &broj2);
+    nzd=NZD(broj1,broj2);
+    printf("NZD na %d i %d e %d\n", broj1,broj2,nzd);
+    return 0;
+}
+int NZD (int broj1, int broj2)
+{
+    if (broj2 != 0)
+           return NZD(broj2, broj1%broj2);
+        else
+           return broj1;
+}
