@@ -1,0 +1,33 @@
+/*Напиши рекурзивна верзија на програма која за внесено
+ *  n повикува функција dzvezdi со параметар n која во зависност од n испечатува ѕвезди на следниот начин*/
+#include <stdio.h>
+
+char zvezdi(int n);
+
+int main()
+{
+    int broj;
+    printf("Vnesite broj\n");
+    scanf("%d", &broj);
+    zvezdi(broj);
+    return 0;
+}
+char zvezdi (int n)
+{
+    int i;
+    if(n==0)
+    {
+        printf("\n");
+        return 0;
+    }
+    else
+    {
+        for(i=n;i>0;i--)
+        {
+            printf("*");
+        }
+        printf("\n");
+        return zvezdi(n-1);
+    }
+
+}
