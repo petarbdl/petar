@@ -1,0 +1,75 @@
+/*Да се најдат природните броеви чиј квадрат и куб (заедно) ги содржат сите цифри 0,1, 2, .. , 9 по еднаш
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int proverka(int n);
+int* brojVoniza(int n);
+
+int main()
+{
+    int i;
+    for(i=0;i<1000;i++)
+    {
+        if(proverka(i))
+        {
+            printf("Brojot %d go zadovoluva uslovot\n", i);
+        }
+    }
+    return 0;
+}
+int proverka(int n)
+{
+    int i=0,j;
+    long int broj1, broj2, flag=0;
+    /*Naogjanje na kvadrad i kub od brojot*/
+    broj1=pow(n,2);
+    broj2=pow(n,3);
+    /*Kreiranje na 3 nizi, imav problem so kreiranje na nizi so dinamicka golemina, zatoa se vaka so konstanti deklarirani*/
+    int niza1[10],niza2[10],niza3[200];
+    /*pretvoranje na dvata broevi vo niza*/
+    int digit;
+    while(broj1>0)
+    {
+        digit=broj1%10;
+        niza1[i]=digit;
+        i++;
+        broj1/=10;
+    }
+    /*vo treta niza se dodavaat elementite na prvata niza*/
+    for(j=0;j<i;j++)
+    {
+        niza3[j]=niza1[j];
+    }
+    i=0;
+    while(broj2!=0)
+    {
+        digit=broj2%10;
+        niza2[i]=digit;
+        i++;
+        broj2/=10;
+    }
+    /*vo treta niza se dodavaat elementite na vtorata niza*/
+    int k=j;
+    for(j=0,k;k<20 && j<i;k++,j++)
+    {
+        niza3[k]=niza2[j];
+    }
+    /*so dva for ciklusi se proveruva dali dvata broevi go sodrzt cifrite od 0 do 9*/
+    for(i=0;i<9;i++)
+    {
+        flag=0;
+        for(j=0;j<k;j++)
+        {
+            if(i==niza3[j])
+            {
+                flag=1;
+            }
+        }
+        if(flag==0)
+            return 0;
+    }
+    return 1;
+}
