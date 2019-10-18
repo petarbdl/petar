@@ -1,0 +1,41 @@
+/*Да се најдат природните броеви помали од n, чиј збир на кубовите на цифри¬те е еднаков на самиот број.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+void zbirKub(int n);
+int presmetajKub(int n);
+
+int main()
+{
+    int broj;
+    printf("Vnesite broj\n");
+    scanf("%d", &broj);
+    zbirKub(broj);
+    return 0;
+}
+void zbirKub(int n)
+{
+    int i;
+    for(i=1;i<n;i++)
+    {
+        if(i==presmetajKub(i))
+        {
+            printf("Brojot %d e ednakov so zbirot na kubovite na cifrite\n", i);
+        }
+    }
+    return;
+}
+int presmetajKub(int n)
+{
+    int digit, suma=0;
+    while(n>0)
+    {
+        digit=n%10;
+        suma+=digit*digit*digit;
+        n/=10;
+    }
+    return suma;
+}
