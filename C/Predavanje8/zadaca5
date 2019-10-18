@@ -1,0 +1,80 @@
+/*Да се напише програма која во главната функција внесува број на редици и колони на дводимензионална матрица.
+ * Во функцијата vnesiMatrica внесува елементи, а преку функцијата pechatiMatrica ги печати елементите во табеларна форма.
+а) Да се напишат итеративни верзии на двете функции.
+б) Да се напишат рекурзивни верзии на двете функции.
+*/
+#include <stdio.h>
+#include <stdlib.h>
+
+void selekcijaSortR(int *niza, int golemina);
+void selekcijaSort(int *niza, int golemina);
+void pecatiNiza(int niza[], int n);
+/* pochetok na izvrshuvanjeto */
+int main()
+{
+    int n, i;
+    printf("Vnesete ja goleminata na nizata \n");
+    scanf("%d", &n);
+    int *niza;
+    niza=(int*) malloc(sizeof (int)*n);
+
+    for(i=0;i<n;i++)
+    {
+        printf("Vnesete element\n");
+        scanf("%d", &niza[i]);
+    }
+
+    int *rez;
+    rez=(int*) malloc(sizeof (int)*n);
+    selekcijaSort(niza,n);
+    //selekcijaSortR(niza,n);
+    pecatiNiza(niza, n);
+    return 0; /* uspeshen kraj */
+} /* kraj main */
+/*Iterativna verzija na f-ta za selekcija*/
+void selekcijaSort(int *n, int gol)
+{
+    int i,j,pomoshna;
+    for(i=0;i<gol;i++)
+    {
+        pomoshna=0;
+        for(j=i+1;j<gol;j++)
+        {
+        if(n[i]>n[i+1])
+        {
+            pomoshna=n[i+1];
+            n[i+1]=n[i];
+            n[i]=pomoshna;
+        }
+        }
+    }
+}
+/*Pecatenje na niza*/
+void pecatiNiza(int niza[], int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        printf("%d ", niza[i]);
+    }
+}
+/*Rekurzivno sortiranje*/
+void selekcijaSortR(int *niza, int golemina)
+{
+    int i,pomoshna;
+    if(golemina==1)
+        return;
+    for(i=0;i<=golemina;i++)
+    {
+        if(niza[i]>niza[i+1])
+        {
+            pomoshna=niza[i+1];
+            niza[i+1]=niza[i];
+            niza[i]=pomoshna;
+        }
+    }
+    selekcijaSortR(niza,golemina--);
+}
+
+/*Да се одговори зошто процесирачките капацитети на ова сортирање се слични како оние со методот на меурче.*/
+/*Imaat ista kompleksnost Bubble sort ima O(n^2)kompleksnost, mojot algoritam isto taka ima n^2, bidejkji koristam dva for ciklusi*/
