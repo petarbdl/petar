@@ -1,0 +1,41 @@
+/*Да се најдат природните броеви во интервалот [n1,n2], кои се деливи со сво-јот спротивен број.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+int sprotivenBroj(int n);
+void delivi(int n1, int n2);
+
+int main()
+{
+    int n1,n2;
+    printf("Vnesite interval n1 n2\n");
+    scanf("%d %d", &n1, &n2);
+    delivi(n1,n2);
+    return 0;
+}
+void delivi(int n1, int n2)
+{
+    int i;
+    for(i=n1;i<=n2;i++)
+    {
+        if(i%sprotivenBroj(i)==0)
+        {
+            printf("Brojot %d e deliv so %d\n", i, sprotivenBroj(i));
+        }
+    }
+}
+int sprotivenBroj(int n)
+{
+    int digit, broj=0;
+    while(n>0)
+    {
+        digit=n%10;
+        broj*=10;
+        broj+=digit;
+        n/=10;
+    }
+    return broj;
+}
