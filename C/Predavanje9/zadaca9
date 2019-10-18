@@ -1,0 +1,43 @@
+/*Секоја од n бактерии се дели на две на секои i минути, додека на секои j минути изумираат x% од живите бактерии во тој момент.
+ *  Колку бактерии ќе има по k минути?
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+
+
+int main()
+{
+    int n, i, j, x, k, brojac;
+    printf("Vnesite broj na bakterii\n");
+    scanf("%d", &n);
+    printf("Na kolku minuti se razmnozuva 1 bakterija \n");
+    scanf("%d",&i);
+    printf("kolku e zivotniot vek na bakterijata, vo minuti \n");
+    scanf("%d",&j);
+    printf("kolkav procent od 0%% do 100%% od bakteriite umiraat \n");
+    scanf("%d",&x);
+    printf("Za kolku minuti treba da se presmeta, vnesite \n");
+    scanf("%d",&k);
+    int suma=n, zgolemi=i, namali=j, odzemi;
+
+    for(brojac=0;brojac<k;brojac++)
+    {
+        if(brojac==zgolemi)
+        {
+            zgolemi+=i;
+            suma*=2;
+        }
+        if(brojac==namali)
+        {
+            namali+=j;
+            odzemi=(x*suma)/100;
+            suma-=odzemi;
+        }
+    }
+
+    printf("%d", suma);
+    return 0;
+}
