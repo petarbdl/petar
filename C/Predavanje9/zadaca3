@@ -1,0 +1,37 @@
+/*Да се најде спротивен број на природниот број n.
+ *  (Тоа е природниот број што ги има истите цифри со n, напишани во спротивен редослед.)
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+void sprotivenBroj(int n);
+
+int main()
+{
+    int broj;
+    printf("Vnesite broj\n");
+    scanf("%d", &broj);
+    printf("Sprotiven broj na brojot %d e ", broj);
+    sprotivenBroj(broj);
+
+    return 0;
+}
+void sprotivenBroj(int n)
+{
+    int digit, i=0, j;
+    int niza[100];
+    while(n>0)
+    {
+        digit=n%10;
+        niza[i]=digit;
+        i++;
+        n/=10;
+    }
+    for(j=0;j<i;j++)
+    {
+        printf("%d", niza[j]);
+    }
+    printf("\n");
+}
