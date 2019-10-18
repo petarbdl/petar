@@ -1,0 +1,50 @@
+/*10.	Да се најдат сите растечки поднизи во низата броеви [ai]n. 
+ * (Растечка подни¬за е онаа во која секој елемент е поголем од претходниот.)
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+
+
+int main()
+{
+    printf("Vnesite broj na elementi vo nizata\n");
+    int n, i, brojac=0;
+    scanf("%d", &n);
+    int *niza;
+    niza=(int*) malloc(sizeof (int)*n);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d", &niza[i]);
+    }
+    while(brojac<n)
+    {
+        if(niza[brojac]<niza[brojac+1])
+        {
+            printf("%d ", niza[brojac]);
+        }
+
+        for(i=brojac;i<n;i++)
+        {
+            if(niza[i]<niza[i+1])
+            {
+                printf("%d ", niza[i+1]);
+                if(niza[i+1]>niza[i+2])
+                {
+                    printf("\n");
+                }
+                continue;
+            }
+            else
+            {
+                break;
+
+            }
+        }
+
+        brojac++;
+    }
+    return 0;
+}
