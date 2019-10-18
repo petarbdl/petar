@@ -1,0 +1,53 @@
+/*Да се најде обиколката и плоштината на правилен n-аголник
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+void obikolka(int *niza, int golemina);
+void ploshtina(int *niza, int golemina);
+
+int main()
+{
+    int n,i;
+    printf("Vnesi go n\n");
+    scanf("%d", &n);
+    int *strani;
+    strani = (int*) malloc(sizeof (int)*n);
+    for(i=0;i<n;i++)
+    {
+        printf("Vnesi strana na %d-agolnikot \n", n);
+        scanf("%d", &strani[i]);
+    }
+    obikolka(strani,n);
+    ploshtina(strani,n);
+    return 0;
+}
+void obikolka(int niza[], int n)
+{
+    int i, suma=0;
+    for(i=0;i<n;i++)
+    {
+        suma+=niza[i];
+    }
+    printf("Obikolkata na %d-agolnikot e %d\n", n, suma);
+    return;
+}
+void ploshtina(int niza[], int n)
+{
+    int i;
+    float suma=0, rez=1;
+    for(i=0;i<n;i++)
+    {
+        suma+=niza[i];
+    }
+    suma /= 2;
+    rez=suma;
+    for(i=0;i<n;i++)
+    {
+        rez*=(suma-niza[i]);
+    }
+    printf("Proshtinata na %d-agolnikot e %.2f\n", n, sqrt(rez));
+    return;
+}
