@@ -1,0 +1,38 @@
+/*Да се најдат совршените броеви помали од природниот број n
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+void sovrsheniBroevi(int n);
+
+int main()
+{
+    int broj;
+    printf("Vnesite broj\n");
+    scanf("%d", &broj);
+    printf("Sovrsheni broevi do brojot %d se ", broj);
+    sovrsheniBroevi(broj);
+    return 0;
+}
+void sovrsheniBroevi(int broj)
+{
+    int brojac, sum, i;
+    for(i=1;i<=broj;i++)
+    {
+      brojac=1;
+      sum = 0;
+      while(brojac < i)
+      {
+        if(i%brojac==0)
+        {
+             sum=sum+brojac;
+        }
+      brojac++;
+      }
+      if(sum==i)
+        printf("%d ",i);
+    }
+        printf("\n");
+}
