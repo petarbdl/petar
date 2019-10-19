@@ -12,8 +12,7 @@ int main()
     printf("Vnesite broj na elementi vo nizata\n");
     int n, i, brojac=1, flag=1;
     scanf("%d", &n);
-    int *niza;
-    niza=(int*) malloc(sizeof (int)*n);
+    int niza[100];
     for(i=0;i<n;i++)
     {
         scanf("%d", &niza[i]);
@@ -52,9 +51,19 @@ int main()
                     break;
                 }
             }
+            else
+            {
+                flag=4;
+                break;
+            }
         }
-
+        if(flag==4)
+        {
+            printf("\n");
+            flag=1;
+        }
         brojac+=2;
+        flag=1;
     }
     return 0;
 }
