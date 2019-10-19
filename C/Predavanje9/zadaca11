@@ -1,0 +1,60 @@
+/*Да се најдат сите пилести поднизи во низата броеви [ai]n.
+ *  (Пилеста подни¬за е онаа во која претходниот и следниот елемент на секој елемент се по¬мали (поголеми) од него.)*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+
+
+int main()
+{
+    printf("Vnesite broj na elementi vo nizata\n");
+    int n, i, brojac=1, flag=1;
+    scanf("%d", &n);
+    int *niza;
+    niza=(int*) malloc(sizeof (int)*n);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d", &niza[i]);
+    }
+    while(brojac<n)
+    {
+        for(i=brojac;i<=n;i++)
+        {
+            /*sledniov if uslov e za da mi go pecati posledniot element vo niza so paren broj na clenovi*/
+            if(brojac==(n-1))
+            {
+                i--;
+                flag=2;
+            }
+            /*proverka na baranjata vo zadacata*/
+            if((niza[i]<niza[i+1] && niza[i-1]>niza[i] && (i+1<n)) || (niza[i]>niza[i+1] && niza[i-1]<niza[i] && (i+1<n)))
+            {
+                /*Prv pat koga vleguva vo ciklusot da go pecati prviot element, zatoa e flag 1*/
+                if(flag==1)
+                {
+                    printf("%d %d %d", niza[i-1], niza[i], niza[i+1]);
+                    flag=0;
+                    break;
+                }
+                else
+                    /*Za pecatenje na posledniot element vo niza so paren broj na clenovi*/
+                    if(flag==2)
+                    {
+                        printf(" %d", niza[i+1]);
+                        break;
+                    }
+                /*Vo sekoj drug slucaj*/
+                else
+                {
+                    printf(" %d %d", niza[i], niza[i+1]);
+                    break;
+                }
+            }
+        }
+
+        brojac+=2;
+    }
+    return 0;
+}
