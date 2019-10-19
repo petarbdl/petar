@@ -1,0 +1,48 @@
+/*Да се генерираат следниве дводимензионални полиња со m-редици и n-колони*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+
+
+int main()
+{
+    int n, m, i, j, brojac=1, k, t, flag=0;
+    int matrica[50][50];
+    printf("Vnesite go N\n");
+    scanf("%d", &n);
+    printf("Vnesite go M\n");
+    scanf("%d", &m);
+    for(i=0;i<m;i++)
+    {
+        if(flag==1)
+        {
+            for(j=n-1;j>=0;j--)
+            {
+                matrica[j][i]=brojac;
+                brojac++;
+            }
+            flag=0;
+        }
+        else
+        {
+            for(j=0;j<n;j++)
+            {
+                matrica[j][i]=brojac;
+                brojac++;
+            }
+            flag=1;
+        }
+    }
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<m;j++)
+        {
+            printf("%d ", matrica[i][j]);
+
+        }
+        printf("\n");
+    }
+    return 0;
+}
