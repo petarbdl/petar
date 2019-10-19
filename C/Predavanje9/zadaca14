@@ -1,0 +1,62 @@
+/*14.	За даден природен број n да се испечатат следниве фигури со користење на рекурзија
+n
+n-1 n
+n-2 n-1 n
+...
+1 2 3 ... n-2 n-1 n
+...
+n-2 n-1 n
+n-1 n
+n
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+void pecatiR(int *niza, int n, int pok);
+void pecatiRobratno(int *niza, int n, int pok);
+
+int main()
+{
+    int n, i;
+    int niza[1000];
+    printf("Vnesite priroden broj\n");
+    scanf("%d", &n);
+    for(i=1;i<=n;i++)
+    {
+        niza[i]=i;
+    }
+    pecatiR(niza,n,n);
+    pecatiRobratno(niza,n,2);
+    return 0;
+}
+
+void pecatiR(int niza[], int n, int pok)
+{
+    int i;
+    if(pok==0)
+    {
+        return;
+    }
+    for(i=pok;i<=n;i++)
+    {
+        printf("%d ", niza[i]);
+    }
+    printf("\n");
+    pecatiR(niza,n,pok-=1);
+}
+void pecatiRobratno(int niza[], int n, int pok)
+{
+    int i;
+    if(pok>n)
+    {
+        return;
+    }
+    for(i=pok;i<=n;i++)
+    {
+        printf("%d ", niza[i]);
+    }
+    printf("\n");
+    pecatiRobratno(niza,n,pok+=1);
+}
