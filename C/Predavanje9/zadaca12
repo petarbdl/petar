@@ -1,0 +1,45 @@
+/*Да се внесат два полинома со степени n m соодветно. 
+ * Да се внесат нивните коефициенти и да се најде нивниот збир*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+
+
+int main()
+{
+    int n, m, i;
+    int niza[10]={0},niza2[10]={0}, rezultat[10], max, j;
+    printf("Vnesite go stepenot na prviot polinom\n");
+    scanf("%d", &n);
+    printf("Vnesite go stepenot na vtoriot polinom\n");
+    scanf("%d", &m);
+    printf("Vnesite gi koeficientite na prviot polinom\n");
+    max=m;
+    if(n>max)
+    {
+        max=n;
+    }
+    for(i=max-n;i<max;i++)
+    {
+        scanf("%d",&niza[i]);
+    }
+    printf("Vnesite gi koeficientite na vtoriot polinom\n");
+    for(i=max-m;i<max;i++)
+    {
+        scanf("%d",&niza2[i]);
+    }
+
+
+    for(i=0;i<max;i++)
+    {
+        rezultat[i]=niza[i]+niza2[i];
+    }
+    for(i=0, j=max;j>0, i<max-1;i++, j--)
+    {
+        printf("%dx^%d + ", rezultat[i], j);
+    }
+    printf("%dx^%d\n", rezultat[i], j);
+    return 0;
+}
