@@ -1,3 +1,4 @@
+/*Претходниот проект да се дополни со делење на карти на двајца играчи (две раце) и при тоа да се одреди кој од нив победил.*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -5,7 +6,7 @@
 /* prototipovi */
 void meshaj( int wDeck[][ 13 ] );
 void deli( const int wDeck[][ 13 ], const char *wFace[], const char *wSuit[] );
-int proverka(int redici[5], int koloni[5]);
+int proverka(int redici[5], int koloni[5], const char *wFace[], const char *wSuit[]);
 
 int main()
 {
@@ -59,10 +60,10 @@ void deli( const int wDeck[][ 13 ], const char *wFace[], const char *wSuit[] )
    int row;    /* brojach na redovi */
    int column; /* brojach na koloni */
    int igrac1, igrac2;
-   int koloni[5], redici[5], koloni1[5], redici1[5]; /*Cuvanje na podatoci za kartite shto padnale na prviot i na vtoriot igrac*/
+   int koloni[5], redici[5], koloni2[5], redici2[5]; /*Cuvanje na podatoci za kartite shto padnale na prviot i na vtoriot igrac*/
    /* podeli ja sekoja od 52-te karti */
-   int i=0;/*Brojac za kartite shto se podeleni*/
-   for ( card = 1; card <= 10; card++ ) {
+   int i=0,j=0;/*Brojac za kartite shto se podeleni*/
+   for ( card = 1; card <= 10; card++ )/*MAksimalnata vrednost na brojacot ja pomestiv od 5 na 10, za da se podelat po 5 karti na dvajcata igraci*/ {
 
       /* pomini niz redovite na wDeck */
       for ( row = 0; row <= 3; row++ ) {
@@ -72,32 +73,51 @@ void deli( const int wDeck[][ 13 ], const char *wFace[], const char *wSuit[] )
 
             /* ako mestoto ja sodrzhi tekovnata karta, prikazhi ja kartata */
              if ( wDeck[ row ][ column ] == card ) {
-                printf( "%s %s%c ", wFace[ column ], wSuit[ row ], card==5 ? '\n':' ');
                 if(card<=5)
                 {
-                koloni[i]=column;
-                redici[i]=row;
+                    /*Kartite na prviot igrac*/
+                    koloni[i]=column;
+                    redici[i]=row;
+                    i++;
                 }
-               else
+                else
                 {
-                    koloni1[i]=column;
-                    redici1[i]=row;
+                    /*Kartite na vtoriot igrac*/
+                    koloni2[j]=column;
+                    redici2[j]=row;
+                    j++;
                 }
-                i++;
+
              } /* kraj if */
           } /* kraj for */
        } /* kraj for */
     } /* kraj for */
-   //igrac1=proverka(redici,koloni);
-   igrac2=proverka(redici1,koloni1);
+   printf("Igrac 1 ima ");
+   igrac1=proverka(redici,koloni,wFace,wSuit);
+   printf("Igrac 2 ima ");
+   igrac2=proverka(redici2,koloni2,wFace,wSuit);
    if(igrac1>igrac2)
+   {
         printf("Pobedi IGRAC 1\n");
-   else
+   }
+   if(igrac1<igrac2)
+   {
        printf("Pobedi IGRAC 2\n");
+   }
+   else
+   {
+       printf("Dvajcata imaat isti rezultat\n");
+   }
  } /* kraj na funkcijata deli */
-int proverka(int r[5], int k[5])
+int proverka(int r[5], int k[5],const char *wFace[], const char *wSuit[])
 {
     int i,j, brojac=1, max=1, flag=0;
+    /*Pecatenje na kartite na igracot*/
+    for(i=0;i<5;i++)
+    {
+        printf( "%s %s%c ", wFace[ k[i] ], wSuit[ r[i] ], i==4 ? '\n':' ');
+    }
+    /*Proverka na par, triplet i for of a kind*/
     for(i=0;i<5;i++)
     {
         brojac=1;
@@ -113,6 +133,7 @@ int proverka(int r[5], int k[5])
         }
     }
     brojac=1;
+    /*Proverka na boja*/
     for(i=0;i<5;i++)
     {
             if(r[i]==r[i+1])
