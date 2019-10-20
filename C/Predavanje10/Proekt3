@@ -1,0 +1,87 @@
+/*Да се направи програма во која ќе се сместат оцени на студенти по предмети (дводимензионална низа во која во редици се студентите,
+ *  а во колони се нивните оцени по 5 предмети). Програмата треба да го нуди следниот кориснички посредник:
+
+Vnesi izbor:
+0 Ispechati ja nizata so oceni
+1 Najdi ja maksimalnataocena
+2 Najdi ja minimalnata ocena
+3 Ispecati ja prosechnata ocena za sekoja student
+4 Kraj
+*/
+#include <stdio.h>
+
+void max(int niza[6][5]);
+void min(int niza[6][5]);
+void pecatiNiza(int niza[6][5]);
+void prosek(int niza[6][5]);
+
+int main()
+{
+    int izbor;
+    int niza[6][5]={{6,7,8,8,9},{7,7,6,6,6},{9,9,8,10,9},{8,7,8,9,9}, {7,7,7,9,7},{6,6,6,7,6}};
+
+    printf("Koj e vashiot izbor:\n 0 --> Ispecati ja nizata so oceni\n 1 --> Najdi ja maksimalnata ocena\n 2 --> Najdi ja minimalnata ocenka\n 3 --> Ispecati ja prosecnata ocenka za sekoj student\n 4 --> KRAJ\n");
+    scanf_s("%d", &izbor);
+    void (*obrabotiOceni[4])(int [6][5])={pecatiNiza, max, min, prosek};
+    while(izbor>=0 && izbor<4)
+    {
+        (*obrabotiOceni[izbor])(niza);
+        printf("Koj e vashiot izbor:\n 0 --> Ispecati ja nizata so oceni\n 1 --> Najdi ja maksimalnata ocena\n 2 --> Najdi ja minimalnata ocenka\n 3 --> Ispecati ja prosecnata ocenka za sekoj student\n 4 --> KRAJ\n");
+        scanf_s("%d", &izbor);
+    }
+    return 0;
+}
+void max(int niza[6][5])
+{
+    int i, indeks, m=6;
+    printf("Koj e vashiot indeks od 0 do 5\n");
+    scanf_s("%d", &indeks);
+    for(i=0;i<5;i++)
+    {
+        if(niza[indeks][i]>m)
+        {
+            m=niza[indeks][i];
+        }
+    }
+    printf("Najgolemata otcenka e %d\n", m);
+}
+void min(int niza[6][5])
+{
+    int i, indeks, m=10;
+    printf("Koj e vashiot indeks od 0 do 5\n");
+    scanf_s("%d", &indeks);
+    for(i=0;i<5;i++)
+    {
+        if(niza[indeks][i]<m)
+        {
+            m=niza[indeks][i];
+        }
+    }
+    printf("Najmalata otcenka e %d\n", m);
+
+}
+void pecatiNiza(int niza[6][5])
+{
+    int i, indeks;
+    printf("Koj e vashiot indeks od 0 do 5\n");
+    scanf_s("%d", &indeks);
+    for(i=0;i<5;i++)
+    {
+        printf("%d ", niza[indeks][i]);
+    }
+    printf("\n");
+}
+void prosek(int niza[6][5])
+{
+    int i,j;
+    float prosek=0.0;
+    for(i=0;i<6;i++)
+    {
+        prosek=0;
+        for(j=0;j<5;j++)
+        {
+            prosek+=niza[i][j];
+        }
+        printf("Prosek na student soindeks %d e %.2f\n",i, (float)(prosek/5));
+    }
+}
