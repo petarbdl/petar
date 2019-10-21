@@ -1,0 +1,66 @@
+/*Напиши програм кој го превртува редоследот на битовите на целобројна unsigned вредност. 
+ * Програмот треба да вчита вредност од корисникот 
+ * и да ја повика функцијата prevtriBitovi за да се испечатат битовите во обратен редослед.
+ *  Вредностите на битовите да се испечатат и пред и после превртувањето.
+*/
+#include <stdio.h>
+#include <math.h>
+
+void prevrtiBroj(unsigned broj);
+void pecatiBroj(unsigned broj);
+
+int main()
+{
+    unsigned broj;
+    printf("Vnesite broj\n");
+    scanf("%u", &broj);
+    printf("Brojot vo normalen redosled\n");
+    pecatiBroj(broj);
+    printf("Brojot vo obraten redosled\n");
+    prevrtiBroj(broj);
+    return 0;
+}
+void prevrtiBroj(unsigned broj)
+{
+    unsigned brojac=32;
+    unsigned obraten = broj;
+    unsigned maska=1;
+    maska <<= 31;
+    broj >>= 1;
+    while(broj)
+    {
+        obraten <<=1;
+        obraten |= broj & 1;
+        broj >>= 1;
+        brojac--;
+    }
+    obraten <<= brojac;
+    for(brojac=1;brojac<=32;brojac++)
+    {
+        putchar(obraten & maska ? '1':'0');
+        obraten<<=1;
+
+        if(brojac % 8 == 0)
+        {
+            putchar(' ');
+        }
+    }
+    printf("\n");
+}
+void pecatiBroj(unsigned broj)
+{
+    unsigned brojac;
+    unsigned maska = 1;
+    maska<<=31;
+    for(brojac=1;brojac<=32;brojac++)
+    {
+        putchar(broj & maska ? '1':'0');
+        broj<<=1;
+
+        if(brojac % 8 == 0)
+        {
+            putchar(' ');
+        }
+    }
+    printf("\n");
+}
