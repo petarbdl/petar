@@ -1,0 +1,22 @@
+/*Напиши програм кој чита датум во обликот 14/06/2005 и враќа датум во обликот 14 juni 2005. 
+ * Корисникот да има можност да внесува колку што сака датуми кои треба да бидат конвертирани во другиот излез.*/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+
+int main()
+{
+    char string[12], *rez, *pomoshna, *meseci[12]={"Januari","Februari", "Mart", "April","Maj","Juni","Juli","Avgust","Septemvri","Oktomvri","Noemvri","Dekemvri"};
+   int den,mesec,godina;
+   while((rez=gets(string)) != NULL)
+   {
+       pomoshna=strtok(string,"/");
+       den=atoi(pomoshna);
+       mesec=atoi(strtok(NULL,"/"));
+       godina=atoi(strtok(NULL,"/"));
+       printf("%d %s %d\n", den, meseci[mesec-1],godina);
+   }
+    return 0;
+}
