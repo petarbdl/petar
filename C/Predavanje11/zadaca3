@@ -1,0 +1,83 @@
+ * Да се напише програм кој чита текст фраза и ја дава нејзината вредност во Морзеовата азбука.
+ *  Да се направи и друга функција на која и се предава Морзеов текст,
+ *  а треба како резултат да се добие текст фраза во говорен јазик*/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+
+
+typedef struct
+{
+    char *morse;
+    char *normal;
+}tabela;
+
+void asciitomorse(char *vlez, tabela t[36]);
+void morsetoascii(char *vlez, tabela t[36]);
+
+int main()
+{
+    tabela t[]={{".-","a"},{"-...","b"},{"-.-.","c"}, {"-..","d"}, {".","e"}, {"..-.","f"}, {"--.","g"}, {"....","h"},{ "..","i"}, {".---","j"}, {"-.-","k"}, {".-..","l"}, {"--","m"},
+                {"-.","n"}, {"---","o"}, {".--.","p"}, {"--.-","q"}, {".-.","r"}, {"...","s"},{ "-","t"}, {"..-","u"}, {"...-","v"}, {".--","w"}, {"-..-","x"}, {"-.--","y"}, {"--..","z"},
+                {".----","1"},{"..---","2"},{"...--","3"},{"....-","4"},{".....","5"},{"-....","6"},{"--...","7"},{"---..","8"},{"----.","9"},{"-----","0"}};
+    char *string="";
+    printf("Vnesite tekst za prevod od ASCII vo MORSE\nPotoa tekst zaprevod od MORSE vo ASCII\n");
+
+    printf("Vnesite tekst ili fraza vo ASCII\n");
+    gets(string);
+    asciitomorse(string,t);
+
+    printf("Vnesite tekst ili fraza vo MORSE\n");
+    gets(string);
+    morsetoascii(string,t);
+
+    return 0;
+}
+void asciitomorse(char *vlez, tabela t[36])
+{
+    int proverka=0,i;
+    char *bukva, *zbor;
+    zbor=strtok(vlez," ");
+    while(zbor!=NULL)
+    {
+
+        for(i=0;zbor[i]!='\0';i++)
+        {
+            bukva=&zbor[i];
+            proverka=*bukva-97;
+            if(isalnum(*bukva))
+            {
+                 printf("%s ", t[proverka].morse);
+            }
+            else
+            {
+                printf("%c", *bukva);
+            }
+        }
+        zbor=strtok(NULL," ");
+    }
+return;
+}
+void morsetoascii(char *vlez, tabela t[36])
+{
+    int i;
+    char *zbor;
+    zbor=strtok(vlez," ");
+    while(zbor!=NULL)
+    {
+        for(i=0;i<36;i++)
+        {
+
+                if(!strcmp(zbor,t[i].morse))
+                {
+                    printf("%s", t[i].normal);
+                }
+
+          }
+        zbor=strtok(NULL," ");
+    }
+return;
+}
+
