@@ -1,0 +1,30 @@
+/*Shto raboti sledniot program?*/
+#include <stdio.h>
+ 
+int misterija( unsigned bitovi ); 
+ 
+int main()
+{ 
+   unsigned x; 
+   printf( "Vnesi cel broj: " );
+   scanf( "%u", &x );
+   printf( "Rezultatot e %d\n", misterija( x ) );
+   return 0; 
+} 
+ /*Ovaa funkcija proveruva dali brojot vnesen od korisnikot ima paren broj na bitovi so vrednost 1*/
+int misterija( unsigned bitovi )
+{ 
+   unsigned i;/*Promenliva za kontrola na tekot na for ciklusot*/              
+   unsigned maska = 1 << 31;/*Promenliva maska. Inicirana na 1, pa edinicata se pomestuva 31 mesto, za maska da stane 01111111 11111111 11111111 11111111*/ 
+   unsigned total = 0;  /*Promenliva za broenje kolku pati uslovot vo if e tocen*/    
+ /* For ciklus vo koj unsigned promenlivata koja vleguva vo funkcijata se shiftira za 1 vo levo po sekoja interacija */
+   for ( i = 1; i <= 32; i++, bitovi <<= 1 ) {
+       /*Ako vo momentalna sostojba bitot na promenlivata bitovi i bitot na maska se 1 togash uslovot (bitovi&maska) e 1, sleduva deka if uslovot kje pomine*/
+       if ( ( bitovi & maska ) == maska ) { 
+          /*Se zgolemuva total za 1 ako uslovot e pominat*/
+           total++;
+       } 
+    } 
+   /*Vrakja dali total e parna brojka ili ne, */
+    return !( total % 2 ) ? 1 : 0;
+ } 
