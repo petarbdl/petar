@@ -1,0 +1,36 @@
+/*Напиши програм кој внесува телефонски број како стринг во облик (333) 333-3333.
+ * Програмот треба со користење на наредбата strtok да го извлече кодот на државата како едно делче,
+ *  а потоа да го спои целиот телефонски број во друг стринг без -.
+ *  Програмот треба да го конвертира бројот на државата во int,
+ *  а седмоцифрениот телефонски број во long. Двата бројат треба да бидат испечатени.*/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+int main()
+{
+    char telBroj[15], *brojPoziven, *pomoshen, *brojRaz, broj[10];
+    int poziven;
+    long b;
+    printf("Vnesite telefonski broj vo format (xxx) xxx-xxxx\n");
+    /*Citanje na brojot od tastatura*/
+    gets_s(telBroj, 15);
+    /*Delenje na brojot na (xxx) i xxx-xxxx i dodeluvanje na prviot del na brojPoziven*/
+    brojPoziven=strtok(telBroj," ");
+    /*Zemanje na Vtoriot del i go delam ushte ednash na dva dela xxx i xxxx, sekoj od delovite go dodavam na nova promenliva broj*/
+    brojRaz=strtok(NULL,"-");
+    strcat(broj,brojRaz);
+    brojRaz=strtok(NULL,"-");
+    strcat(broj,brojRaz);
+    /*Trganje na zagradite od pozivniot broj za da go pretvoram vo int*/
+    brojPoziven=strtok(brojPoziven,")");
+    brojPoziven=strtok(brojPoziven,"(");
+    /*Konverzija na stringovite vo int i long soodvetno*/
+    poziven= atoi(brojPoziven);
+    b= strtol(broj,&pomoshen,0);
+    /*Pecatenje*/
+    printf("Poziven broj e %d\n",poziven);
+    printf("Ostanatiot del od brojot e %ld\n", b);
+    return 0;
+}
