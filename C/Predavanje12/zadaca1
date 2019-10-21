@@ -1,0 +1,37 @@
+/*Само со користење на операторот за шифтирање да се напише функција mnoziSoStepenOdDva која зема два целобројни аргументи:
+ *  broj и stepen и ја пресметува следната вредност:
+broj * 2^stepen;
+*/
+#include <stdio.h>
+#include <math.h>
+
+void mnoziSoStepenOdDva(unsigned broj, int stepen);
+
+int main()
+{
+    unsigned broj;
+    int stepen;
+    printf("Vnesite broj i stepen\n");
+    scanf("%u %d", &broj, &stepen);
+    mnoziSoStepenOdDva(broj,stepen);
+    return 0;
+}
+void mnoziSoStepenOdDva(unsigned broj, int stepen)
+{
+    unsigned brojac;
+    unsigned maska=1<<31;
+    printf("Brojot %d X 2^%d e ", broj, stepen);
+    broj <<= stepen;
+    printf("%u", broj);
+    printf("Brojot vo bitska vrednost e ");
+    for(brojac=1;brojac<=32;brojac++)
+    {
+        putchar(broj & maska ? '1':'0');
+        broj<<=1;
+        if(brojac % 8 == 0)
+        {
+            putchar(' ');
+        }
+    }
+    printf("\n");
+}
