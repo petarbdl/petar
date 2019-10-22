@@ -1,0 +1,255 @@
+/*Напиши програма која внесува елементи со функцијата vnesi несортирано, на крајот на листата,
+ *  ја користи функцијата sortOpagjanje која сортира елементи во опаѓачки редослед,
+ *  функцијата sortRastenje која ги сортира елемнтите во растечки редослед, 
+ * brisi која брише елемент со дадена содржина. Елементите на листата се целобројни елементи*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+/* samo-referencirachka struktutra */
+struct listNode {
+   int broj; /* sekoj listNode sodrzhi broj */
+   struct listNode *nextPtr; /* pokazhuvach do sledniot jazol */
+}; /* kraj na strukturata listNode */
+
+typedef struct listNode ListNode; /* sinonim za strukturata listNode */
+typedef ListNode *ListNodePtr; /* sinonim za ListNode* */
+
+/* prototipovi */
+void insert( ListNodePtr *sPtr, int broj );
+int isEmpty( ListNodePtr sPtr );
+void printList( ListNodePtr currentPtr );
+void pecatiListaNanazad( ListNodePtr currentPtr );
+void brisi( ListNodePtr *sPtr, int value );
+void sortOp(ListNodePtr l);
+void sortRa(ListNodePtr l);
+
+int main()
+{
+   ListNodePtr startPtr = NULL; /* vo pochetokot nema jazli */
+   int n, i=0, broj, b; /* korisnikot vnesuva broj */
+
+   printf("Vnesi ja goleminata na nizata\n");
+   scanf("%d", &n);
+
+   /* vrti dodeka korisnikot ne vnese 3 */
+   while ( i<n ) {
+       printf( "Vnesi broj: " );
+       scanf("%d", &broj);
+
+       insert( &startPtr, broj); /* vnesi element vo listata */
+       i++;
+   } /* kraj while */
+   if(isEmpty(startPtr)==0)
+   {
+        printList( startPtr );/*pecati ja celata lista*/
+   }
+   else
+   {
+       printf("Listata e prazna\n");
+   }
+   sortOp(startPtr);
+   sortRa(startPtr);
+   printf("Element shto sakate da se izbrishi\n");
+   scanf("%d", &b);
+   brisi(&startPtr,b);
+   printList(startPtr);
+   return 0; /* uspeshen kraj */
+
+} /* kraj main */
+
+void sortOp(ListNodePtr lista)
+{
+    int broj1;
+    ListNodePtr tmp1=lista;
+    ListNodePtr tmp2=lista;
+    while(tmp1 != NULL)
+    {
+        while(tmp2 != NULL)
+        {
+            if(tmp1->broj<tmp2->broj)
+            {
+                broj1=tmp1->broj;
+                tmp1->broj=tmp2->broj;
+                tmp2->broj=broj1;
+            }
+            tmp2=tmp2->nextPtr;
+        }
+        tmp1=tmp1->nextPtr;
+        tmp2=tmp1;
+    }
+    if ( lista == NULL ) {
+       printf( "Listata e prazna.\n\n" );
+    } /* kraj if */
+    else {
+       printf( "Listata vo opagjacki redosled e:\n" );
+
+       /* dodeka ne e kraj na listata */
+       while ( lista != NULL ) {
+          printf( "%d --> ", lista->broj);
+          lista = lista->nextPtr;
+       } /* kraj while */
+
+       printf( "NULL\n\n" );
+    } /* kraj else */
+
+}
+
+void sortRa(ListNodePtr lista)
+{
+    int broj1;
+    ListNodePtr tmp1=lista;
+    ListNodePtr tmp2=lista;
+    while(tmp1 != NULL)
+    {
+        while(tmp2 != NULL)
+        {
+            if(tmp1->broj>tmp2->broj)
+            {
+                broj1=tmp1->broj;
+                tmp1->broj=tmp2->broj;
+                tmp2->broj=broj1;
+            }
+            tmp2=tmp2->nextPtr;
+        }
+        tmp1=tmp1->nextPtr;
+        tmp2=tmp1;
+    }
+    if ( lista == NULL ) {
+       printf( "Listata e prazna.\n\n" );
+    } /* kraj if */
+    else {
+       printf( "Listata vo rastecki redosled e:\n" );
+
+       /* dodeka ne e kraj na listata */
+       while ( lista != NULL ) {
+          printf( "%d --> ", lista->broj);
+          lista = lista->nextPtr;
+       } /* kraj while */
+
+       printf( "NULL\n\n" );
+    } /* kraj else */
+
+}
+
+/* Vnesi nova vrednost vo listata sortiranor */
+void insert( ListNodePtr *sPtr, int broj )
+{
+   ListNodePtr newPtr;      /* pointer do nov jazel */
+   ListNodePtr previousPtr; /* pokazhuvach do prethodniot jazel vo listata */
+   ListNodePtr currentPtr;  /* pokazhuvach do tekovniot jazel */
+
+   newPtr = malloc( sizeof( ListNode ) ); /* sozdadi jazel */
+
+   if ( newPtr != NULL ) { /* ako ima mesto */
+      newPtr->broj = broj;/* stavi vrednost vo jazelot */
+      newPtr->nextPtr = NULL; /* jazelot ne e povrzan so drug jazel */
+
+      previousPtr = NULL;
+      currentPtr = *sPtr;
+
+      /* vrti dodeka ne ja najdesh tochnata pozicija vo listata */
+      while ( currentPtr != NULL ) {
+         previousPtr = currentPtr;          /* odi do ...   */
+         currentPtr = currentPtr->nextPtr;  /* ... sledniot jazel */
+      } /* kraj while */
+
+      /* vnesi nov jazel na pochetokot na listata */
+      if ( previousPtr == NULL ) {
+         newPtr->nextPtr = *sPtr;
+         *sPtr = newPtr;
+      } /* kraj if */
+      else { /* vnesi nov jazel megju previousPtr i currentPtr */
+         previousPtr->nextPtr = newPtr;
+         newPtr->nextPtr = currentPtr;
+      } /* kraj else */
+
+   } /* kraj if */
+   else {
+      printf( "%d i %c ne e vnesen. Nema dovolno memorija.\n", broj );
+   } /* kraj else */
+
+} /* kraj na funkcijata insert */
+
+/* Vrati 1 ako listata e prazna, 0 inaku */
+int isEmpty( ListNodePtr sPtr )
+{
+   return sPtr == NULL;
+
+} /* kraj na funkcijata isEmpty */
+
+
+/* Ispechati ja listata */
+void printList( ListNodePtr currentPtr )
+{
+
+   /* ako listata e prazna */
+   if ( currentPtr == NULL ) {
+      printf( "Listata e prazna.\n\n" );
+   } /* kraj if */
+   else {
+      printf( "Listata e:\n" );
+
+      /* dodeka ne e kraj na listata */
+      while ( currentPtr != NULL ) {
+         printf( "%d --> ", currentPtr->broj);
+         currentPtr = currentPtr->nextPtr;
+      } /* kraj while */
+
+      printf( "NULL\n\n" );
+   } /* kraj else */
+
+} /* kraj na funkcijata printList */
+
+void pecatiListaNanazad( ListNodePtr currentPtr )
+{
+
+   /* ako listata e prazna */
+   if ( currentPtr == NULL )
+   {
+       return;
+   } /* kraj if */
+
+   pecatiListaNanazad(currentPtr->nextPtr);
+
+   printf("%d --> ", currentPtr->broj);
+
+} /* kraj na funkcijata printList */
+
+/* Izbrishi element od lista */
+void brisi( ListNodePtr *sPtr, int b )
+{
+   ListNodePtr previousPtr; /* pokazhuvach do prethodniot element vo listata */
+   ListNodePtr currentPtr;  /* pokazhuvach do tekovniot jazel */
+   ListNodePtr tempPtr;     /* pokazhuvach do privremen element */
+
+   /* izbrishi go prviot jazel */
+   if ( b == ( *sPtr )->broj ) {
+      tempPtr = *sPtr; /* chuvaj go jazelot shto se brishe */
+      *sPtr = ( *sPtr )->nextPtr; /* sredi ja listata */
+      free( tempPtr ); /* oslobodi go nepotrebniot jazel */
+      return;
+   } /* kraj if */
+   else {
+      previousPtr = *sPtr;
+      currentPtr = ( *sPtr )->nextPtr;
+
+      /* vrti dodeka ne ja najdesh tochnata pozicija */
+      while ( currentPtr != NULL && currentPtr->broj != b ) {
+         previousPtr = currentPtr;         /* odi do ...   */
+         currentPtr = currentPtr->nextPtr; /* ... sledniot jazel */
+      } /* kraj while */
+
+      /* izbrishi go jazelot na currentPtr */
+      if ( currentPtr != NULL ) {
+         tempPtr = currentPtr;
+         previousPtr->nextPtr = currentPtr->nextPtr;
+         free( tempPtr );
+         return;
+      } /* kraj if */
+
+   } /* kraj else */
+
+   return;
+
+} /* kraj na funkcijata delete */
