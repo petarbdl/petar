@@ -1,0 +1,225 @@
+/*Да се напише програм кој дефинира тип vraboten, кој има полиња за ID, име, презиме, возраст, пол, брачна состојба, кредибилност (цел број од 0-100 кој означува кредитна историја, што поголем број, тоа бил вработениот поуспешен во враќање кредити), адреса, тековна плата и поранешна плата. 
+  
+Да се овозможи внесување на повеќе вработени во низа и да се направат 3 сортирања (sort_kred, sort_tekovnaPlata, sort_minataPlata) по кредибилност, по тековна и по поранешна плата. 
+ 
+Да се направи и функција koregiraj_vraboten која овозможува предефинирање на податоците за еден вработен внесен преку неговиот ID. 
+ 
+Да се направи и функција koregiraj_kredibilnost која за сите вработени ја корегира нивната кредибилност на следниот начин: 
+ако тековната плата им е поголема од претходната, тогаш ја зголемува кредибилноста за 3 и ја изедначува тековната со поранешната плата, 
+ако тековната плата е помала од претходната, тогаш ја намалува кредибилноста за 3 и ја изедначува тековната од поранешната плата,
+инаку ништо не менува за вработениот.
+ 
+Да се обезбеди мени кое на корисникот на апликацијата ќе му овозможи која функција да ја повика. Може да има максимум 50 вработени, но корисникот на апликацијата го внесува бројот на вработени кои сака да ги внесе, на почетоткот на користењето на апликацијата.*/
+
+#include <stdio.h>
+
+typedef struct vraboten
+{
+    int ID;
+    char ime[10];
+    char prezime[15];
+    int vozrast;
+    char pol[10];
+    char bracnaS[10];
+    int kred;
+    char adresa[20];
+    int t_plata;
+    int p_plata;
+}Vraboten;
+
+void sort_Kred(Vraboten v[], int n);
+void sort_tekovnaPlata(Vraboten v[], int n);
+void sort_minataPlata(Vraboten v[], int n);
+void pecati(Vraboten v[], int n);
+void koregiraj_vraboten(Vraboten v[], int indeks, int n);
+void koregirajKredibilnost(Vraboten v[], int n);
+void vnesiVraboteni(Vraboten v[], int n);
+int startMeni(void);
+
+int main()
+{
+    struct vraboten vraboteni[50];
+    int n, izbor, indeks;
+    printf("Vnesite vkupen broj na vraboteni\n");
+    scanf("%d", &n);
+    printf("Vnesi vraboteni\n");
+    vnesiVraboteni(vraboteni,n);
+    izbor=startMeni();
+
+    switch(izbor)
+    {
+    case 2:
+        printf("Odbravte sortiranje spored Tekovna plata\n");
+        sort_tekovnaPlata(vraboteni,n);
+        break;
+    case 1:
+        printf("Odbravte sortiranje po Kredibilnost\n");
+        sort_Kred(vraboteni,n);
+        break;
+    case 3:
+        printf("Odbravte sortiranje spored Minata plata\n");
+        sort_minataPlata(vraboteni,n);
+        break;
+    case 4:
+        printf("Odbravte Koregiraj Vraboten, vnesite indeks na vraboteniot\n");
+        scanf("%d", &indeks);
+        koregiraj_vraboten(vraboteni,indeks,n);
+        break;
+    case 5:
+        printf("Odbravte Koregiraj Kredibilnost\n");
+        koregirajKredibilnost(vraboteni,n);
+        break;
+    case 6:
+        printf("KRAJ\n");
+        break;
+    default :
+        printf("Pogreshen izbor\n");
+    }
+    return 0;
+}
+int startMeni()
+{
+    int izbor;
+    printf("Vnesite broj na funkcija shto sakate da se izvrshi:\n1 --> Sortiraj spored Kredibilnost\n2 --> sortiraj spored Tekovna plata\n3 --> Sortiraj spored Minata plata\n4 --> Koregiraj Vraboten\n5 --> Koregiraj Kredibilnost\n6 --> KRAJ\n");
+    scanf("%d", &izbor);
+    return izbor;
+}
+void vnesiVraboteni(Vraboten vraboteni[], int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        printf("Vnesi ID na vraboten\n");
+        scanf("%d", &vraboteni[i].ID);
+        printf("Vnesi Ime \n");
+        scanf("%s", vraboteni[i].ime);
+        printf("Vnesi Prezime \n");
+        scanf("%s", vraboteni[i].prezime);
+        printf("Vnesi Vozrast \n");
+        scanf("%d", &vraboteni[i].vozrast);
+        printf("Vnesi Pol \n");
+        scanf("%s", vraboteni[i].pol);
+        printf("Vnesi Bracna Sostojba (Brak, Single) \n");
+        scanf("%s", vraboteni[i].bracnaS);
+        printf("Vnesi Kredibilnost \n");
+        scanf("%d", &vraboteni[i].kred);
+        printf("Vnesi Adresa \n");
+        scanf("%s", vraboteni[i].adresa);
+        printf("Vnesi Tekovna plata \n");
+        scanf("%d", &vraboteni[i].t_plata);
+        printf("Vnesi Poraneshna plata \n");
+        scanf("%d", &vraboteni[i].p_plata);
+        printf("Vnesi Nov Vraboten\n");
+    }
+}
+void sort_Kred(Vraboten v[], int n)
+{
+    int i,j;
+    Vraboten tmp;
+    for(i=0;i<n;i++)
+    {
+        for(j=i;j<n;j++)
+        {
+            if(v[i].kred<v[j].kred)
+            {
+                tmp=v[i];
+                v[i]=v[j];
+                v[j]=tmp;
+            }
+        }
+    }
+    pecati(v,n);
+}
+void sort_tekovnaPlata(Vraboten v[], int n)
+{
+    int i,j;
+    Vraboten tmp;
+    for(i=0;i<n;i++)
+    {
+        for(j=i;j<n;j++)
+        {
+            if(v[i].t_plata<v[j].t_plata)
+            {
+                tmp=v[i];
+                v[i]=v[j];
+                v[j]=tmp;
+            }
+        }
+    }
+    pecati(v,n);
+}
+void sort_minataPlata(Vraboten v[], int n)
+{
+    int i,j;
+    Vraboten tmp;
+    for(i=0;i<n;i++)
+    {
+        for(j=i;j<n;j++)
+        {
+            if(v[i].p_plata<v[j].p_plata)
+            {
+                tmp=v[i];
+                v[i]=v[j];
+                v[j]=tmp;
+            }
+        }
+    }
+    pecati(v,n);
+}
+void koregiraj_vraboten(Vraboten v[], int indeks,int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        if(v[i].ID==indeks)
+        {
+            printf("Vnesi Nov ID na vraboten\n");
+            scanf("%d", &v[i].ID);
+            printf("Vnesi Novo Ime \n");
+            scanf("%s", v[i].ime);
+            printf("Vnesi Novo Prezime \n");
+            scanf("%s", v[i].prezime);
+            printf("Vnesi Nova Vozrast \n");
+            scanf("%d", &v[i].vozrast);
+            printf("Vnesi Nov Pol \n");
+            scanf("%s", v[i].pol);
+            printf("Vnesi Nova Bracna Sostojba (Brak, Single) \n");
+            scanf("%s", v[i].bracnaS);
+            printf("Vnesi Nova Kredibilnost \n");
+            scanf("%d", &v[i].kred);
+            printf("Vnesi Nova Adresa \n");
+            scanf("%s", v[i].adresa);
+            printf("Vnesi Nova Tekovna plata \n");
+            scanf("%d", &v[i].t_plata);
+            printf("Vnesi Nova Poraneshna plata \n");
+            scanf("%d", &v[i].p_plata);
+            break;
+        }
+    }
+}
+void koregirajKredibilnost(Vraboten v[], int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        if(v[i].t_plata>v[i].p_plata)
+        {
+            v[i].kred+=3;
+            v[i].p_plata=v[i].t_plata;
+        }
+        else
+            if(v[i].t_plata<v[i].p_plata)
+            {
+                v[i].kred-=3;
+                v[i].t_plata=v[i].p_plata;
+            }
+    }
+}
+void pecati(Vraboten v[], int n)
+{
+    int i;
+    for(i=0;i<n;i++)
+    {
+        printf("Vraboten id: %d\nVraboten Ime: %s\nVraboten Prezime: %s\nVraboten Kredibulnost: %d\nVraboten Tekovna plata: %d\nVraboten minata plata: %d\n",v[i].ID,v[i].ime,v[i].prezime,v[i].kred,v[i].t_plata,v[i].p_plata);
+    }
+}
