@@ -1,0 +1,137 @@
+/*апиши функција pecatiListaNanazad која рекурзивно ги печати елементите од листа наназад.
+ * Елементите на листата се состојат од едно целоборјно поле broj и еден карактер кој се вика karakter.*/
+
+#include <stdio.h>
+#include <stdlib.h>
+
+/* samo-referencirachka struktutra */
+struct listNode {
+   int broj;
+   char karakter; /* sekoj listNode sodrzhi karakter */
+   struct listNode *nextPtr; /* pokazhuvach do sledniot jazol */
+}; /* kraj na strukturata listNode */
+
+typedef struct listNode ListNode; /* sinonim za strukturata listNode */
+typedef ListNode *ListNodePtr; /* sinonim za ListNode* */
+
+/* prototipovi */
+void insert( ListNodePtr *sPtr, int broj, char value );
+int isEmpty( ListNodePtr sPtr );
+void printList( ListNodePtr currentPtr );
+void pecatiListaNanazad( ListNodePtr currentPtr );
+
+int main()
+{
+   ListNodePtr startPtr = NULL; /* vo pochetokot nema jazli */
+   int n, i=0, broj; /* korisnichki izbor */
+   char item;  /* korisnichki vnesen karakter */
+
+   printf("Vnesi ja goleminata na nizata\n");
+   scanf("%d", &n);
+
+   /* vrti dodeka korisnikot ne vnese 3 */
+   while ( i<n ) {
+       printf( "Vnesi broj: " );
+       scanf("%d", &broj);
+       printf("Vnesi karakter");
+       scanf( "\n%c", &item );
+       insert( &startPtr, broj, item ); /* vnesi element vo listata */
+       i++;
+   } /* kraj while */
+   if(isEmpty(startPtr)==0)
+   {
+        printList( startPtr );/*pecati ja celata lista*/
+   }
+   else
+   {
+       printf("Listata e prazna\n");
+   }
+   pecatiListaNanazad(startPtr);
+   return 0; /* uspeshen kraj */
+
+} /* kraj main */
+
+/* Vnesi nova vrednost vo listata sortiranor */
+void insert( ListNodePtr *sPtr, int broj, char karakter )
+{
+   ListNodePtr newPtr;      /* pointer do nov jazel */
+   ListNodePtr previousPtr; /* pokazhuvach do prethodniot jazel vo listata */
+   ListNodePtr currentPtr;  /* pokazhuvach do tekovniot jazel */
+
+   newPtr = malloc( sizeof( ListNode ) ); /* sozdadi jazel */
+
+   if ( newPtr != NULL ) { /* ako ima mesto */
+      newPtr->broj = broj;/* stavi vrednost vo jazelot */
+      newPtr->karakter = karakter;
+      newPtr->nextPtr = NULL; /* jazelot ne e povrzan so drug jazel */
+
+      previousPtr = NULL;
+      currentPtr = *sPtr;
+
+      /* vrti dodeka ne ja najdesh tochnata pozicija vo listata */
+      while ( currentPtr != NULL ) {
+         previousPtr = currentPtr;          /* odi do ...   */
+         currentPtr = currentPtr->nextPtr;  /* ... sledniot jazel */
+      } /* kraj while */
+
+      /* vnesi nov jazel na pochetokot na listata */
+      if ( previousPtr == NULL ) {
+         newPtr->nextPtr = *sPtr;
+         *sPtr = newPtr;
+      } /* kraj if */
+      else { /* vnesi nov jazel megju previousPtr i currentPtr */
+         previousPtr->nextPtr = newPtr;
+         newPtr->nextPtr = currentPtr;
+      } /* kraj else */
+
+   } /* kraj if */
+   else {
+      printf( "%d i %c ne e vnesen. Nema dovolno memorija.\n", broj, karakter );
+   } /* kraj else */
+
+} /* kraj na funkcijata insert */
+
+/* Vrati 1 ako listata e prazna, 0 inaku */
+int isEmpty( ListNodePtr sPtr )
+{
+   return sPtr == NULL;
+
+} /* kraj na funkcijata isEmpty */
+
+
+/* Ispechati ja listata */
+void printList( ListNodePtr currentPtr )
+{
+
+   /* ako listata e prazna */
+   if ( currentPtr == NULL ) {
+      printf( "Listata e prazna.\n\n" );
+   } /* kraj if */
+   else {
+      printf( "Listata e:\n" );
+
+      /* dodeka ne e kraj na listata */
+      while ( currentPtr != NULL ) {
+         printf( "%d i %c --> ", currentPtr->broj, currentPtr->karakter );
+         currentPtr = currentPtr->nextPtr;
+      } /* kraj while */
+
+      printf( "NULL\n\n" );
+   } /* kraj else */
+
+} /* kraj na funkcijata printList */
+
+void pecatiListaNanazad( ListNodePtr currentPtr )
+{
+
+   /* ako listata e prazna */
+   if ( currentPtr == NULL )
+   {
+       return;
+   } /* kraj if */
+
+   pecatiListaNanazad(currentPtr->nextPtr);
+
+   printf("%d i %c --> ", currentPtr->broj, currentPtr->karakter);
+
+} /* kraj na funkcijata printList */
