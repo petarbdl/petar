@@ -1,0 +1,20 @@
+/*Напиши С++ програм кој користи inline функција circleArea
+ *  која бара влез од корисникот за радиус на круг, ја пресметува и ја печати површината на кругот.*/
+
+#include <iostream>
+
+using namespace std;
+
+inline double circleArea(double r)
+{
+    return (3.14*r*r);
+}
+
+int main()
+{
+    double r;
+    cout << "Vnesite radius na krug" << endl;
+    cin >> r;
+    cout << "Area: " << circleArea(r) << endl;
+    return 0;
+}
