@@ -1,0 +1,113 @@
+/*Напиши програм кој внесува линија текст и користи стек за да се испечати текстот во обратен дерослед.
+ * Текстот да содржи и празни места*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/* samo-referencirachka struktura */
+struct stackNode {
+    char data;                  /* definiraj int podatoci */
+    struct stackNode *nextPtr; /* stackNode pokazhuvach */
+ }; /* kraj na strukturata stackNode */
+
+ typedef struct stackNode StackNode; /* sinonim za struct stackNode */
+ typedef StackNode *StackNodePtr; /* sinonim za StackNode* */
+
+ /* prototipovi */
+ void push( StackNodePtr *topPtr, char info );
+ char pop( StackNodePtr *topPtr );
+ int isEmpty( StackNodePtr topPtr );
+ void printStack( StackNodePtr currentPtr );
+ void instructions( void );
+
+ /* pochetok na izvrshuvanjeto */
+ int main()
+ {
+    StackNodePtr stackPtr = NULL; /* pokazhuva na vrvot na stekot */
+    char *string="";/*Pokazuvac kon char za da se smesti tekstot od korisnikot*/
+    int i;
+    printf("Vnesite tekst\n");
+    gets(string);/*Se cita vlezot od korisnikot*/
+    /*So for ciklus se pominuva stringot i sekoja bukva se vnesuva vo stek*/
+    for(i=0;string[i]!=NULL;i++)
+    {
+        push(&stackPtr,string[i]);
+    }
+    /*Se pecati stekot*/
+    printStack(stackPtr);
+    return 0; /* uspeshen kraj */
+
+ } /* kraj main */
+
+ /* ispechati instrukcii za korisnikot */
+ void instructions( void )
+ {
+    printf( "Vnesi izbor:\n"
+       "1 za stavanje vrednost na stek\n"
+       "2 za vadenje vrednost od stek\n"
+       "3 za kraj na programot\n" );
+ } /* kraj na funkcijata instructions */
+
+ /* Vnesi jazel na vrvot na stekot */
+ void push( StackNodePtr *topPtr, char info )
+ {
+    StackNodePtr newPtr; /* pokazhuvach do noviot jazel */
+
+    newPtr = malloc( sizeof( StackNode ) );
+
+    /* vnesi jazel na vrvot na stekot */
+    if ( newPtr != NULL ) {
+       newPtr->data = info;
+       newPtr->nextPtr = *topPtr;
+       *topPtr = newPtr;
+    } /* kraj if */
+    else { /* nema mesto */
+       printf( "%d ne e vnesen. Nema dovolno memorija.\n", info );
+    } /* kraj else */
+
+ } /* kraj na funkcijata push */
+
+ /* Izvadi jazel od vrvot na stekot */
+ char pop( StackNodePtr *topPtr )
+ {
+     StackNodePtr tempPtr; /* pokazhuvach do privremen jazol */
+     char popValue; /* vrednost na jazelot */
+
+     tempPtr = *topPtr;
+     popValue = ( *topPtr )->data;
+     *topPtr = ( *topPtr )->nextPtr;
+     free( tempPtr );
+
+     return popValue;
+
+  } /* kraj na funkcijata pop */
+
+  /* Ispechati go stekot */
+  void printStack( StackNodePtr currentPtr )
+  {
+
+     /* ako stekot e prazen */
+     if ( currentPtr == NULL ) {
+        printf( "Stekot e prazen.\n\n" );
+     } /* kraj if */
+     else {
+        printf( "Tekstot vo obraten redosled e:\n" );
+
+        /* dodeka ne e kraj na stekot */
+        while ( currentPtr != NULL ) {
+           printf( "%c", currentPtr->data );
+           currentPtr = currentPtr->nextPtr;
+        } /* kraj while */
+
+        printf( "\n" );
+     } /* kraj else */
+
+  } /* kraj na funkcijata printList */
+
+  /* Vrati 1 ako stekot e prazen,0 inaku */
+  int isEmpty( StackNodePtr topPtr )
+  {
+     return topPtr == NULL;
+
+  } /* kraj na funkcijata isEmpty */
