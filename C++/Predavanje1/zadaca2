@@ -1,0 +1,34 @@
+/*Нaпиши С++ програм со две посебни функции кои едноставно ја триплираат вредноста на променливата
+ *  count дефинирана во main. Овие функции се: 
+ * 
+ * a.	Функцијата tripleCallByValue која предава копија од count, 
+ * ја триплира нејзината вредност и ја враќа новата вредност
+ * 
+b.	Функцијата tripleCallByReference која ja предава count како референцен параметар, 
+ја триплира самата променлива и ја враќа новата вредност на count
+*/
+
+#include <iostream>
+
+using namespace std;
+
+inline int tripleCallByValue(int count)
+{
+    return count*count*count;
+}
+
+inline void tripleCallByReference(int &count)
+{
+    count*=count*count;
+}
+
+int main()
+{
+    int count;
+    cout << "Vnesite broj " << endl;
+    cin >> count;
+    cout << "Povikana so vrednost: " << tripleCallByValue(count) << endl;
+    tripleCallByReference(count);
+    cout << "Povikana so referenca: " << count << endl;
+    return 0;
+}
