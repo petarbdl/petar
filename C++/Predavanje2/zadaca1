@@ -1,0 +1,41 @@
+/*Напиши програм кој кој користи функциски урнек min за да го определи помалиот од двата аргументи. 
+ * Тестирај го прогамот со цели броеви, реални броеви и карактери.
+*/
+
+#include <iostream>
+
+using namespace std;
+
+template <class T>
+T min(T arg1, T arg2)
+{
+    T min=arg1;
+    if(min>arg2)
+        min=arg2;
+    return min;
+
+}
+
+int main()
+{
+    int broj1,broj2;
+    char kar1,kar2;
+    float f1,f2;
+    
+    cout << "Vnesi dva celi broja" << endl;
+    cin>>broj1;
+    cin>>broj2;
+    cout << "Pomal od dvata broja e "<<min(broj1,broj2)<<endl;
+    
+    cout<<"Vnesi dva karakteri"<<endl;
+    cin>>kar1;
+    cin>>kar2;
+    cout << "Pomal od dvata karakteri e "<<min(kar1,kar2)<<endl;
+    
+    cout << "Vnesi dva float broja" << endl;
+    cin>>f1;
+    cin>>f2;
+    cout << "Pomal od dvata float broja e "<<min(f1,f2)<<endl;
+    
+    return 0;
+}
