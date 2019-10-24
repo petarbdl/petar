@@ -1,0 +1,220 @@
+/*Да се направи програма која ќе ја користи класата Штедач и ќе овозможи: 
+a)	Внесување на нов штедач во системот
+b)	Приказ на податоците
+c)	Уплата на средства
+d)	Исплата на средства (со контрола дали е можна таква исплата)
+e)	Приказ на салдото за даден штедач
+
+*/
+
+#include <iostream>
+
+using namespace std;
+
+class Stedac
+{
+ public:
+        void vnesi_podatoci();
+        void prikazi_podatoci();
+        void uplata(unsigned long i);
+        void isplata(unsigned long i);
+        long sostojba();
+        int getBroj();
+  private:
+        int broj;
+        char imeprezime[30], adresa[50];
+        long saldo;
+};
+
+int Stedac::getBroj()
+{
+    return Stedac::broj;
+}
+long Stedac::sostojba()
+{
+    return saldo;
+}
+void Stedac::isplata(unsigned long i)
+{
+    if(i<=Stedac::sostojba())
+    {
+        Stedac::saldo-=i;
+    }
+    else
+    {
+        cout<<"Isplatata ne e mozna, nema dovolno sredstva"<<endl;
+    }
+}
+void Stedac::uplata(unsigned long i)
+{
+    Stedac::saldo+=i;
+}
+void Stedac::prikazi_podatoci()
+{
+    cout<<Stedac::broj<<" "<<Stedac::imeprezime<<" so adresa "<<Stedac::adresa<<" Ima saldo "<<Stedac::saldo<<endl;
+}
+
+void Stedac::vnesi_podatoci()
+{
+    int b, i;
+    char ip[30], ad[50];
+    long s;
+    cout<<"Vnesi broj na stedacot"<<endl;
+    cin>>b;
+    cout<<"Vnesi ime i prezime na stedacot so broj "<<b<<endl;
+    cin>>ip;
+    cout<<"Vnesi adresa na stedacot so broj "<<b<<endl;
+    cin>>ad;
+    cout<<"Vnesi go saldoto na stedacot so broj "<<b<<endl;
+    cin>>s;
+    Stedac::broj=b;
+    for(i=0;i<sizeof (ip);i++)
+    {
+        Stedac::imeprezime[i]=ip[i];
+    }
+    for(i=0;i<sizeof (ad);i++)
+    {
+        Stedac::adresa[i]=ad[i];
+    }
+    Stedac::saldo=s;
+}
+
+char menu();
+
+int main()
+{ 
+    char izbor=' ';
+    Stedac stedaci[10];
+    int i=0;
+    while(1)
+    {
+
+        izbor=menu();
+        if(izbor=='k')
+        {
+            cout<<"KRAJ"<<endl;
+            return 0;
+        }
+        else
+        {
+        int pecati, tmp, flag=0;
+        unsigned long uplata_vnes;
+        unsigned long isplata_vnes;
+        switch (izbor) {
+        case 'a':
+            stedaci[i].vnesi_podatoci();
+            i++;
+            break;
+       case 'b':
+            tmp=i-1;
+            while(tmp>=0)
+            {
+                stedaci[tmp].prikazi_podatoci();
+                tmp--;
+            }
+            break;
+       case 'c':
+            cout<<"Vnesite go brojot na stedacot"<<endl;
+            cin>>pecati;
+            tmp=i-1;
+            while(tmp>=0)
+            {
+                if(stedaci[tmp].getBroj() == pecati)
+                {
+                    stedaci[tmp].prikazi_podatoci();
+                    flag=1;
+                }
+                tmp--;
+            }
+            if(flag!=1)
+            {
+                cout<<"Vnesovte nepostoecki korisnik"<<endl;
+            }
+            flag=0;
+            break;
+       case 'd':
+            cout<<"Vnesite go brojot na korisnik"<<endl;
+            cin>>pecati;
+            cout<<"Vnesite ja sumata shto treba da se Uplati"<<endl;
+            cin>>uplata_vnes;
+            tmp=i-1;
+            while(tmp>=0)
+            {
+                if(stedaci[tmp].getBroj() == pecati)
+                {
+                    stedaci[tmp].uplata(uplata_vnes);
+                    flag=1;
+                    break;
+                }
+                tmp--;
+            }
+            if(flag!=1)
+            {
+                cout<<"Vnesovte nepostoecki korisnik"<<endl;
+            }
+            flag=0;
+            break;
+        case 'e':
+            cout<<"Vnesite go brojot na korisnik"<<endl;
+            cin>>pecati;
+            cout<<"Vnesite ja sumata shto treba da se Isplati"<<endl;
+            cin>>isplata_vnes;
+            tmp=i-1;
+            while(tmp>=0)
+            {
+                if(stedaci[tmp].getBroj() == pecati)
+                {
+                    stedaci[tmp].isplata(isplata_vnes);
+                    break;
+                }
+                tmp--;
+            }
+            if(flag!=1)
+            {
+                cout<<"Vnesovte nepostoecki korisnik"<<endl;
+            }
+            flag=0;
+            break;
+
+       case 'f':
+            cout<<"Vnesite go brojot na korisnik"<<endl;
+            cin>>pecati;
+            tmp=i-1;
+            while(tmp>=0)
+            {
+                if(stedaci[tmp].getBroj() == pecati)
+                {
+                    stedaci[tmp].sostojba();
+                    flag=1;
+                    break;
+                }
+                tmp--;
+            }
+            if(flag!=1)
+            {
+                cout<<"Vnesovte nepostoecki korisnik"<<endl;
+            }
+            flag=0;
+            break;
+       default :
+            cout<<"Vnesivte pogreshen izbot"<<endl;
+            break;
+            }
+        }
+    }
+}
+
+char menu()
+{
+    char izbor=' ';
+    cout<<"Odberete edna od founkciite za manipulacija na Stedac"<<endl;
+    cout<<"a --> Vnesuvanje na nov stedac"<<endl;
+    cout<<"b --> Prikaz na podatocite za site stedaci"<<endl;
+    cout<<"c --> Prikaz na podatocite na odreden stedac so vnesucanje na negoviot broj"<<endl;
+    cout<<"d --> Uplata na sredstva"<<endl;
+    cout<<"e --> Isplata na sredstva"<<endl;
+    cout<<"f --> Prikaz na saldoto na stedac"<<endl;
+    cout<<"k --> KRAJ"<<endl;
+    cin >> izbor;
+    return izbor;
+}
