@@ -1,0 +1,159 @@
+/*Да се формира класа Квадар (скриени елементи: должина, ширина и висина; јавни функции: плоштина, волумен). 
+ * Од неа да се имплементира поле од објекти. Да се најде оној кој има најмала плоштина, а не е коцка. Да се креира мени:
+a)	Креирај нов објект
+b)	Постави ги димензиите
+c)	Печати ги димензиите на сите објекти
+d)	Печати ги димензиите за поедин објект
+e)	Печати ги оние кои го задоволуваат условот
+
+*/
+
+#include <iostream>
+
+using namespace std;
+
+class Kvadrat
+{
+    int dolzina;
+    int shirina;
+    int visina;
+public:
+    Kvadrat()
+    {
+        dolzina=0;
+        shirina=0;
+        visina=0;
+    }
+    Kvadrat(int d, int s, int v)
+    {
+        dolzina=d;
+        shirina=s;
+        visina=v;
+    }
+    void setDolzina(int d)
+    {
+        dolzina=d;
+    }
+    void setShirina(int s)
+    {
+        shirina=s;
+    }
+    void setVisina(int v)
+    {
+        visina=v;
+    }
+    int getDolzina()
+    {
+        return dolzina;
+    }
+    int getShirina()
+    {
+        return shirina;
+    }
+    int getVisina()
+    {
+        return visina;
+    }
+    void pecatiKvadrat()
+    {
+        cout << "Dolzina: "<<dolzina<<endl;
+        cout << "Shirina: "<<shirina<<endl;
+        cout << "Visina: "<<visina<<endl;
+    }
+    int ploshtina()
+    {
+        return (2*(dolzina*shirina)+2*(dolzina*visina)+2*(shirina*visina));
+    }
+    int volumen()
+    {
+        return dolzina*shirina*visina;
+    }
+};
+
+char menu();
+
+int main()
+{ 
+    char izbor=' ';
+    Kvadrat *kvadrati= new Kvadrat();
+    int i=0;
+    while(1)
+    {
+
+        izbor=menu();
+        if(izbor=='k')
+        {
+            cout<<"KRAJ"<<endl;
+            return 0;
+        }
+        int d=0, v=0, s=0, pecati, tmp;
+        switch (izbor) {
+        case 'a':
+            kvadrati[i]=Kvadrat();
+            //kvadrati[i].pecatiKvadrat();
+            i++;
+            break;
+       case 'b':
+            cout<<"Postavete gi dimenziite za noviot kvadrat"<<endl;
+            cout<<"Vnesite dolzina"<<endl;
+            cin>>d;
+            cout<<"Vnesite visina"<<endl;
+            cin>>v;
+            cout<<"Vnesite shirina"<<endl;
+            cin>>s;
+            kvadrati[i-1].setVisina(v);
+            kvadrati[i-1].setDolzina(d);
+            kvadrati[i-1].setShirina(s);
+            break;
+       case 'c':
+            tmp=i-1;
+            while(tmp>=0)
+            {
+                cout<<"Kvadrat so reden broj "<<tmp<<endl;
+                kvadrati[tmp].pecatiKvadrat();
+                tmp--;
+            }
+            break;
+       case 'd':
+            cout<<"Vnesi go rednior broj na kvadratot shto sakate da go ispecatite"<<endl;
+            cin>>pecati;
+            if(pecati>i)
+                cout<<"Vnesovte nepostoecki broj na kvadrat"<<endl;
+            else
+                kvadrati[pecati].pecatiKvadrat();
+            break;
+        case 'e':
+            tmp=i-1;
+            while(tmp>=0)
+            {
+                if((kvadrati[tmp].getVisina() == kvadrati[tmp].getDolzina()) && (kvadrati[tmp].getVisina() == kvadrati[tmp].getShirina()) &&(kvadrati[tmp].getDolzina() == kvadrati[tmp].getShirina()))
+                {
+                   cout<<"Kvadratot so broj "<<tmp<<" e Kocka"<<endl;
+                }
+                else
+                {
+                    kvadrati[tmp].pecatiKvadrat();
+                }
+                tmp--;
+            }
+            break;
+       default :
+            cout<<"Vnesivte pogreshen izbot"<<endl;
+            break;
+        }
+    }
+}
+
+char menu()
+{
+    char izbor=' ';
+    cout<<"Odberete edna od founkciite za kvadrat"<<endl;
+    cout<<"a --> Kreiraj nov objekt"<<endl;
+    cout<<"b --> Postavi gi dimenziite"<<endl;
+    cout<<"c --> Pecati gi dimenziite na site objekti"<<endl;
+    cout<<"d --> Pecati gi dimenciite za poedini objekt"<<endl;
+    cout<<"e --> Pecati gi onie koi go zadovoluvaat uslovot"<<endl;
+    cout<<"k --> Kraj"<<endl;
+    cin >> izbor;
+    return izbor;
+}
