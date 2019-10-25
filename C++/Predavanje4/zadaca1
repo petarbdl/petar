@@ -1,0 +1,225 @@
+/*Создади класа Dropki која извршува операции со дропки. Напиши „драјвер“ за твојот програм да манипулира со оваа класа.
+
+Користи целоборјни променливи за броител и именител кои мора да се приватни. 
+Обезбеди потребен број на контруктори кои нема да дозволат дефинирање на грешни вредности (со 0 не се дели!). 
+По секоја од наредните операции, дропката треба да се зачува во редуцирана форма, т.е дропката 2/4 треба да се зачува како 1/2. 
+Обезбеди ги следните јавни функции членки:
+	а) Собирање на два објекти од класа Dropki. Резултатот да се даде во редуцирана форма.
+	б) Одземање на два објекти од класа Dropki. Резултатот да се даде во редуцирана форма
+	в) Множење на два објекти од класа Dropki. Резултатот да се даде во редуцирана форма
+	г) Делење на два објекти од класа Dropki. Резултатот да се даде во редуцирана форма
+	д) Печатење на објектот во форма a/b.
+	ѓ) Печатење на објектот во форма на реален број.
+*/
+
+
+#ifndef DROPKI_H
+#define DROPKI_H
+
+class Dropki
+{
+private:
+    int broitel;
+    int imenitel;
+public:
+    Dropki();
+    Dropki(int b, int i);
+    void soberi(Dropki d1, Dropki d2);
+    void odzemi(Dropki d1, Dropki d2);
+    void mnozi(Dropki d1, Dropki d2);
+    void deli(Dropki d1, Dropki d2);
+    void pecati();
+    void pecati_int();
+    int NZD(int a, int b);
+    void najmal(int a, int b);
+};
+
+#endif // DROPKI_H
+
+
+#include <iostream>
+
+using namespace std;
+
+#include <Dropki.h>
+
+Dropki::Dropki()
+{
+    Dropki::broitel=1;
+    Dropki::imenitel=1;
+}
+
+Dropki::Dropki(int b, int i)
+{
+    if(i==0)
+    {
+        cout<<"Greshka!!! Ne e dozvoleno delenje so nula"<<endl;
+        return;
+    }
+    else
+    {
+        int nzd=NZD(b,i);
+        int bro=b/nzd;
+        int ime=i/nzd;
+        Dropki::broitel=bro;
+        Dropki::imenitel=ime;
+    }
+}
+
+int Dropki::NZD(int a, int b)
+{
+    if(a==0)
+        return b;
+    return NZD(b%a,a);
+}
+
+void Dropki::najmal(int a, int b)
+{
+    int nzd=NZD(a,b);
+    a=a/nzd;
+    b=b/nzd;
+    Dropki::broitel=a;
+    Dropki::imenitel=b;
+}
+
+void Dropki::soberi(Dropki d1, Dropki d2)
+{
+    Dropki tmp = Dropki();
+    tmp.imenitel=NZD(d1.broitel,d2.broitel);
+    tmp.imenitel=(d1.imenitel*d2.imenitel)/tmp.imenitel;
+    tmp.broitel=(d1.broitel*(tmp.imenitel/d1.imenitel)) + (d2.broitel*(tmp.imenitel/d2.imenitel));
+    int nzd=NZD(tmp.broitel,tmp.imenitel);
+    int bro=tmp.broitel/nzd;
+    int ime=tmp.imenitel/nzd;
+    tmp.broitel=bro;
+    tmp.imenitel=ime;
+    tmp.pecati();
+}
+
+void Dropki::odzemi(Dropki d1, Dropki d2)
+{
+    Dropki tmp = Dropki();
+    tmp.imenitel=NZD(d1.broitel,d2.broitel);
+    tmp.imenitel=(d1.imenitel*d2.imenitel)/tmp.imenitel;
+    tmp.broitel=(d1.broitel*(tmp.imenitel/d1.imenitel)) - (d2.broitel*(tmp.imenitel/d2.imenitel));
+    int nzd=NZD(tmp.broitel,tmp.imenitel);
+    int bro=tmp.broitel/nzd;
+    int ime=tmp.imenitel/nzd;
+    tmp.broitel=bro;
+    tmp.imenitel=ime;
+    tmp.pecati();
+}
+
+void Dropki::mnozi(Dropki d1, Dropki d2)
+{
+    Dropki tmp = Dropki();
+    tmp.broitel=d1.broitel*d2.broitel;
+    tmp.imenitel=d1.imenitel*d2.imenitel;
+    int nzd=NZD(tmp.broitel,tmp.imenitel);
+    int bro=tmp.broitel/nzd;
+    int ime=tmp.imenitel/nzd;
+    tmp.broitel=bro;
+    tmp.imenitel=ime;
+    tmp.pecati();
+}
+ void Dropki::deli(Dropki d1, Dropki d2)
+ {
+     Dropki tmp = Dropki();
+     tmp.broitel=d1.broitel*d2.imenitel;
+     tmp.imenitel=d1.imenitel*d2.broitel;
+     int nzd=NZD(tmp.broitel,tmp.imenitel);
+     int bro=tmp.broitel/nzd;
+     int ime=tmp.imenitel/nzd;
+     tmp.broitel=bro;
+     tmp.imenitel=ime;
+     tmp.pecati();
+ }
+
+ void Dropki::pecati()
+ {
+
+     cout<<Dropki::broitel<<"/"<<Dropki::imenitel<<endl;
+ }
+
+ void Dropki::pecati_int()
+ {
+     double rez = Dropki::broitel/Dropki::imenitel;
+     cout<<"Dropkata vo realen broj e: "<<rez<<endl;
+ }
+
+
+
+/*MAIN*/
+
+#include <iostream>
+#include <Dropki.h>
+
+using namespace std;
+
+char menu();
+
+
+int main()
+{ 
+    Dropki d1,d2, rezultat;
+    int a, b;
+    char izbor=' ';
+    cout<<"Vnesete broitel na prvata dropka"<<endl;
+    cin>>a;
+    cout<<"Vnesete imenitel na prvata dropka"<<endl;
+    cin>>b;
+    d1 = Dropki(a,b);
+    cout<<"Prvata dropka e kreirana"<<endl;
+    cout<<"Vnesete broitel na vtorata dropka"<<endl;
+    cin>>a;
+    cout<<"Vnesete imenitel na vtorata dropka"<<endl;
+    cin>>b;
+    d2 = Dropki(a,b);
+    cout<<"Dropkata eden e ";
+    d1.pecati();
+    cout<<"Dropkata dva e ";
+    d2.pecati();
+    izbor=menu();
+    switch(izbor)
+    {
+    case 'a':
+        cout<<"Zbirot na dvete dropki e ";
+        rezultat.soberi(d1,d2);
+        break;
+    case 'b':
+        cout<<"Dropka eden minus dropka dva e ";
+        rezultat.odzemi(d1,d2);
+        break;
+    case 'c':
+        cout<<"Dvete dropki pomnozeni ";
+        rezultat.mnozi(d1,d2);
+        break;
+    case 'd':
+        cout<<"Dropka eden podelena so dropka dva e ";
+        rezultat.deli(d1,d2);
+        break;
+    case 'e':
+        cout<<"Dropka eden ispecatena vo realen broj e: ";
+        d1.pecati_int();
+        cout<<"Dropka dva ispecatena vo realen broj e: ";
+        d2.pecati_int();
+        break;
+    default:
+        cout<<"Vnesovte pogrshen izbor!"<<endl;
+        break;
+    }
+}
+
+char menu()
+{
+    char izbor=' ';
+    cout<<"Odberete edna od founkciite za manipulacija so dropki"<<endl;
+    cout<<"a --> Sobiranje na dve dropki"<<endl;
+    cout<<"b --> Odzemanje na dve dropki"<<endl;
+    cout<<"c --> Mnozenje na dve dropki"<<endl;
+    cout<<"d --> Delenje na dve dropki"<<endl;
+    cout<<"e --> Pecatenje na dropka vo realen broj"<<endl;
+    cout<<"k --> KRAJ"<<endl;
+    cin >> izbor;
+    return izbor;
+}
