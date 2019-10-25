@@ -10,6 +10,7 @@
 6.	Излез од менито
 */
 
+/*DATUM.H*/
 #ifndef DATUM_H
 #define DATUM_H
 
@@ -30,9 +31,13 @@ public:
 
 #endif // DATUM_H
 
+/*ZIVOTNO.H*/
 #ifndef ZIVOTNO_H
 #define ZIVOTNO_H
 #include <Datum.h>
+#include <string>
+
+using namespace std;
 
 class Zivotno
 {
@@ -45,9 +50,12 @@ private:
     Datum datum_na_posledna_vakcinacija;
 public:
     Zivotno();
-    Zivotno(Datum dr, Datum dd, char tip, char pol, char ime[], Datum dv);
     void prikazi_podatoci();
     int presmetaj_vakcinacija();
+    Datum getDatumV();
+    Datum getDatumR();
+    Datum getDatumD();
+    char getPol();
     char getTip();
     void vnesi_podatoci();
 };
@@ -55,6 +63,7 @@ public:
 #endif // ZIVOTNO_H
 
 
+/*DATUM.CPP*/
 #include <iostream>
 
 using namespace std;
@@ -96,10 +105,13 @@ void Datum::pecatiDatum()
 }
 
 
+/ZIVOTNO.CPP/
+
 #include <iostream>
 #include <zivotno.h>
 #include <Datum.h>
 #include <string>
+
 using namespace std;
 
 Zivotno::Zivotno()
@@ -108,22 +120,7 @@ Zivotno::Zivotno()
     Zivotno::datum_na_donesuvanje_vo_zoo=Datum();
     Zivotno::tip=' ';
     Zivotno::pol=' ';
-    Zivotno::ime[0]=' ';
     Zivotno::datum_na_posledna_vakcinacija=Datum();
-}
-
-Zivotno::Zivotno(Datum dr, Datum dd, char tip, char pol, char ime[], Datum dv)
-{
-    int i;
-    Zivotno::datum_na_ragjanje=dr;
-    Zivotno::datum_na_donesuvanje_vo_zoo=dd;
-    Zivotno::tip=tip;
-    Zivotno::pol=pol;
-    for(i=0;i<strlen(ime);i++)
-    {
-        Zivotno::ime[i]=ime[i];
-    }
-    Zivotno::datum_na_posledna_vakcinacija=dv;
 }
 
 void Zivotno::prikazi_podatoci()
@@ -133,7 +130,34 @@ void Zivotno::prikazi_podatoci()
     {
         cout<<Zivotno::ime[i];
     }
+    cout<<" "<<"Tip na zivotnoto :"<<Zivotno::tip<<endl<<"Pol na zivotnoto "<<Zivotno::pol<<endl;
+    cout<<"Datum na posledna vakcinacija";
+    Zivotno::getDatumV().pecatiDatum();
+    cout<<"Datum na Doagjanje na zivotnoto vo ZOO";
+    Zivotno::getDatumD().pecatiDatum();
+    cout<<"Datum na ragjanje na zivotnoto";
+    Zivotno::getDatumR().pecatiDatum();
 
+}
+
+Datum Zivotno::getDatumD()
+{
+    return Zivotno::datum_na_donesuvanje_vo_zoo;
+}
+
+Datum Zivotno::getDatumV()
+{
+    return Zivotno::datum_na_posledna_vakcinacija;
+}
+
+Datum Zivotno::getDatumR()
+{
+    return Zivotno::datum_na_ragjanje;
+}
+
+char Zivotno::getPol()
+{
+    return Zivotno::tip;
 }
 
 char Zivotno::getTip()
@@ -198,9 +222,17 @@ void Zivotno::vnesi_podatoci()
     cin>>m;
     cin>>g;
     Datum datumV = Datum(d,m,g);
-    Zivotno(datumR,datumD,pom_t,pom_p,pom_ime,datumV);
+    strcpy(Zivotno::ime,pom_ime);
+    Zivotno::pol=pom_p;
+    Zivotno::tip=pom_t;
+    Zivotno::datum_na_ragjanje=datumR;
+    Zivotno::datum_na_donesuvanje_vo_zoo=datumD;
+    Zivotno::datum_na_posledna_vakcinacija=datumV;
+
 }
 
+
+/*MAIN.CPP*/
 
 #include <iostream>
 #include <stdlib.h>
@@ -215,7 +247,7 @@ char menu();
 int main()
 {
     char izbor=' ';
-    Zivotno *zoo = nullptr;
+    Zivotno zoo[50];
     int i=0;
     while(1)
         {
