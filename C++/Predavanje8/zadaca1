@@ -1,0 +1,206 @@
+/COMPLEX.H/
+
+#ifndef COMPLEX_H
+#define COMPLEX_H
+#include <iostream>
+
+using namespace std;
+
+
+class Complex {
+public:
+   Complex( double = 0.0, double = 0.0 );       // konstruktor
+   Complex operator+( const Complex & ) const;  // sobiranje
+   Complex operator-( const Complex & ) const;  // odzemanje
+   Complex operator+( const int ) const;  // sobiranje
+   Complex operator-( const int ) const;  // odzemanje
+   const Complex &operator=( const Complex & ); // dodeluvanje
+   friend ostream &operator<<(ostream&,const Complex &);
+   friend istream &operator>>(istream&,const Complex &);
+   Complex operator*(const Complex b) const;
+   Complex operator*(const int a)const;
+   int operator==(const Complex a)const;
+   int operator!=(const Complex a)const;
+   Complex operator+=(Complex a);
+   Complex operator-=(Complex a);
+   Complex operator*=(Complex a);
+   Complex operator+=(const int a)const;
+   Complex operator-=(const int a)const;
+   Complex operator*=(const int a)const;
+   friend Complex operator*(int a, Complex b);                        // izlez
+private:
+   double real;       // realen del
+   double imaginary;  // imaginaren del
+}; // kraj na klasta Complex
+
+#endif
+
+
+
+/COMPLEX.CPP/
+
+#include <iostream>
+#include <iomanip>
+using std::cout;
+using std::setw;
+using namespace std;
+
+#include "complex.h"
+// Konstruktor
+Complex::Complex( double r, double i )
+   : real( r ), imaginary( i ) { }
+
+ostream &operator<<(ostream &out, const Complex &cBroj)
+{
+    out<<"("<<cBroj.real<<", "<<cBroj.imaginary<<")";
+    return out;
+}
+
+istream &operator>>(istream &in, const Complex &cBroj)
+{
+    in.ignore();
+    in>>setw(4)>>cBroj.real;
+    in.ignore();
+    in>>setw(4)>>cBroj.imaginary;
+    return in;
+}
+
+Complex Complex::operator*(const Complex b) const
+{
+    return Complex(((real*b.real) - (imaginary*b.imaginary)),((real*b.imaginary) + (imaginary*b.real)));
+}
+
+Complex Complex::operator*(const int a)const
+{
+    return Complex(real*a,imaginary*a);
+}
+
+Complex operator*(int a, Complex b)
+{
+    Complex tmp;
+    tmp.real=a*b.real;
+    tmp.imaginary=a*b.imaginary;
+    return tmp;
+}
+
+int Complex::operator==(const Complex a)const
+{
+    if((real==a.real) && (imaginary==a.imaginary))
+        return 1;
+    else
+        return 0;
+}
+
+int Complex::operator!=(const Complex a)const
+{
+    if((real!=a.real) && (imaginary!=a.imaginary))
+        return 1;
+    else
+        return 0;
+}
+
+
+
+Complex Complex::operator+( const int a ) const
+{
+   return Complex( real + a,
+                   imaginary + a );
+} // kraj na funkcijata operator+
+
+// Preklopi operator za odzemanje
+Complex Complex::operator-( const int a ) const
+{
+   return Complex( real - a,
+                   imaginary - a );
+} // kraj na funkcijata operator-
+
+// Preklopi operator za sobiranje
+Complex Complex::operator+( const Complex &operand2 ) const
+{
+   return Complex( real + operand2.real,
+                   imaginary + operand2.imaginary );
+} // kraj na funkcijata operator+
+
+// Preklopi operator za odzemanje
+Complex Complex::operator-( const Complex &operand2 ) const
+{
+   return Complex( real - operand2.real,
+                   imaginary - operand2.imaginary );
+} // kraj na funkcijata operator-
+
+
+// Preklopi operator =
+const Complex& Complex::operator=( const Complex &right )
+{
+   real = right.real;
+   imaginary = right.imaginary;
+   return *this;   // ovozmozhuva kaskadiranje
+} // ekraj na funkcijata operator=
+Complex Complex::operator+=(Complex a)
+{
+    *this=*this+a;
+    return *this;
+}
+
+Complex Complex::operator-=(Complex a)
+{
+    *this=*this-a;
+    return *this-a;
+}
+
+Complex Complex::operator*=(Complex a)
+{
+    *this=*this*a;
+    return *this * a;
+}
+
+
+/MAIN/
+
+#include <iostream>
+
+using std::cout;
+using std::endl;
+
+#include "complex.h"
+
+int main()
+{
+   Complex x, y( 4.3, 8.2 ), z( 3.3, 1.1 );
+
+   y+=z;
+   cout<<"y+=z = ";
+   cout<<y;
+
+   if(y==z)
+       cout<<"Ednakvi se"<<endl;
+   else
+       cout<<"ne se ednakvi"<<endl;
+   x = y * z;
+   cout<<"Mnozenje y * z = ";
+   cout<<x;
+
+   cout << "\ny: ";
+      cout<<y;
+      cout << "\nz: ";
+      cout<<z;
+
+      x = y + z;
+      cout << "\n\nx = y + z:\n";
+      cout<<x;
+      cout << " = ";
+      cout<<y;
+      cout << " + ";
+      cout<<z;
+
+      x = y - z;
+      cout << "\n\nx = y - z:\n";
+      cout<<x;
+      cout << " = ";
+      cout<<y;
+      cout << " - ";
+      cout<<z;
+      cout << endl;
+
+      return 0;
+   } // kraj main
