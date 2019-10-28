@@ -1,0 +1,443 @@
+/*Користејќи ги концептите на ООП да се моделираат соодветни класи според спецификациите дадени на слика 1, а потоа во функцијата main() да се констуира низа со објекти од долунаведените класи (професор, асистент, демонстратор) и имплементира кориснички посредник преку мени со следните опции: 
+ 
+1.    Додавање на нов вработен во листата
+2.    Прикажување на листата 
+3.    Крај
+*/
+
+/Vraboten.h/
+#ifndef VRABOTEN_H
+#define VRABOTEN_H
+
+class Vraboten
+{
+protected:
+    char *ime, *prezime;
+    int godina_na_vrabotuvanje;
+public:
+    Vraboten();
+    Vraboten(char *, char *, int);
+    void postaviIme(char *);
+    void postaviPrezime(char *);
+    void postaviGodinaV(int);
+    void prikazi_podatoci();
+};
+
+#endif // VRABOTEN_H
+
+
+/*profesor.h*/
+#ifndef PROFESOR_H
+#define PROFESOR_H
+#include <vraboten.h>
+
+
+class Profesor : public Vraboten
+{
+protected:
+    char *zvanje, *oblast;
+    int br_predmeti;
+public:
+    Profesor();
+    Profesor(char *, char *, int, char *, char *, int);
+    void postaviZvanje(char *);
+    void postaviOblast(char *);
+    void postaviBrPredmeti(int);
+    void prikazi_podatoci();
+};
+
+#endif // PROFESOR_H
+
+
+/*assistent.h*/
+#ifndef ASSISTENT_H
+#define ASSISTENT_H
+#include <vraboten.h>
+
+class Assistent : public Vraboten
+{
+protected:
+    char *zvanje;
+    char *mentor;
+    int br_predmeti;
+public:
+    Assistent();
+    Assistent(char *, char *, int, char *, char *, int);
+    void postaviZvanje(char *);
+    void postaviMentor(char *);
+    void postaviBrPredmeti(int);
+    void prikazi_podatoci();
+};
+
+
+#endif // ASSISTENT_H
+
+
+/*demonstrator.h*/
+#ifndef DEMONSTRATOR_H
+#define DEMONSTRATOR_H
+#include <vraboten.h>
+
+class Demonstrator : public Vraboten
+{
+protected:
+    int rabV_od;
+    int rabV_do;
+public:
+    Demonstrator();
+    Demonstrator(char *, char *, int, int, int);
+    void postaviRabotnoVreme(int, int);
+    void prikazi_podatoci();
+};
+
+
+#endif // DEMONSTRATOR_H
+
+
+/*vraboten.cpp*/
+#include <iostream>
+#include <vraboten.h>
+#include <cassert>
+
+using namespace std;
+
+Vraboten::Vraboten()
+{
+    Vraboten::ime=new char[1];
+    strcpy(Vraboten::ime,"");
+    prezime=new char[1];
+    strcpy(prezime,"");
+    godina_na_vrabotuvanje=1970;
+}
+
+Vraboten::Vraboten(char *ime, char *prezime, int godina_na_vrabotuvanje)
+{
+    Vraboten::ime = new char[strlen(ime)+1];
+    assert(Vraboten::ime != NULL);
+    strcpy(Vraboten::ime,ime);
+    Vraboten::prezime = new char[strlen(prezime)+1];
+    assert(Vraboten::prezime != NULL);
+    strcpy(Vraboten::prezime,prezime);
+    Vraboten::godina_na_vrabotuvanje=godina_na_vrabotuvanje;
+}
+void Vraboten::postaviIme(char *ime)
+{
+    Vraboten::ime = new char[strlen(ime)+1];
+    assert(Vraboten::ime != NULL);
+    strcpy(Vraboten::ime,ime);
+}
+
+void Vraboten::postaviPrezime(char *prezime)
+{
+    Vraboten::prezime = new char[strlen(prezime)+1];
+    assert(Vraboten::prezime != NULL);
+    strcpy(Vraboten::prezime,prezime);
+}
+
+void Vraboten::postaviGodinaV(int god)
+{
+    Vraboten::godina_na_vrabotuvanje=god;
+}
+
+void Vraboten::prikazi_podatoci()
+{
+    cout<<ime<<" "<<prezime<<" So godina na vrabotuvanje "<<godina_na_vrabotuvanje<<endl;
+}
+
+
+/*profesor.cpp*/
+#include <iostream>
+#include <profesor.h>
+#include <cassert>
+
+using namespace std;
+
+Profesor::Profesor()
+{
+
+}
+
+Profesor::Profesor(char *i, char *p, int god_v, char *zvanje, char *oblast, int br_predmeti): Vraboten(i,p,god_v)
+{
+    Profesor::zvanje = new char[strlen(zvanje)+1];
+    assert(zvanje != NULL);
+    strcpy(Profesor::zvanje,zvanje);
+
+    Profesor::oblast = new char[strlen(oblast)+1];
+    assert(zvanje != NULL);
+    strcpy(Profesor::oblast,oblast);
+
+    Profesor::br_predmeti=br_predmeti;
+}
+
+void Profesor::postaviZvanje(char *z)
+{
+    Profesor::zvanje = new char[strlen(z)+1];
+    assert(zvanje != NULL);
+    strcpy(Profesor::zvanje,z);
+}
+
+void Profesor::postaviOblast(char *o)
+{
+    Profesor::oblast = new char[strlen(o)+1];
+    assert(zvanje != NULL);
+    strcpy(Profesor::oblast,o);
+}
+
+void Profesor::postaviBrPredmeti(int b)
+{
+    Profesor::br_predmeti=b;
+}
+
+void Profesor::prikazi_podatoci()
+{
+    Vraboten::prikazi_podatoci();
+    cout<<"So zvanje "<<zvanje<<" Od oblasta "<<oblast<<" i so "<<br_predmeti<<" predmeti"<<endl;
+}
+
+
+/*assistent.cpp*/
+#include <assistent.h>
+#include <iostream>
+#include <cassert>
+
+using namespace std;
+
+Assistent::Assistent()
+{
+
+}
+Assistent::Assistent(char *i, char *p, int god_v, char *zvanje, char *mentor, int br_predmeti) : Vraboten(i,p,god_v)
+{
+    Assistent::zvanje = new char[strlen(zvanje)+1];
+    assert(zvanje != NULL);
+    strcpy(Assistent::zvanje,zvanje);
+
+    Assistent::mentor = new char[strlen(mentor)+1];
+    assert(mentor != NULL);
+    strcpy(Assistent::mentor,mentor);
+
+    Assistent::br_predmeti=br_predmeti;
+}
+
+void Assistent::postaviZvanje(char *z)
+{
+    Assistent::zvanje = new char[strlen(z)+1];
+    assert(zvanje != NULL);
+    strcpy(Assistent::zvanje,z);
+}
+
+void Assistent::postaviMentor(char *m)
+{
+    Assistent::mentor = new char[strlen(m)+1];
+    assert(mentor != NULL);
+    strcpy(Assistent::mentor, m);
+}
+
+void Assistent::postaviBrPredmeti(int b)
+{
+    br_predmeti=b;
+}
+
+void Assistent::prikazi_podatoci()
+{
+    Vraboten::prikazi_podatoci();
+    cout<<"Ima "<<zvanje<<" So ime na mentorot, "<<mentor<<", i so "<<br_predmeti<<" predmeti"<<endl;
+}
+
+
+
+/*demonstrator*/
+#include <demonstrator.h>
+#include <iostream>
+#include <cassert>
+
+using namespace std;
+
+Demonstrator::Demonstrator()
+{
+
+}
+
+Demonstrator::Demonstrator(char *i, char *p, int god_v, int v_od, int v_do) : Vraboten(i,p,god_v)
+{
+    Demonstrator::rabV_od=v_od;
+    Demonstrator::rabV_do=v_do;
+}
+
+void Demonstrator::postaviRabotnoVreme(int a, int b)
+{
+        rabV_od=a;
+        rabV_do=b;
+}
+
+void Demonstrator::prikazi_podatoci()
+{
+    Vraboten::prikazi_podatoci();
+    cout<<"So rabotno vreme od "<<rabV_od<<" do "<<rabV_do<<endl;
+}
+
+
+/MAIN/
+#include <iostream>
+#include <demonstrator.h>
+#include <assistent.h>
+#include <profesor.h>
+#include <vraboten.h>
+
+using namespace std;
+
+void menu();
+void menu1();
+Profesor profesorMenu();
+Assistent assistentMenu();
+Demonstrator demonstratorMenu();
+
+int main()
+{
+    int vlez, vlez_vraboten, pro_i=0, ass_i=0, dem_i=0, flag=0, flag1=0;
+    Profesor profesori[5];
+    Assistent assistenti[5];
+    Demonstrator demo[5];
+
+    while(1)
+    {
+        menu();
+        cin>>vlez;
+        switch (vlez) {
+        case 1:
+            while(1)
+            {
+            menu1();
+            cin>>vlez_vraboten;
+            switch (vlez_vraboten) {
+            case 1:
+                profesori[pro_i]=profesorMenu();
+                pro_i++;
+                break;
+            case 2:
+                assistenti[ass_i]=assistentMenu();
+                ass_i++;
+                break;
+            case 3:
+                demo[dem_i]=demonstratorMenu();
+                dem_i++;
+                break;
+            case 4:
+                flag1=1;
+                break;
+            default :
+                cout<<"Pogreshen izbor, Nazad na pocetnoto menu"<<endl;
+                flag1=1;
+                break;
+            }
+            if(flag1==1)
+                break;
+            }
+            menu1();
+            break;
+        case 2:
+            int j;
+            cout<<"Listata na profesori e "<<endl;
+            for(j=0;j<pro_i;j++)
+            {
+                 profesori[j].prikazi_podatoci();
+            }
+
+            cout<<"Listata na assistenti e "<<endl;
+            for(j=0;j<ass_i;j++)
+            {
+                 assistenti[j].prikazi_podatoci();
+            }
+
+            cout<<"Listata na demonstratori e "<<endl;
+            for(j=0;j<dem_i;j++)
+            {
+                 demo[j].prikazi_podatoci();
+            }
+            break;
+        case 3:
+            flag=1;
+            break;
+        default:
+            cout<<"Pogreshen izbor"<<endl;
+            flag=1;
+            break;
+        }
+        if(flag==1)
+            break;
+    }
+    return 0;
+}
+
+void menu()
+{
+    cout<<"Odberete edna od opciite"<<endl;
+    cout<<"1 --> Dodadi nov vrabiten vo listata"<<endl;
+    cout<<"2 --> Prikazuvanje na listata"<<endl;
+    cout<<"3 --> KRAJ"<<endl;
+}
+
+void menu1()
+{
+    cout<<"Odberete edna od opciite za vnesuvanje nov vraboten"<<endl;
+    cout<<"1 --> Dodadi Professor vo listata"<<endl;
+    cout<<"2 --> Dodadi Assistent vo listata"<<endl;
+    cout<<"3 --> Dodadi Demonstrator vo listata"<<endl;
+    cout<<"4 --> Vrati se nazad"<<endl;
+}
+
+Profesor profesorMenu()
+{
+    char ime[10], prezime[15], zvanje[15], oblast[15];
+    int godina, brPredmeti;
+    cout<<"Vnesete go imeto na profesorot"<<endl;
+    cin>>ime;
+    cout<<"Vnesete go prezimeto na profesorot"<<endl;
+    cin>>prezime;
+    cout<<"Vnesi go zvanjeto na profesorot"<<endl;
+    cin>>zvanje;
+    cout<<"Vnesi ja oblasta na profesorot"<<endl;
+    cin>>oblast;
+    cout<<"Vnesi godina na vrabotuvanje na profesorot"<<endl;
+    cin>>godina;
+    cout<<"Vnesi broj na predmeti koi profesorot gi predava"<<endl;
+    cin>>brPredmeti;
+    Profesor p(ime,prezime,godina,zvanje,oblast,brPredmeti);
+    return p;
+}
+Assistent assistentMenu()
+{
+    char ime[10], prezime[15], zvanje[15], mentor[15];
+    int godina, brPredmeti;
+    cout<<"Vnesete go imeto na Assistentot"<<endl;
+    cin>>ime;
+    cout<<"Vnesete go prezimeto na Assistentot"<<endl;
+    cin>>prezime;
+    cout<<"Vnesi go zvanjeto na Assistentot"<<endl;
+    cin>>zvanje;
+    cout<<"Vneseto go mentorot na assistentot"<<endl;
+    cin>>mentor;
+    cout<<"Vnesi godina na vrabotuvanje na Assistentot"<<endl;
+    cin>>godina;
+    cout<<"Vnesi broj na predmeti koi Assistentot gi predava"<<endl;
+    cin>>brPredmeti;
+    Assistent a(ime,prezime,godina,zvanje,mentor,brPredmeti);
+    return a;
+}
+Demonstrator demonstratorMenu()
+{
+    char ime[10], prezime[15];
+    int godina, rabVod, rabVdo;
+    cout<<"Vnesete go imeto na Demonstratorot"<<endl;
+    cin>>ime;
+    cout<<"Vnesete go prezimeto na Demonstratorot"<<endl;
+    cin>>prezime;
+    cout<<"Vnesi godina na vrabotuvanje na Demonstratorot"<<endl;
+    cin>>godina;
+    cout<<"Vnesi rabotno vreme na demonstratorot"<<endl;
+    cin>>rabVod;
+    cin>>rabVdo;
+    Demonstrator d(ime,prezime,godina,rabVod,rabVdo);
+    return d;
+}
