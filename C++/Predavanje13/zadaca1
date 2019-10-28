@@ -1,0 +1,624 @@
+/*Во една зоолошка градина се води евиденција за животните кои се чуваат во неа: птици, влекачи и цицачи. Користејќи ги концептите на ООП да се моделираат соодветни класи според спецификациите дадени на слика 1. Цицачите се вакцинираат секоја година, птиците на секои 6 месеци, а за влекачите овој податок варира. Во main() функцијата да се конструира низа од долунаведените класи (влекачи, птици и цицачи) и да се имплементира кориснички посредник преку мени со следните опции:
+1.	Додавање на животно во листата
+2.	Прикажување на бројна состојба
+3.	Прикажување на животни од дадена група
+4.	Прикажување на целата листа
+5.	Прикажување на сите животни кои треба да се вакцинираат во рок од 1 недела
+6.	Излез од менито
+*/
+
+/*datum.h*/
+#ifndef DATUM_H
+#define DATUM_H
+
+class Datum
+{
+private:
+    int den;
+    int mesec;
+    int godina;
+public:
+    Datum();
+    Datum(int, int, int);
+    void pecatiDatum();
+    int getDen();
+    int getMesec();
+    int getGodina();
+};
+
+#endif // DATUM_H
+
+
+/*zivotni.h*/
+#ifndef ZIVOTNI_H
+#define ZIVOTNI_H
+#include <datum.h>
+
+class Zivotni
+{
+protected:
+    Datum datum_na_ragjanje;
+    Datum datum_na_donesuvanje_vo_zoo;
+    char pol;
+    char *ime;
+    Datum datum_na_posledna_vakcinacija;
+    static int brZivotni;
+public:
+    Zivotni();
+    virtual ~Zivotni();
+    Zivotni(Datum , Datum, char, char *, Datum);
+    void prikaziPodatoci();
+    virtual void presmetaj_vakcinacija();
+};
+
+#endif // ZIVOTNI_H
+
+
+/*cicaci.h*/
+#ifndef CICACI_H
+#define CICACI_H
+#include <zivotni.h>
+#include <datum.h>
+
+class Cicaci : public Zivotni
+{
+private:
+    char prezivar;
+    static int brCicaci;
+public:
+    Cicaci();
+    Cicaci(Datum, Datum, char, char *, Datum, char);
+    ~Cicaci() override;
+    void prikaziPodatoci();
+    void presmetaj_vakcinacija() override;
+    int getBrCicaci();
+};
+
+#endif // CICACI_H
+
+
+/*ptici.h*/
+#ifndef PTICI_H
+#define PTICI_H
+#include <datum.h>
+#include <zivotni.h>
+
+class Ptici : public Zivotni
+{
+private:
+    char letac;
+    static int brPtici;
+public:
+    Ptici();
+    Ptici(Datum, Datum, char, char *, Datum, char);
+    ~Ptici() override;
+    void prikaziPodatoci();
+    void presmetaj_vakcinacija() override;
+    int getBrPtici();
+};
+
+#endif // PTICI_H
+
+
+/*vlekaci.h*/
+#ifndef VLEKACI_H
+#define VLEKACI_H
+#include <datum.h>
+#include <zivotni.h>
+
+class Vlekaci : public Zivotni
+{
+private:
+    Datum datum_na_sledna_vakcinacija;
+    static int brVlekaci;
+public:
+    Vlekaci();
+    ~Vlekaci() override;
+    Vlekaci(Datum , Datum , char , char *, Datum , Datum );
+    void prikaziPodatoci();
+    void presmetaj_vakcinacija() override;
+    int getBrVlekaci();
+};
+
+
+#endif // VLEKACI_H
+
+
+
+/*datum.cpp*/
+#include <iostream>
+#include <datum.h>
+
+using namespace std;
+
+Datum::Datum(){}
+
+Datum::Datum(int d, int m, int g)
+{
+    den=d;
+    mesec=m;
+    godina=g;
+}
+
+int Datum::getDen()
+{
+    return den;
+}
+
+int Datum::getMesec()
+{
+    return mesec;
+}
+
+int Datum::getGodina()
+{
+    return godina;
+}
+
+void Datum::pecatiDatum()
+{
+    cout<<den<<"/"<<mesec<<"/"<<godina<<endl;
+}
+
+
+
+/*zivotni.cpp*/
+#include <iostream>
+#include <datum.h>
+#include <zivotni.h>
+#include <cassert>
+
+using namespace std;
+
+int Zivotni::brZivotni=0;
+
+Zivotni::Zivotni(){brZivotni=0;}
+
+Zivotni::Zivotni(Datum dR, Datum dD, char p, char *i, Datum dV)
+{
+    datum_na_ragjanje=dR;
+    datum_na_donesuvanje_vo_zoo=dD;
+    pol=p;
+
+    ime = new char[strlen(i)+1];
+    assert(ime != NULL);
+    strcpy(ime,i);
+
+    datum_na_posledna_vakcinacija=dV;
+
+    brZivotni++;
+}
+
+Zivotni::~Zivotni()
+{
+    brZivotni--;
+}
+
+void Zivotni::prikaziPodatoci()
+{
+    cout<<"Datum na raganje na zivotnoto ";
+    Zivotni::datum_na_ragjanje.pecatiDatum();
+    cout<<"Datum na donesuvanje vo Zoo ";
+    Zivotni::datum_na_donesuvanje_vo_zoo.pecatiDatum();
+    cout<<"Pol na zivotnoto "<<Zivotni::pol<<", Ime na zivotnoto "<<Zivotni::ime<<endl;
+    cout<<"Datum na posledna vakcinacija ";
+    Zivotni::datum_na_posledna_vakcinacija.pecatiDatum();
+}
+
+void Zivotni::presmetaj_vakcinacija()
+{
+}
+
+
+
+/*cicaci.cpp*/
+#include <iostream>
+#include <datum.h>
+#include <zivotni.h>
+#include <cicaci.h>
+
+using namespace std;
+
+int Cicaci::brCicaci=0;
+
+Cicaci::Cicaci(){}
+
+Cicaci::Cicaci(Datum dR, Datum dD, char p, char *i, Datum dV, char prez) : Zivotni(dR,dD,p,i,dV)
+{
+    prezivar=prez;
+    brCicaci++;
+}
+
+Cicaci::~Cicaci()
+{
+    brCicaci--;
+}
+
+void Cicaci::prikaziPodatoci()
+{
+    cout<<"Datum na raganje na zivotnoto ";
+    Zivotni::datum_na_ragjanje.pecatiDatum();
+    cout<<"Datum na donesuvanje vo Zoo ";
+    Zivotni::datum_na_donesuvanje_vo_zoo.pecatiDatum();
+    cout<<"Pol na zivotnoto "<<Zivotni::pol<<", Ime na zivotnoto "<<Zivotni::ime<<endl;
+    cout<<"Datum na posledna vakcinacija ";
+    Zivotni::datum_na_posledna_vakcinacija.pecatiDatum();
+    cout<<(prezivar=='d' ? "Cicacot e prezivar":"Cicacot ne e prezivar")<<endl;
+}
+
+void Cicaci::presmetaj_vakcinacija()
+{
+    Datum denesen(28,10,2019);
+    int sumaDenesen=denesen.getDen()+(denesen.getMesec()*30);
+    int sumaSledna=datum_na_posledna_vakcinacija.getDen()+(datum_na_posledna_vakcinacija.getMesec()*30);
+    if(datum_na_posledna_vakcinacija.getGodina()!=denesen.getGodina())
+    {
+        if(((sumaSledna-sumaDenesen)<=7) && ((sumaSledna-sumaDenesen)>=0))
+            {
+                 Cicaci::prikaziPodatoci();
+            }
+    }
+}
+
+int Cicaci::getBrCicaci()
+{
+    return Cicaci::brCicaci;
+}
+
+
+/*ptici.cpp*/
+#include <datum.h>
+#include <zivotni.h>
+#include <ptici.h>
+#include <iostream>
+
+using namespace std;
+
+int Ptici::brPtici=0;
+
+Ptici::Ptici(){}
+
+Ptici::Ptici(Datum dR, Datum dD, char p, char *i, Datum dV, char l): Zivotni(dR,dD,p,i,dV)
+{
+    letac=l;
+    brPtici++;
+}
+
+Ptici::~Ptici()
+{
+    brPtici--;
+}
+
+void Ptici::prikaziPodatoci()
+{
+    cout<<"Datum na raganje na zivotnoto ";
+    Zivotni::datum_na_ragjanje.pecatiDatum();
+    cout<<"Datum na donesuvanje vo Zoo ";
+    Zivotni::datum_na_donesuvanje_vo_zoo.pecatiDatum();
+    cout<<"Pol na zivotnoto "<<Zivotni::pol<<", Ime na zivotnoto "<<Zivotni::ime<<endl;
+    cout<<"Datum na posledna vakcinacija ";
+    Zivotni::datum_na_posledna_vakcinacija.pecatiDatum();
+    cout<<((Ptici::letac=='d') ? "Pticata e letac":"Pticata ne e letac")<<endl;
+}
+
+void Ptici::presmetaj_vakcinacija()
+{
+    Datum denesen(28,10,2019);
+    int sumaDenesen=denesen.getDen()+(denesen.getMesec()*30);
+    int sumaSledna=datum_na_posledna_vakcinacija.getDen()+(datum_na_posledna_vakcinacija.getMesec()*30);
+    sumaSledna+=150;
+
+    if(((sumaSledna-sumaDenesen)<=7) && ((sumaSledna-sumaDenesen)>=0))
+        {
+            Ptici::prikaziPodatoci();
+        }
+}
+
+int Ptici::getBrPtici()
+{
+    return Ptici::brPtici;
+}
+
+
+
+/*vlekaci.cpp*/
+#include <iostream>
+#include <datum.h>
+#include <zivotni.h>
+#include <vlekaci.h>
+
+using namespace std;
+
+int Vlekaci::brVlekaci=0;
+
+Vlekaci::Vlekaci(){}
+
+Vlekaci::Vlekaci(Datum dR, Datum dD, char p, char *i, Datum dV, Datum dS): Zivotni(dR,dD,p,i,dV)
+{
+    datum_na_sledna_vakcinacija=dS;
+    brVlekaci++;
+}
+
+Vlekaci::~Vlekaci()
+{
+    brVlekaci--;
+}
+
+void Vlekaci::prikaziPodatoci()
+{
+    cout<<"Datum na raganje na zivotnoto ";
+    Zivotni::datum_na_ragjanje.pecatiDatum();
+    cout<<"Datum na donesuvanje vo Zoo ";
+    Zivotni::datum_na_donesuvanje_vo_zoo.pecatiDatum();
+    cout<<"Pol na zivotnoto "<<Zivotni::pol<<", Ime na zivotnoto "<<Zivotni::ime<<endl;
+    cout<<"Datum na posledna vakcinacija ";
+    Zivotni::datum_na_posledna_vakcinacija.pecatiDatum();
+    cout<<"Datum na sledna vakcinacija";
+    datum_na_sledna_vakcinacija.pecatiDatum();
+}
+
+void Vlekaci::presmetaj_vakcinacija()
+{
+    Datum denesen(28,10,2019);
+    int sumaDenesen=denesen.getDen()+(denesen.getMesec()*30);
+    int sumaSledna=datum_na_sledna_vakcinacija.getDen()+(datum_na_sledna_vakcinacija.getMesec()*30);
+    if(denesen.getGodina()==datum_na_sledna_vakcinacija.getGodina())
+    {
+        if(((sumaSledna-sumaDenesen)<=7) && ((sumaSledna-sumaDenesen)>=0))
+        {
+            Vlekaci::prikaziPodatoci();
+        }
+    }
+}
+
+int Vlekaci::getBrVlekaci()
+{
+    return Vlekaci::brVlekaci;
+}
+
+
+
+/*MAIN*/
+#include <iostream>
+#include <zivotni.h>
+#include <datum.h>
+#include <cicaci.h>
+#include <ptici.h>
+#include <vlekaci.h>
+
+using namespace std;
+
+void menu();
+void menu1();
+Cicaci CicaciMenu();
+Ptici PticiMenu();
+Vlekaci VlekaciMenu();
+
+int main()
+{
+    int vlez, vlez_vraboten, c_i=0, p_i=0, v_i=0, flag=0, flag1=0;
+    Cicaci cicaci[10];
+    Vlekaci vlekaci[10];
+    Ptici ptici[10];
+    while(1)
+    {
+        menu();
+        cin>>vlez;
+        switch (vlez) {
+        case 1:
+        {
+            while(1)
+            {
+            menu1();
+            cin>>vlez_vraboten;
+            switch (vlez_vraboten) {
+            case 1:
+                cicaci[c_i]=CicaciMenu();
+                c_i++;
+                break;
+            case 2:
+                vlekaci[v_i]=VlekaciMenu();
+                v_i++;
+                break;
+            case 3:
+                ptici[p_i]=PticiMenu();
+                p_i++;
+                break;
+            case 4:
+                flag1=1;
+                break;
+            default :
+                cout<<"Pogreshen izbor, Nazad na pocetnoto menu"<<endl;
+                flag1=1;
+                break;
+            }
+            if(flag1==1)
+                break;
+            }
+            menu1();
+            break;
+        }
+        case 2:
+            cout<<"Brojnata sostojba e "<<p_i+v_i+c_i<<endl;
+            break;
+        case 3:
+        {
+            int j;
+            cout<<"Listata na cicaci e"<<endl;
+            for(j=0;j<c_i;j++)
+            {
+                cicaci[j].prikaziPodatoci();
+            }
+            cout<<"Listata na ptici e"<<endl;
+            for(j=0;j<p_i;j++)
+            {
+                ptici[j].prikaziPodatoci();
+            }
+            cout<<"Listata na vlekaci e"<<endl;
+            for(j=0;j<v_i;j++)
+            {
+                cicaci[j].prikaziPodatoci();
+            }
+            break;
+        }
+        case 4:
+        {
+            int j;
+
+            for(j=0;j<c_i;j++)
+            {
+                cicaci[j].prikaziPodatoci();
+            }
+
+            for(j=0;j<p_i;j++)
+            {
+                ptici[j].prikaziPodatoci();
+            }
+
+            for(j=0;j<v_i;j++)
+            {
+                vlekaci[j].prikaziPodatoci();
+            }
+            break;
+        }
+        case 5:
+        {
+            int j;
+
+            for(j=0;j<c_i;j++)
+            {
+                cicaci[j].presmetaj_vakcinacija();
+            }
+
+            for(j=0;j<p_i;j++)
+            {
+                ptici[j].presmetaj_vakcinacija();
+            }
+
+            for(j=0;j<v_i;j++)
+            {
+                vlekaci[j].presmetaj_vakcinacija();
+            }
+            break;
+        }
+        case 6:
+            flag=1;
+            break;
+        default:
+            cout<<"Pogreshen izbor"<<endl;
+            flag=1;
+            break;
+        }
+        if(flag==1)
+            break;
+    }
+    return 0;
+}
+
+void menu()
+{
+    cout<<"Odberete edna od opciite"<<endl;
+    cout<<"1 --> Dodavanje na zivotno vo listata"<<endl;
+    cout<<"2 --> Prikazuvanje na brojna sostojba"<<endl;
+    cout<<"3 --> Prikazuvanje na zivotni od dadena grupa"<<endl;
+    cout<<"4 --> Prikazuvanje na celata lsita"<<endl;
+    cout<<"5 --> Prikazuvanje na site zivotni koi treba da se vakciniraat vo slednata nedela"<<endl;
+    cout<<"6 --> Izlezi od menito"<<endl;
+}
+
+void menu1()
+{
+    cout<<"Odberete edna od opciite za vnesuvanje novo zivotno vo ZOO"<<endl;
+    cout<<"1 --> Dodadi Cicac vo listata"<<endl;
+    cout<<"2 --> Dodadi Vlekac vo listata"<<endl;
+    cout<<"3 --> Dodadi Ptica vo listata"<<endl;
+    cout<<"4 --> Vrati se nazad"<<endl;
+}
+
+Cicaci CicaciMenu()
+{
+    char ime[10], pol, prezivar;
+    int den, mesec, godina;
+    cout<<"Vnesi go datumot na ragjanje na cicacot"<<endl;
+    cin>>den;
+    cin>>mesec;
+    cin>>godina;
+    Datum dR(den,mesec,godina);
+    cout<<"Vnesete go datumot na donesuvanje na cicacot vo Zoo"<<endl;
+    cin>>den;
+    cin>>mesec;
+    cin>>godina;
+    Datum dD(den,mesec,godina);
+    cout<<"Vnesi go polot na cicacot"<<endl;
+    cin>>pol;
+    cout<<"Vnesi go imeto na cicacot"<<endl;
+    cin>>ime;
+    cout<<"Vnesi go datumot na posledna vakcinacija"<<endl;
+    cin>>den;
+    cin>>mesec;
+    cin>>godina;
+    Datum dV(den,mesec,godina);
+    cout<<"Dali cicacot e prezivar d/n ?"<<endl;
+    cin>>prezivar;
+    Cicaci c(dR,dD,pol,ime,dV, prezivar);
+    return c;
+}
+Vlekaci VlekaciMenu()
+{
+    char ime[10], pol;
+    int den, mesec, godina;
+    cout<<"Vnesi go datumot na ragjanje na vlekacot"<<endl;
+    cin>>den;
+    cin>>mesec;
+    cin>>godina;
+    Datum dR(den,mesec,godina);
+    cout<<"Vnesete go datumot na donesuvanje na vlekacot vo Zoo"<<endl;
+    cin>>den;
+    cin>>mesec;
+    cin>>godina;
+    Datum dD(den,mesec,godina);
+    cout<<"Vnesi go polot na vlekacot"<<endl;
+    cin>>pol;
+    cout<<"Vnesi go imeto na vlekacot"<<endl;
+    cin>>ime;
+    cout<<"Vnesi go datumot na posledna vakcinacija"<<endl;
+    cin>>den;
+    cin>>mesec;
+    cin>>godina;
+    Datum dV(den,mesec,godina);
+    cout<<"Vnesi go datumot na sledna vakcinacija"<<endl;
+    cin>>den;
+    cin>>mesec;
+    cin>>godina;
+    Datum dS(den,mesec,godina);
+    Vlekaci v(dR,dD,pol,ime,dV,dS);
+    return v;
+}
+Ptici PticiMenu()
+{
+    char ime[10], pol, letac;
+    int den, mesec, godina;
+    cout<<"Vnesi go datumot na ragjanje na pticata"<<endl;
+    cin>>den;
+    cin>>mesec;
+    cin>>godina;
+    Datum dR(den,mesec,godina);
+    cout<<"Vnesete go datumot na donesuvanje na pticata vo Zoo"<<endl;
+    cin>>den;
+    cin>>mesec;
+    cin>>godina;
+    Datum dD(den,mesec,godina);
+    cout<<"Vnesi go polot na pticata"<<endl;
+    cin>>pol;
+    cout<<"Vnesi go imeto na pticata"<<endl;
+    cin>>ime;
+    cout<<"Vnesi go datumot na posledna vakcinacija"<<endl;
+    cin>>den;
+    cin>>mesec;
+    cin>>godina;
+    Datum dV(den,mesec,godina);
+    cout<<"Dali pticata e letac d/n ?"<<endl;
+    cin>>letac;
+    Ptici p(dR,dD,pol,ime,dV, letac);
+    return p;
+}
