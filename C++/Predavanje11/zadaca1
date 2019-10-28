@@ -1,0 +1,414 @@
+/*Во една продавница се води евиденција за артиклите кои се продаваат во неа: пантолони и кошули. Користејќи ги концептите на ООП да се моделираат соодветни класи според спецификациите дадени на сликата. Пратката на пантолони доаѓа секој месец, а нарачки на кошули се прават по потреба. Во main() функцијата да се конструира низа од долунаведените класи (пантолони, кошули) и да се имплементира кориснички посредник преку мени со следните опции:
+1.      Додавање на артикл во листата
+2.      Прикажување на артикли од дадена група
+3.      Прикажување на целата листа (со вкупна цена)
+4.      Прикажување на сите артикли кои треба да се набават во рок од 1 недела и пари кои треба да се потрошат за да се набават потребните артикли
+5.      Излез од менито
+*/
+
+/artikal.h/
+#ifndef ARTIKAL_H
+#define ARTIKAL_H
+#include <datum.h>
+
+class Artikal
+{
+private:
+    char *ime_na_artikal;
+    int golemina;
+    int cena;
+    Datum donesen_vo_prodavnica;
+public:
+    Artikal();
+    Artikal(char *, int, int, Datum);
+    void prikazi_Podatoci();
+    int presmetaj_nabavka();
+    int getCena();
+    int getGolemina();
+    Datum getDatumD();
+    char* getIme();
+};
+
+#endif // ARTIKAL_H
+
+
+/*datum.h*/
+#ifndef DATUM_H
+#define DATUM_H
+
+class Datum
+{
+private:
+    int den;
+    int mesec;
+    int godina;
+public:
+    Datum();
+    Datum(int,int,int);
+    void pecatiDatum();
+    int getDen();
+    int getMesec();
+    int getGodina();
+};
+
+#endif // DATUM_H
+
+
+/*pantoloni.h*/
+#ifndef PANTOLONI_H
+#define PANTOLONI_H
+#include <artikal.h>
+#include <datum.h>
+
+class Pantoloni : public Artikal
+{
+private:
+    Datum datum_na_sledna_nabavka;
+public:
+    Pantoloni();
+    Pantoloni(char *i, int g, int c, Datum donesen, Datum sledna);
+    void prikazi_podatoci();
+    int presmetaj_nabavka();
+};
+
+#endif // PANTOLONI_H
+
+/*kosuli.h*/
+#ifndef KOSULI_H
+#define KOSULI_H
+#include <artikal.h>
+#include <datum.h>
+
+class Kosuli : public Artikal
+{
+public:
+    Kosuli();
+    Kosuli(char *, int , int, Datum);
+    void prikazi_podatoci();
+    int presmetaj_nabavka();
+};
+
+#endif // KOSULI_H
+
+
+/datum.cpp/
+#include <iostream>
+#include <datum.h>
+
+using namespace std;
+
+Datum::Datum(){}
+
+Datum::Datum(int d, int m, int g)
+{
+    den=d;
+    mesec=m;
+    godina=g;
+}
+
+void Datum::pecatiDatum()
+{
+    cout<<" "<<den<<"/"<<mesec<<"/"<<godina<<endl;
+}
+
+int Datum::getDen()
+{
+    return den;
+}
+
+int Datum::getMesec()
+{
+    return mesec;
+}
+
+int Datum::getGodina()
+{
+    return godina;
+}
+
+
+/*artikal.cpp*/
+#include <artikal.h>
+#include <datum.h>
+#include <iostream>
+#include <cassert>
+
+using namespace std;
+
+Artikal::Artikal(){}
+
+Artikal::Artikal(char *i, int g, int c, Datum d)
+{
+    ime_na_artikal = new char[strlen(i)+1];
+    assert(ime_na_artikal != NULL);
+    strcpy(ime_na_artikal,i);
+
+    golemina=g;
+    cena=c;
+    donesen_vo_prodavnica=d;
+}
+
+void Artikal::prikazi_Podatoci()
+{
+    cout<<"Ime na artikal: "<<ime_na_artikal<<" Golemina na artikal: "<<golemina<<" Cena na artikal: "<<cena;
+    donesen_vo_prodavnica.pecatiDatum();
+}
+
+int Artikal::presmetaj_nabavka(){return 0;}
+
+int Artikal::getCena()
+{
+    return cena;
+}
+
+int Artikal::getGolemina()
+{
+    return golemina;
+}
+
+char* Artikal::getIme()
+{
+    return ime_na_artikal;
+}
+
+Datum Artikal::getDatumD()
+{
+    return donesen_vo_prodavnica;
+}
+
+
+/*kosuli.cpp*/
+#include <iostream>
+#include <datum.h>
+#include <artikal.h>
+#include <kosuli.h>
+
+using namespace std;
+
+Kosuli::Kosuli(){}
+Kosuli::Kosuli(char *i, int g, int c, Datum d):Artikal(i,g,c,d)
+{
+}
+
+void Kosuli::prikazi_podatoci()
+{
+    Artikal::prikazi_Podatoci();
+}
+
+int Kosuli::presmetaj_nabavka()
+{
+    return 0;
+}
+
+
+/*pantoloni.cpp*/
+#include <iostream>
+#include <artikal.h>
+#include <datum.h>
+#include <pantoloni.h>
+
+using namespace std;
+
+Pantoloni::Pantoloni(){}
+
+Pantoloni::Pantoloni(char *i, int g, int c, Datum donesen, Datum sledna):Artikal(i,g,c,donesen)
+{
+    datum_na_sledna_nabavka=sledna;
+}
+
+void Pantoloni::prikazi_podatoci()
+{
+    Artikal::prikazi_Podatoci();
+    cout<<"Sledna nabavka: ";
+    datum_na_sledna_nabavka.pecatiDatum();
+}
+
+int Pantoloni::presmetaj_nabavka()
+{
+    int rez=0, rez2=0;
+    Datum denesen(28,10,2019);
+    rez+=denesen.getDen();
+    rez+=denesen.getMesec()*30;
+    rez2+=datum_na_sledna_nabavka.getDen();
+    rez2+=datum_na_sledna_nabavka.getMesec()*30;
+    if((rez2-rez)<=7 && (rez2-rez)>=0)
+    {
+        return Artikal::getCena();
+    }
+    else
+        return 0;
+}
+
+/*MAIN*/
+#include <iostream>
+#include <datum.h>
+#include <kosuli.h>
+#include <pantoloni.h>
+
+
+using namespace std;
+
+void menu();
+void menu1();
+Pantoloni pantoloniMenu();
+Kosuli kosulaMenu();
+
+int main()
+{
+    int vlez, vlez2, p_i=0, k_i=0, flag=0, flag1=0;
+    Pantoloni pantoloni[10];
+    Kosuli kosuli[10];
+
+        while(1)
+        {
+            menu();
+            cin>>vlez;
+            switch (vlez) {
+            case 1:
+            {
+                while(1)
+                {
+                menu1();
+                cin>>vlez2;
+                switch (vlez2) {
+                case 1:
+                    pantoloni[p_i]=pantoloniMenu();
+                    p_i++;
+                    break;
+                case 2:
+                    kosuli[k_i]=kosulaMenu();
+                    k_i++;
+                    break;
+                case 3:
+                    flag1=1;
+                    break;
+                default :
+                    cout<<"Pogreshen izbor, Nazad na pocetnoto menu"<<endl;
+                    flag1=1;
+                    break;
+                }
+                if(flag1==1)
+                    break;
+                }
+                break;
+            }
+            case 2:
+            {
+                int j;
+                cout<<"Listata na pantoloni e "<<endl;
+                for(j=0;j<p_i;j++)
+                {
+                     pantoloni[j].prikazi_podatoci();
+                }
+
+                cout<<"Listata na kosuli e "<<endl;
+                for(j=0;j<k_i;j++)
+                {
+                     kosuli[j].prikazi_podatoci();
+                }
+                break;
+            }
+            case 3:
+            {
+                int k, suma=0;
+                for(k=0;k<p_i;k++)
+                {
+                     pantoloni[k].prikazi_podatoci();
+                     suma+=pantoloni[k].getCena();
+                }
+                for(k=0;k<k_i;k++)
+                {
+                     kosuli[k].prikazi_podatoci();
+                     suma+=kosuli[k].getCena();
+                }
+                cout<<"Vkupnata cena na site artikli e "<<suma<<endl;
+                break;
+            }
+            case 4:
+            {
+                int suma=0, k;
+                for(k=0;k<p_i;k++)
+                {
+                    if(pantoloni[k].presmetaj_nabavka()>0)
+                    {
+                         pantoloni[k].prikazi_podatoci();
+                         suma+=pantoloni[k].presmetaj_nabavka();
+                    }
+
+                }
+                cout<<"Cenata shto treba da se plati za pantolonite koi kje se nabavat e "<<suma<<endl;
+                break;
+            }
+            case 5:
+                flag=1;
+                break;
+            default:
+                cout<<"Pogreshen izbor, Kraj na programata"<<endl;
+                flag=1;
+                break;
+            }
+            if(flag==1)
+                break;
+        }
+        return 0;
+    }
+
+void menu()
+{
+        cout<<"Odberete edna od opciite"<<endl;
+        cout<<"1 --> Dodavanje artikal vo listata"<<endl;
+        cout<<"2 --> Prikazuvanje na artikli od dadena grupa"<<endl;
+        cout<<"3 --> Prikazuvanje na celata lista, so vkupna cena"<<endl;
+        cout<<"4 --> Prikazuvanje na artikli koi treba da se naracaat vo rok od 1 nedela i sumata koja treba da se potroshi"<<endl;
+        cout<<"5 --> Izlez od menito"<<endl;
+}
+
+void menu1()
+{
+        cout<<"Odberete eden ot tipovite na artikli za dodavanje"<<endl;
+        cout<<"1 --> Dodadi Pantoloni vo listata"<<endl;
+        cout<<"2 --> Dodadi Koshula vo listata"<<endl;
+        cout<<"3 --> Vrati se nazad"<<endl;
+}
+
+Pantoloni pantoloniMenu()
+{
+        char ime[10];
+        int golemina,cena,den,mesec,godina;
+        cout<<"Vnesete go imeto na artiklot"<<endl;
+        cin>>ime;
+        cout<<"Vnesete ja goleminata na pantolonite"<<endl;
+        cin>>golemina;
+        cout<<"Vnesi ja cenata na pantolonite"<<endl;
+        cin>>cena;
+        cout<<"Vnesi go datumot na vnesuvanje vo prodavnicata"<<endl;
+        cin>>den;
+        cin>>mesec;
+        cin>>godina;
+        Datum dD(den,mesec,godina);
+        cout<<"Vnesi datum na sledna naracka"<<endl;
+        cin>>den;
+        cin>>mesec;
+        cin>>godina;
+        Datum dS(den,mesec,godina);
+        Pantoloni p(ime,golemina,cena,dD,dS);
+        return p;
+}
+Kosuli kosulaMenu()
+{
+        char ime[10];
+        int golemina, cena, den, mesec, godina;
+        cout<<"Vnesete go iemto na artiklot"<<endl;
+        cin>>ime;
+        cout<<"Vnesete ja goleminata na pantolonite"<<endl;
+        cin>>golemina;
+        cout<<"Vnesi ja cenata na pantolonite"<<endl;
+        cin>>cena;
+        cout<<"Vnesi go datumot na vnesuvanje vo prodavnicata"<<endl;
+        cin>>den;
+        cin>>mesec;
+        cin>>godina;
+        Datum dD(den,mesec,godina);
+        Kosuli k(ime,golemina,cena,dD);
+        return k;
+}
