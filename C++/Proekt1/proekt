@@ -1,0 +1,504 @@
+/*matrica.h*/
+#ifndef MATRICA_H
+#define MATRICA_H
+#include <iostream>
+
+using namespace std;
+
+class Matrica
+{
+
+private:
+    int **matrica;
+    int row,col;
+public:
+    Matrica();
+    Matrica(const int &row, const int &col);
+    ~Matrica();
+    void pecatiMatrica();
+    Matrica(const Matrica &m);
+    void postavi(const int i, const int j, const int m);
+    void operator=(const Matrica &m);
+    bool operator==(const Matrica &m) const;
+    bool operator!=(const Matrica &m) const;
+    int* &operator[](int &r);
+    int* &operator[](const int &r) const;
+    Matrica operator+(const Matrica &m) const;
+    Matrica operator+(const int &broj)const;
+    Matrica operator-(const Matrica &m) const;
+    Matrica operator-(const int &broj) const;
+    Matrica operator*(const Matrica &m) const;
+    Matrica operator*(const int &broj) const;
+    friend ostream &operator<<(ostream &out, const Matrica &m)
+    {
+        for(int i=0;i<m.row;i++)
+        {
+            for(int j=0;j<m.col;j++)
+            {
+                out<<m.matrica[i][j];
+            }
+        }
+        out<<endl;
+        return out;
+    }
+    friend istream &operator>>(istream &in, const Matrica &m)
+    {
+
+        for(int i=0;i<m.row;i++)
+        {
+            for(int j=0;j<m.col;j++)
+            {
+                in>>m.matrica[i][j];
+            }
+        }
+        return in;
+    }
+    friend Matrica operator-(const int &broj, const Matrica &m)
+    {
+        for(int i=0;i<m.row;i++)
+        {
+            for(int j=0;j<m.col;j++)
+            {
+                m.matrica[i][j]-=broj;
+            }
+        }
+        return m;
+    }
+    friend Matrica operator+(const int &broj, const Matrica &m)
+    {
+        for(int i=0;i<m.row;i++)
+        {
+            for(int j=0;j<m.col;j++)
+            {
+                m.matrica[i][j]=m.matrica[i][j]+broj;
+            }
+        }
+        return m;
+    }
+    friend Matrica operator*(const int &broj, const Matrica &m)
+    {
+        for(int i=0;i<m.row;i++)
+        {
+            for(int j=0;j<m.col;j++)
+            {
+                m.matrica[i][j]*=broj;
+            }
+        }
+        return m;
+    }
+};
+
+#endif // MATRICA_H
+
+
+/*matrica.cpp*/
+#include <iostream>
+#include <matrica.h>
+#include <cassert>
+
+using namespace std;
+
+Matrica::Matrica()
+{
+    row=col=0;
+    matrica=nullptr;
+}
+
+Matrica::Matrica(const int &row, const int &col)
+{
+    Matrica::row=row;
+    Matrica::col=col;
+    matrica= new int*[row];
+    assert(matrica != NULL);
+    for(int i=0;i<row;i++)
+    {
+        matrica[i] = new int[col];
+        assert(matrica[i] != NULL);
+    }
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            matrica[i][j]=0;
+        }
+    }
+}
+
+Matrica::~Matrica()
+{
+    for(int i=0;i<row;i++)
+        delete [] matrica[i];
+    delete [] matrica;
+}
+
+Matrica::Matrica(const Matrica &m)
+{
+    row=m.row;
+    col=m.col;
+    matrica = new int*[row];
+    assert(matrica != NULL);
+    for(int i=0;i<row;i++)
+    {
+        matrica[i] = new int[col];
+        assert(matrica[i] != NULL);
+    }
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            matrica[i][j]=m.matrica[i][j];
+        }
+    }
+    cout<<"Copy konstruktor"<<endl;
+}
+
+void Matrica::postavi(const int i, const int j, const int m)
+{
+    matrica[i][j]=m;
+}
+
+void Matrica::operator=(const Matrica &m)
+{
+    if(&m != this )
+    {
+    if(row!=m.row || col != m.col)
+    {
+    for(int i=0;i<row;i++)
+    {
+        delete [] matrica[i];
+    }
+    delete [] matrica;
+    row=m.row;
+    col=m.col;
+    matrica = new int*[row];
+    assert(matrica != NULL);
+    for(int i=0;i<row;i++)
+    {
+        matrica[i] = new int[col];
+        assert(matrica[i] != NULL);
+    }
+    }
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            matrica[i][j]=m.matrica[i][j];
+        }
+    }
+    }
+}
+
+bool Matrica::operator==(const Matrica &m) const
+{
+    if((row != m.row) || (col!=m.col))
+        return false;
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            if(matrica[i][j] != m.matrica[i][j])
+                return false;
+        }
+    }
+    return true;
+}
+
+bool Matrica::operator!=(const Matrica &m) const
+{
+    return !(*this==m);
+}
+
+int* &Matrica::operator[](int &r)
+{
+    assert(0<=r && (r<row || r<col));
+    return matrica[r];
+}
+
+int* &Matrica::operator[](const int &r) const
+{
+    assert(0<=r && (r<row || r<col));
+    return matrica[r];
+}
+
+Matrica Matrica::operator+(const Matrica &m) const
+{
+    if(row!=m.row || col != m.col)
+    {
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                matrica[i][j]=matrica[i][j];
+            }
+        }
+        return *this;
+    }
+    else
+    {
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                matrica[i][j]=m.matrica[i][j]+matrica[i][j];
+            }
+        }
+    }
+    return *this;
+}
+
+Matrica Matrica::operator+(const int &broj) const
+{
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            matrica[i][j]+=broj;
+        }
+    }
+    return *this;
+}
+
+Matrica Matrica::operator-(const Matrica &m) const
+{
+    if(row!=m.row || col != m.col)
+    {
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                matrica[i][j]=matrica[i][j];
+            }
+        }
+        return *this;
+    }
+    else
+    {
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            {
+                matrica[i][j]=matrica[i][j]-m.matrica[i][j];
+            }
+        }
+    }
+    return *this;
+}
+
+Matrica Matrica::operator-(const int &broj) const
+{
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            matrica[i][j]-=broj;
+        }
+    }
+    return *this;
+}
+
+Matrica Matrica::operator*(const Matrica &m) const
+{
+    if(col!=m.row)
+    {
+        Matrica tmp(col,row);
+            for(int i=0;i<row;i++)
+            {
+                for(int j=0;j<col;j++)
+                {
+                    tmp.matrica[i][j]+=matrica[i][j];
+                }
+            }
+            return tmp;
+    }
+    else
+    {
+        Matrica tmp(col,m.row);
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<m.col;j++)
+            {
+                for(int k=0;k<col;k++)
+                {
+                    tmp.matrica[i][j]+=matrica[i][k]*m.matrica[i][j];
+                }
+            }
+        }
+        return tmp;
+    }
+}
+
+Matrica Matrica::operator*(const int &broj) const
+{
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            matrica[i][j]=matrica[i][j]*broj;
+        }
+    }
+    return *this;
+}
+
+void Matrica::pecatiMatrica()
+{
+    for(int i=0;i<row;i++)
+    {
+        for(int j=0;j<col;j++)
+        {
+            cout<<matrica[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+}
+
+
+/*MAIN*/
+#include <iostream>
+#include <matrica.h>
+
+using namespace std;
+
+void menu();
+Matrica vnesiMatrica(int r, int k);
+
+int main()
+{
+    int redici,koloni,vlez, broj,flag=0;
+    Matrica m1,m2, m3;
+    while(1)
+       {
+           menu();
+           cin>>vlez;
+           switch (vlez) {
+           case 1:
+           {
+                cout<<"Vnesi gi redicite i kolonite na prvata matrica"<<endl;
+                cin>>redici;
+                cin>>koloni;
+                m1=vnesiMatrica(redici,koloni);
+                cout<<"Vnesi gi redicite i kolonite na vtorata matrica"<<endl;
+                cin>>redici;
+                cin>>koloni;
+                m2=vnesiMatrica(redici,koloni);
+                cout<<"Zbirot na dvete matrici e"<<endl;
+                m1+m2;
+                m1.pecatiMatrica();
+                break;
+           }
+           case 2:
+               cout<<"Vnesi gi redicite i kolonite na matricata"<<endl;
+               cin>>redici;
+               cin>>koloni;
+               m1=vnesiMatrica(redici,koloni);
+               cout<<"Vnesi broj"<<endl;
+               cin>>broj;
+               cout<<"Matrica plus broj"<<endl;
+               m1+broj;
+               m1.pecatiMatrica();
+               cout<<"Broj plus matrica";
+               m3=broj+m1;
+               m3.pecatiMatrica();
+               break;
+           case 3:
+           {
+               cout<<"Vnesi gi redicite i kolonite na prvata matrica"<<endl;
+               cin>>redici;
+               cin>>koloni;
+               m1=vnesiMatrica(redici,koloni);
+               cout<<"Vnesi gi redicite i kolonite na vtorata matrica"<<endl;
+               cin>>redici;
+               cin>>koloni;
+               m2=vnesiMatrica(redici,koloni);
+               cout<<"Razlikata na dvete matrici e"<<endl;
+               m1-m2;
+               m1.pecatiMatrica();
+               break;
+           }
+           case 4:
+           {
+               cout<<"Vnesi gi redicite i kolonite na matricata"<<endl;
+               cin>>redici;
+               cin>>koloni;
+               m1=vnesiMatrica(redici,koloni);
+               cout<<"Vnesi broj"<<endl;
+               cin>>broj;
+               cout<<"Matrica minus broj"<<endl;
+               m1-broj;
+               m1.pecatiMatrica();
+               cout<<"Broj minus matrica";
+               m3=broj-m1;
+               m3.pecatiMatrica();
+               break;
+           }
+           case 5:
+           {
+               cout<<"Vnesi gi redicite i kolonite na prvata matrica"<<endl;
+               cin>>redici;
+               cin>>koloni;
+               m1=vnesiMatrica(redici,koloni);
+               cout<<"Vnesi gi redicite i kolonite na vtorata matrica"<<endl;
+               cin>>redici;
+               cin>>koloni;
+               m2=vnesiMatrica(redici,koloni);
+               cout<<"Proizvod na dvete matrici e"<<endl;
+               m3=m1*m2;
+               m3.pecatiMatrica();
+               break;
+           }
+           case 6:
+           {
+               cout<<"Vnesi gi redicite i kolonite na matricata"<<endl;
+               cin>>redici;
+               cin>>koloni;
+               m1=vnesiMatrica(redici,koloni);
+               cout<<"Vnesi broj"<<endl;
+               cin>>broj;
+               cout<<"Matrica pomnozena so broj"<<endl;
+               m1*broj;
+               m1.pecatiMatrica();
+               cout<<"Broj pomnozen so matrica";
+               m3=broj*m1;
+               m3.pecatiMatrica();
+               break;
+           }
+           case 7:
+               flag=1;
+               break;
+           default:
+               cout<<"Pogreshen izbor"<<endl;
+               flag=1;
+               break;
+           }
+           if(flag==1)
+               break;
+       }
+       return 0;
+}
+
+void menu()
+{
+    cout<<"Odberete edna od opciite"<<endl;
+       cout<<"1 --> Sobiranje na dve matrici"<<endl;
+       cout<<"2 --> Sobiranje na matrica i broj"<<endl;
+       cout<<"3 --> Odzemanje na dve matrici"<<endl;
+       cout<<"4 --> Odzemanje na matrica i broj"<<endl;
+       cout<<"5 --> Mnozenje na dve matrici"<<endl;
+       cout<<"6 --> Mnozenje na matrica so broj"<<endl;
+       cout<<"7 --> Izlezi od menito"<<endl;
+}
+
+Matrica vnesiMatrica(int r, int k)
+{
+    Matrica tmp(r,k);
+    int element;
+    for(int i=0;i<r;i++)
+    {
+        for(int j=0;j<k;j++)
+        {
+            cout<<"Vnesi element vo matricata"<<endl;
+            cin>>element;
+            tmp.postavi(i,j,element);
+        }
+    }
+    return tmp;
+}
