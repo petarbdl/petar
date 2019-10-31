@@ -1,0 +1,658 @@
+/*oblik.h*/
+#ifndef OBLIK_H
+#define OBLIK_H
+#include <string>
+
+using namespace std;
+
+class Oblik
+{
+public:
+    Oblik();
+    virtual ~Oblik() = 0;
+    virtual string getIme()const =0;
+    virtual double getPloshtina()const = 0;
+    virtual double getPerimetar() const = 0;
+    virtual double getVolume() const = 0;
+    virtual void pecat()const =0;
+    virtual int getBroj() const = 0;
+private:
+    static int brojFiguri;
+};
+
+#endif // OBLIK_H
+
+
+/*DvoDimenzionalni.h*/
+#ifndef DVODIMENZIONALNI_H
+#define DVODIMENZIONALNI_H
+#include <string.h>
+#include <oblik.h>
+
+using namespace std; 
+
+class DvoDimenzionalni : public Oblik
+{
+private:
+    int x;
+    int y;
+    static int br2D;
+public:
+    DvoDimenzionalni(int, int);
+    ~DvoDimenzionalni() override;
+    void setX(int);
+    void setY(int);
+    int getX();
+    int getY();
+    virtual double getPerimetar() const override;
+    virtual double getPloshtina() const override;
+    virtual string getIme() const override;
+    virtual void pecat() const override;
+    int getBroj() const override;
+};
+
+#endif // DVODIMENZIONALNI_H
+
+
+/*TriDimenzionalni*/
+#ifndef TRIDIMENZIONALNI_H
+#define TRIDIMENZIONALNI_H
+#include <oblik.h>
+
+using namespace std;
+
+class TriDimenzionalni : public Oblik
+{
+private:
+    int x;
+    int y;
+    int z;
+    static int br3D;
+public:
+    TriDimenzionalni(int, int, int);
+    ~TriDimenzionalni() override;
+    void setX(int);
+    void setY(int);
+    void setZ(int);
+    int getX();
+    int getY();
+    int getZ();
+    virtual double getPerimetar() const override;
+    virtual double getPloshtina() const override;
+    virtual double getVolume() const override;
+    virtual string getIme() const override;
+    virtual void pecat() const override;
+    int getBroj() const override;
+};
+
+#endif // TRIDIMENZIONALNI_H
+
+
+/*krug.h*/
+#ifndef KRUG_H
+#define KRUG_H
+#include <DvoDimenzionalni.h>
+#include <string.h>
+
+using namespace std;
+
+class Krug : public DvoDimenzionalni
+{
+private:
+    double radius;
+    static int brKrug;
+public:
+    Krug(int, int, double);
+    ~Krug() override;
+    void setRadius(double);
+    double getRadius() const;
+    double getDiametar() const;
+    double getPerimetar() const override;
+    virtual double getPloshtina() const override;
+    virtual string getIme() const override;
+    virtual void pecat() const override;
+    int getBroj() const override; 
+};
+
+#endif // KRUG_H
+
+
+/*triagolnik.h*/
+#ifndef TRIAGOLNIK_H
+#define TRIAGOLNIK_H
+#include <DvoDimenzionalni.h>
+
+using namespace std;
+
+class Triagolnik : public DvoDimenzionalni
+{
+private:
+    int aStrana;
+    int bStrana;
+    int cStrana;
+    static int brTriagolnici;
+public:
+    Triagolnik(int,int,int,int,int);
+    ~Triagolnik() override;
+    void setStranaA(int);
+    void setStranaB(int);
+    void setStranaC(int);
+    int getStranaA()const;
+    int getStranaB()const;
+    int getStranaC()const;
+    virtual double getPerimetar()const override;
+    virtual double getPloshtina()const override;
+    virtual string getIme() const override;
+    virtual void pecat() const override;
+    virtual int getBroj() const override;
+};
+
+#endif // TRIAGOLNIK_H
+
+
+/*rectangle.h*/
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
+#include <DvoDimenzionalni.h>
+
+using namespace std;
+
+class Rectangle : public DvoDimenzionalni
+{
+private:
+    int dolzina;
+    int shirina;
+    static int brRectangle;
+public:
+    Rectangle(int , int , int, int);
+    ~Rectangle()override;
+    void setDolzina(int);
+    void setShirina(int);
+    int getDolzina() const;
+    int getShirina() const;
+    virtual double getPerimetar()const override;
+    virtual double getPloshtina() const override;
+    virtual void pecat() const override;
+    virtual int getBroj() const override;
+    virtual string getIme() const override;
+};
+
+#endif // RECTANGLE_H
+
+
+/*cilindar.h*/
+#ifndef CILINDAR_H
+#define CILINDAR_H
+#include <TriDimenzionalni.h>
+#include <krug.h>
+
+using namespace std;
+
+class Cilindar : public Krug, public TriDimenzionalni
+{
+private:
+    double visina;
+    static int brCilindari;
+public:
+    Cilindar(int,int,double,int,int,int,double);
+    virtual ~Cilindar() override;
+    void setVisina(double);
+    double getVisina() const;
+    virtual double getPerimetar() const override;
+    virtual double getVolume() const override;
+    virtual double getPloshtina() const override;
+    virtual void pecat() const override;
+    virtual string getIme() const override;
+};
+
+#endif // CILINDAR_H
+
+
+/*oblik.cpp*/
+#include <iostream>
+#include <oblik.h>
+#include <string.h>
+
+using namespace std;
+
+int Oblik::brojFiguri=0;
+
+Oblik::Oblik()
+{
+    brojFiguri++;
+}
+
+Oblik::~Oblik()
+{
+    brojFiguri--;
+}
+
+double Oblik::getPloshtina() const
+{
+    return 0.0;
+}
+
+double Oblik::getPerimetar() const
+{
+    return 0.0;
+}
+
+double Oblik::getVolume() const
+{
+    return 0.0;
+}
+
+int Oblik::getBroj() const
+{
+    return brojFiguri;
+}
+
+
+
+/*dvodimenzionalni.cpp*/
+#include <iostream>
+#include <oblik.h>
+#include <DvoDimenzionalni.h>
+#include <string.h>
+
+using namespace std;
+
+int DvoDimenzionalni::br2D=0;
+
+DvoDimenzionalni::DvoDimenzionalni(int x, int y)
+{
+    setX(x);
+    setY(y);
+    br2D++;
+}
+
+DvoDimenzionalni::~DvoDimenzionalni()
+{
+    br2D--;
+}
+
+void DvoDimenzionalni::setX(int x)
+{
+    DvoDimenzionalni::x=x;
+}
+
+void DvoDimenzionalni::setY(int y)
+{
+    DvoDimenzionalni::y=y;
+}
+
+int DvoDimenzionalni::getX()
+{
+    return DvoDimenzionalni::x;
+}
+
+int DvoDimenzionalni::getY()
+{
+    return DvoDimenzionalni::y;
+}
+
+string DvoDimenzionalni::getIme() const
+{
+    return "2D";
+}
+
+void DvoDimenzionalni::pecat() const
+{
+    cout<<'['<<DvoDimenzionalni::x<<","<<DvoDimenzionalni::y<<']';
+}
+
+int DvoDimenzionalni::getBroj() const
+{
+    return br2D;
+}
+
+
+
+/*tridimenzionalni.cpp*/
+#include <iostream>
+#include <oblik.h>
+#include <TriDimenzionalni.h>
+#include <string.h>
+
+using namespace std;
+
+int TriDimenzionalni::br3D=0;
+
+TriDimenzionalni::TriDimenzionalni(int x, int y, int z)
+{
+    setX(x);
+    setY(y);
+    setZ(z);
+    br3D++;
+}
+
+TriDimenzionalni::~TriDimenzionalni()
+{
+    br3D--;
+}
+
+void TriDimenzionalni::setX(int x)
+{
+    TriDimenzionalni::x=x;
+}
+
+void TriDimenzionalni::setY(int y)
+{
+    TriDimenzionalni::y=y;
+}
+
+void TriDimenzionalni::setZ(int z)
+{
+    TriDimenzionalni::z=z;
+}
+
+int TriDimenzionalni::getX()
+{
+    return TriDimenzionalni::x;
+}
+
+int TriDimenzionalni::getY()
+{
+    return TriDimenzionalni::y;
+}
+
+int TriDimenzionalni::getZ()
+{
+    return TriDimenzionalni::z;
+}
+
+string TriDimenzionalni::getIme() const
+{
+    return "3D";
+}
+
+void TriDimenzionalni::pecat() const
+{
+    cout<<"["<<TriDimenzionalni::x<<","<<TriDimenzionalni::y<<","<<TriDimenzionalni::z<<"]";
+}
+
+int TriDimenzionalni::getBroj() const
+{
+    return br3D;
+}
+
+
+
+/*triagolnik.cpp*/
+#include <iostream>
+#include <DvoDimenzionalni.h>
+#include <triagolnik.h>
+#include <math.h>
+
+using namespace std;
+
+int Triagolnik::brTriagolnici=0;
+
+Triagolnik::Triagolnik(int x1,int y1, int a, int b, int c):DvoDimenzionalni(x1,y1)
+{
+    Triagolnik::setStranaA(a);
+    Triagolnik::setStranaB(b);
+    Triagolnik::setStranaC(c);
+    brTriagolnici++;
+}
+
+Triagolnik::~Triagolnik()
+{
+    brTriagolnici--;
+}
+
+void Triagolnik::setStranaA(int a)
+{
+    Triagolnik::aStrana=a;
+}
+
+void Triagolnik::setStranaB(int b)
+{
+    Triagolnik::bStrana=b;
+}
+
+void Triagolnik::setStranaC(int c)
+{
+    Triagolnik::cStrana=c;
+}
+
+int Triagolnik::getStranaA() const
+{
+    return aStrana;
+}
+
+int Triagolnik::getStranaB() const
+{
+    return bStrana;
+}
+
+int Triagolnik::getStranaC() const
+{
+    return cStrana;
+}
+
+double Triagolnik::getPerimetar() const
+{
+    return getStranaA()+getStranaB()+getStranaC();
+}
+
+double Triagolnik::getPloshtina() const
+{
+    double s=(getStranaA()+getStranaB()+getStranaC())/2;
+    double plos=sqrt(s*(s-getStranaA())*(s-getStranaB())*(s-getStranaC()));
+    return plos;
+}
+
+string Triagolnik::getIme() const
+{
+    return "Triagolnik";
+}
+
+void Triagolnik::pecat() const
+{
+    cout<<"Centarot e";
+    DvoDimenzionalni::pecat();
+    cout<<"Stranata A e "<<getStranaA()<<endl;
+    cout<<"Stranata B e "<<getStranaB()<<endl;
+    cout<<"Stranata C e "<<getStranaC()<<endl;
+}
+
+int Triagolnik::getBroj() const
+{
+    return brTriagolnici;
+}
+
+
+
+/*krug.cpp*/
+#include <iostream>
+#include <DvoDimenzionalni.h>
+#include <krug.h>
+#include <string.h>
+
+using namespace std;
+
+int Krug::brKrug=0;
+
+Krug::Krug(int a, int b, double r):DvoDimenzionalni(a,b)
+{
+    Krug::setRadius(r);
+    brKrug++;
+}
+
+Krug::~Krug()
+{
+    brKrug--;
+}
+
+void Krug::setRadius(double r)
+{
+    Krug::radius=r;
+}
+
+double Krug::getRadius() const
+{
+    return Krug::radius;
+}
+
+double Krug::getDiametar() const
+{
+    return 2*radius;
+}
+
+double Krug::getPerimetar() const
+{
+    return 3.14*getDiametar();
+}
+
+double Krug::getPloshtina() const
+{
+    return 3.14*getRadius()*getRadius();
+}
+
+string Krug::getIme() const
+{
+    return "KRUG";
+}
+
+void Krug::pecat() const
+{
+    cout<<"Centarot e";
+    DvoDimenzionalni::pecat();
+    cout<<"radiusot e "<<getRadius()<<endl;
+}
+
+int Krug::getBroj() const
+{
+    return brKrug;
+}
+
+
+
+/*rectangle.cpp*/
+#include <rectangle.h>
+#include <DvoDimenzionalni.h>
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+int Rectangle::brRectangle=0;
+
+Rectangle::Rectangle(int x, int y, int d, int s):DvoDimenzionalni(x,y)
+{
+    Rectangle::setDolzina(d);
+    Rectangle::setShirina(s);
+    brRectangle++;
+}
+
+Rectangle::~Rectangle()
+{
+    brRectangle--;
+}
+
+void Rectangle::setDolzina(int d)
+{
+    Rectangle::dolzina=d;
+}
+
+void Rectangle::setShirina(int s)
+{
+    Rectangle::shirina=s;
+}
+
+int Rectangle::getDolzina() const
+{
+    return dolzina;
+}
+
+int Rectangle::getShirina() const
+{
+    return shirina;
+}
+
+double Rectangle::getPerimetar() const
+{
+    return (2*getShirina() + 2*getDolzina());
+}
+
+double Rectangle::getPloshtina() const
+{
+    return (getDolzina()*getShirina());
+}
+
+void Rectangle::pecat() const
+{
+    cout<<"Centarot e";
+    DvoDimenzionalni::pecat();
+    cout<<"Dolzinata e "<<getDolzina()<<endl;
+    cout<<"Shirinata e "<<getShirina()<<endl;
+}
+
+string Rectangle::getIme() const
+{
+    return "Pravoagolnik";
+}
+
+int Rectangle::getBroj() const
+{
+    return brRectangle;
+}
+
+
+
+/*cilindar.cpp*/
+#include <iostream>
+#include <cilindar.h>
+
+using namespace std;
+
+int Cilindar::brCilindari=0;
+
+Cilindar::Cilindar(int x1, int y1, double rad, int x2, int y2, int z2, double visina):Krug(x1,y1,rad), TriDimenzionalni(x2,y2,z2)
+{
+    Cilindar::setVisina(visina);
+    brCilindari++;
+}
+
+Cilindar::~Cilindar()
+{
+    brCilindari--;
+}
+
+void Cilindar::setVisina(double v)
+{
+    Cilindar::visina=v;
+}
+
+double Cilindar::getVisina() const
+{
+    return Cilindar::visina;
+}
+
+double Cilindar::getPerimetar() const
+{
+    return 2*(3.14*getDiametar()+Cilindar::getVisina());
+}
+
+double Cilindar::getPloshtina() const
+{
+    return 2*Krug::getPloshtina()+Krug::getPerimetar()*getVisina();
+}
+
+double Cilindar::getVolume() const
+{
+    return Krug::getPloshtina()*getVisina();
+}
+
+string Cilindar::getIme() const
+{
+    return "Cilindar";
+}
+
+void Cilindar::pecat() const
+{
+    cout<<"Centarot e";
+    TriDimenzionalni::pecat();
+    cout<<"Visinata e "<<getVisina()<<endl;
+}
