@@ -3,6 +3,93 @@
 кој се врши печатење на поле. Во main креирај две полиња од квадрати и праваголници, 
 прикажи ги со pecatiPole, сортирај ги според плоштина со sortirajPole и повторно отпечати ги.
 
+/*kvadrat.h*/
+#ifndef KVADRAT_H
+#define KVADRAT_H
+
+class Kvadrat
+{
+private:
+    double strana;
+public:
+    Kvadrat();
+    Kvadrat(double);
+    double getPloshtina();
+    void pecati();
+};
+
+#endif // KVADRAT_H
+
+
+/*pravoagolnik.h*/
+#ifndef PRAVOAGOLNIK_H
+#define PRAVOAGOLNIK_H
+
+class Pravoagolnik
+{
+private:
+    double shirina;
+    double dolzina;
+public:
+    Pravoagolnik();
+    Pravoagolnik(double, double);
+    double getPloshtina();
+    void pecati();
+};
+
+#endif // PRAVOAGOLNIK_H
+
+
+/*kvadrat.cpp*/
+#include <iostream>
+#include <kvadrat.h>
+
+using namespace std;
+
+Kvadrat::Kvadrat(){}
+
+Kvadrat::Kvadrat(double s)
+{
+    strana=s;
+}
+
+double Kvadrat::getPloshtina()
+{
+    return strana*strana;
+}
+
+void Kvadrat::pecati()
+{
+    cout<<"Kvadrat with side "<<strana<<" and area of "<<getPloshtina()<<endl;
+}
+
+
+
+/*pravoagolnik.cpp*/
+#include <iostream>
+#include <pravoagolnik.h>
+
+using namespace std;
+
+Pravoagolnik::Pravoagolnik(){}
+
+Pravoagolnik::Pravoagolnik(double s, double d)
+{
+    shirina=s;
+    dolzina=d;
+}
+
+double Pravoagolnik::getPloshtina()
+{
+    return shirina*dolzina;
+}
+
+void Pravoagolnik::pecati()
+{
+    cout<<"Pravoagolnik with weight of "<<shirina<<" and length "<<dolzina<<" has area "<<getPloshtina()<<endl;
+}
+
+
 #include <iostream>
 #include <kvadrat.h>
 #include <pravoagolnik.h>
