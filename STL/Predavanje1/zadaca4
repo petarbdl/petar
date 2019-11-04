@@ -1,0 +1,40 @@
+Преклопи го function template-от printArray со non-template функција која печати поле од int во четири порамнети колони.
+
+
+#include <iostream>
+
+using namespace std;
+
+template< class T > void printArray( const T *array, const int count )//**
+
+{
+
+   for ( int i = 0; i < count; i++ )
+
+      cout << array[ i ] << " ";
+
+      cout << endl;
+
+
+
+} // Kraj na function template printArray
+
+
+//Override of printArray function with non-template function, INT
+void printArray( const int *array, const int count )
+
+{
+
+   for ( int i = 0; i < count; i++ )
+   {
+      cout << array[ i ] <<endl;
+   }
+
+} // Kraj na function template printArray
+
+int main()
+{
+    int n[8]={1,2,3,4,5,6,7,8};
+    printArray(n,8);
+    return 0;
+}
