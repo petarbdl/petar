@@ -1,0 +1,67 @@
+Напиши class template Zapis<T> кој содржи три приватни членки: x, y и z од тип Т. Креирај function template kontrolor 
+кој ќе проверува дали збирот на елементите x, y и z во Zapis надминува 10000. 
+Напиши соодветна програма за демонстрација со инстанцирање на објекти од тип Zapis<int> и Zapis<double>. 
+
+
+#include <iostream>
+
+using namespace std;
+
+template <class T> class Zapis
+{
+private:
+    T x;
+    T y;
+    T z;
+public:
+    Zapis();
+    Zapis(T,T,T);
+    int kontrolor();
+};
+
+template <class T>
+Zapis<T>::Zapis(){}
+
+template <class T>
+Zapis<T>::Zapis(T a, T b, T c)
+{
+    x=a;
+    y=b;
+    z=c;
+}
+
+template <class T>
+int Zapis<T>::kontrolor()
+{
+    T suma = x+y+z;
+    if(suma<10000)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+
+int main()
+{
+    Zapis<int> z(50,1000,9000);
+    Zapis<double> zd(4000.54,5000.4,8888.8);
+    if(z.kontrolor()==1)
+    {
+        cout<<"Sumata e pomala od 10000"<<endl;
+    }
+    else
+    {
+        cout<<"Sumata e pogolema od 10000"<<endl;
+    }
+
+    if(zd.kontrolor()==1)
+    {
+        cout<<"Sumata e pomala od 10000"<<endl;
+    }
+    else
+    {
+        cout<<"Sumata e pogolema od 10000"<<endl;
+    }
+    return 0;
+}
