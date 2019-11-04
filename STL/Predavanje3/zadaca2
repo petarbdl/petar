@@ -1,0 +1,162 @@
+#include <iostream>
+
+using namespace std;
+
+template <class T> class Mnozestvo
+{
+private:
+    T *pole;
+    static int numElements;
+public:
+    Mnozestvo();
+    void insertElement(T);
+    T getBiggestElement();
+    void printElements();
+};
+
+template <class T>
+Mnozestvo<T>::Mnozestvo()
+{
+}
+
+template <class T>
+int Mnozestvo<T>::numElements=0;
+
+template <class T>
+void Mnozestvo<T>::insertElement(T e)
+{
+    for(int i=0;i<numElements;i++)
+    {
+        if(pole[i]==e)
+        {
+            cout<<e<<" This element is already in array"<<endl;
+            return;
+        }
+    }
+
+    T *tmp = pole;
+    pole = new T[numElements+1];
+    for(int i=0;i<numElements;i++)
+    {
+        pole[i]=tmp[i];
+    }
+    pole[numElements]=e;
+    numElements++;
+}
+
+template <class T>
+T Mnozestvo<T>::getBiggestElement()
+{
+    T tmp=pole[0];
+    for(int i=1;i<numElements;i++)
+    {
+        if(tmp<pole[i])
+        {
+            tmp=pole[i];
+        }
+    }
+    return tmp;
+}
+
+template <>
+char* Mnozestvo<char*>::getBiggestElement()
+{
+    char* tmp=pole[0];
+    for(int i=1;i<numElements;i++)
+    {
+        if(strcmp(tmp,pole[i])<0)
+        {
+            tmp=pole[i];
+        }
+    }
+    return tmp;
+}
+
+template <class T>
+void Mnozestvo<T>::printElements()
+{
+    for(int i=0; i<numElements; i++)
+    {
+        cout<<pole[i]<<" ";
+    }
+    cout<<endl;
+}
+
+void menu();
+
+int main()
+{
+    Mnozestvo<int> integer;
+    Mnozestvo<char*> character;
+    Mnozestvo<double> doubleI;
+    int vlez, flag =0;
+    while(1)
+                   {
+                       menu();
+                       cin>>vlez;
+                       switch (vlez) {
+                       case 1:
+                       {
+                           int element;
+                           cout<<"Submit integer"<<endl;
+                           cin>>element;
+                           integer.insertElement(element);
+                           break;
+                       }
+                       case 2:
+                       {
+                           char *string;
+                           string = new char[20];
+                           cout<<"Submit String"<<endl;
+                           cin>>string;
+                           character.insertElement(string);
+                           break;
+                       }
+                       case 3:
+                       {
+                           double element;
+                           cout<<"Submit Double"<<endl;
+                           cin>>element;
+                           doubleI.insertElement(element);
+                          break;
+                       }
+                       case 4:
+                       {
+                          integer.printElements();
+                          cout<<endl<<"Biggest Integer is"<<integer.getBiggestElement();
+                           break;
+                       }
+                       case 5:
+                       {
+                           character.printElements();
+                           cout<<endl<<"Biggest String is"<<character.getBiggestElement();
+                           break;
+                       }
+                       case 6:
+                       {
+                           doubleI.printElements();
+                           cout<<endl<<"Biggest Double is"<<doubleI.getBiggestElement();
+                           break;
+                       }
+                       default:
+                           cout<<"Pogreshen izbor"<<endl;
+                           flag=1;
+                           break;
+                       }
+                       if(flag==1)
+                           break;
+                   }
+    return 0;
+}
+
+void menu()
+{
+           cout<<"Choose one of the following options"<<endl;
+           cout<<"1 --> Enter Element in Integer Array"<<endl;
+           cout<<"2 --> Enter Element in Character Array"<<endl;
+           cout<<"3 --> Enter Element in Double Array"<<endl;
+           cout<<"4 --> Print Integer Array"<<endl;
+           cout<<"5 --> Print Character Array"<<endl;
+           cout<<"6 --> Print Double Array"<<endl;
+           cout<<"7 --> END"<<endl;
+}
