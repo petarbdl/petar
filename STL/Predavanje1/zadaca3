@@ -1,0 +1,30 @@
+Во примерот
+
+template<typename R, typename P>
+
+R implicit_cast(const P& p) {
+
+  return p;
+
+}
+
+ 
+
+int main() {
+
+  int i = 1;
+
+  float x = implicit_cast<float>(i);
+
+  int j = implicit_cast<int>(x);
+
+ 
+
+} //kraj na main
+
+замени ги R и P. Дали кодот се компајлира? Во што се состои проблемот?
+
+
+Zadacata nema da kompajlira. 
+Koga ke se smenat mestata, so implicit_cast<float>(i) samo se specijalizira vlezniot argument vo funkcijata, a ne e specijaliziran izlezniot
+argument od funkcijata i ke javi greshka. Ke mora da se specificira i izlezniot argument, implicit_cast<float,float>(i);
