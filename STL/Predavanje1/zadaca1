@@ -1,1 +1,61 @@
+#include <iostream>
+
+using namespace std;
+
+template <class T> void swap(T *xp, T *yp)
+{
+    T temp = *xp;
+    *xp = *yp;
+    *yp = temp;
+}
+
+// A function to implement bubble sort
+template <class T> void bubbleSort(T *arr, const int n)
+{
+    int i, j;
+    for (i = 0; i < n-1; i++)
+
+    // Last i elements are already in place
+    for (j = 0; j < n-i-1; j++)
+        if (arr[j] > arr[j+1])
+            swap(&arr[j], &arr[j+1]);
+}
+
+template< class T >  //*
+
+void printArray( const T *array, const int count )//**
+
+{
+
+   for ( int i = 0; i < count; i++ )
+
+      cout << array[ i ] << " ";
+
+      cout << endl;
+
+
+
+} // End of function template printArray
+
+int main()
+{
+    double nizaD[10];
+    int niza[10];
+    for(int i=0;i<10;i++)
+    {
+        cout<<"Enter INT array element"<<endl;
+        cin>>niza[i];
+    }
+    for(int i=0;i<10;i++)
+    {
+        cout<<"Enter DOUBLE array element"<<endl;
+        cin>>nizaD[i];
+    }
+    bubbleSort<int>(niza,10);
+    bubbleSort<double>(nizaD,10);
+    printArray<int>(niza,10);
+    printArray<double>(nizaD,10);
+    return 0;
+}
+
 
