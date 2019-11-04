@@ -1,0 +1,203 @@
+Една фирма води евиденција за лица кои можат да бидат вработени или клиенти. За секое лице се чуваат следните податоци: 
+imeiprezime, mat_br, vozrast, adresa, kod. За вработените kod има целобројна вредност, а за клиентите е низа од знаци.
+
+Креирај class template Lica во која ќе се сместуваат податоците за лица. Податоците кои се низи од знаци да се внесуваат 
+преку динамичка алокација на меморија. Креирај две полиња од објекти, Vraboteni и Klienti. За печатење на двете полиња употреби 
+ја pecatiPole од претходната задача.
+
+Напиши тест програма која содржи мени:
+
+1.      Внесување на податоци за вработен
+
+2.      Внесување на податоци за клиент
+
+3.      Печетење на листа на вработени
+
+4.      Печатење на листа на клиенти
+
+5.      Крај
+
+
+#include <iostream>
+#include <cassert>
+
+using namespace std;
+
+template <typename T>
+class Lica
+{
+private:
+    char *imeprezime;
+    long int maticen_broj;
+    int vozrast;
+    char *adresa;
+    T kod;
+public:
+    Lica<T>();
+    void pecati();
+    void setName(char *);
+    void setMbroj(long int);
+    void setVozrast(int);
+    void setAdrress(char*);
+    void setKodC(char *);
+    void setKod(T);
+};
+
+template <class T>
+Lica<T>::Lica(){}
+
+template<typename T>
+void Lica<T>::setName(char *c)
+{
+    imeprezime = new char[strlen(c)+1];
+    assert(imeprezime != NULL);
+    strcpy(imeprezime,c);
+}
+
+template<class T>
+void Lica<T>::setMbroj(long int b)
+{
+    maticen_broj=b;
+}
+
+template <class T>
+void Lica<T>::setVozrast(int v)
+{
+    vozrast=v;
+}
+
+template <class T>
+void Lica<T>::setAdrress(char *a)
+{
+    adresa = new char[strlen(a)+1];
+    assert(adresa!=NULL);
+    strcpy(adresa,a);
+}
+template <class T>
+void Lica<T>::setKodC(char* k)
+{
+    kod = new char[strlen(k)+1];
+    assert(kod != NULL);
+    strcpy(kod,k);
+}
+
+template <class T>
+void Lica<T>::setKod(T k)
+{
+    kod=k;
+}
+
+template <class T>
+void Lica<T>::pecati()
+{
+    cout<<"Ime i prezime "<<imeprezime<<endl<<" Maticen Broj "<<maticen_broj<<endl<<" Kod "<<kod<<endl;
+}
+
+
+void menu();
+
+
+template <class T> void pecatiPole(Lica<T> *pole, int count)
+{
+    for(int i=0;i<count;i++)
+    {
+        pole[i].pecati();
+    }
+    cout<<endl;
+}
+
+int main()
+{
+    Lica<int> vraboteni[5];
+    Lica<char*> klienti[5];
+
+    int vlez,flag=0, i_v=0, i_k=0;
+            while(1)
+               {
+                   menu();
+                   cin>>vlez;
+                   switch (vlez) {
+                   case 1:
+                   {
+                       char namesurname[30], adresa[15];
+                       int maticen, age, kod;
+
+                       cout<<"Enter name and surname of the worker"<<endl;
+                       cin>>namesurname;
+                       cout<<"Enter Maticen number of the worker"<<endl;
+                       cin>>maticen;
+                       cout<<"Enter the age of worker"<<endl;
+                       cin>>age;
+                       cout<<"Enter the adrress of the worker"<<endl;
+                       cin>>adresa;
+                       cout<<"Enter kod of the worker"<<endl;
+                       cin>>kod;
+                       Lica<int> l;
+                       l.setName(namesurname);
+                       l.setMbroj(maticen);
+                       l.setVozrast(age);
+                       l.setAdrress(adresa);
+                       l.setKod(kod);
+                       vraboteni[i_v]=l;
+                       i_v++;
+                        break;
+                   }
+                   case 2:
+                   {
+                       char namesurname[30], adresa[15], kod[10];
+                       int maticen, age;
+
+                       cout<<"Enter name and surname of the worker"<<endl;
+                       cin>>namesurname;
+                       cout<<"Enter Maticen number of the worker"<<endl;
+                       cin>>maticen;
+                       cout<<"Enter the age of worker"<<endl;
+                       cin>>age;
+                       cout<<"Enter the adrress of the worker"<<endl;
+                       cin>>adresa;
+                       cout<<"Enter kod of the worker"<<endl;
+                       cin>>kod;
+                       Lica<char*> l;
+                       l.setName(namesurname);
+                       l.setMbroj(maticen);
+                       l.setVozrast(age);
+                       l.setAdrress(adresa);
+                       l.setKodC(kod);
+                       klienti[i_k]=l;
+                       i_k++;
+                       break;
+                   }
+                   case 3:
+                   {
+                      pecatiPole(vraboteni,5);
+                      break;
+                   }
+                   case 4:
+                   {
+                      pecatiPole(klienti,5);
+                       break;
+                   }
+                   case 5:
+                   {
+                       flag=1;
+                       break;
+                   }
+                   default:
+                       cout<<"Pogreshen izbor"<<endl;
+                       flag=1;
+                       break;
+                   }
+                   if(flag==1)
+                       break;
+               }
+    return 0;
+}
+void menu()
+{
+           cout<<"Choose one of the following options"<<endl;
+           cout<<"1 --> Enter data for worker"<<endl;
+           cout<<"2 --> Ender data fot client"<<endl;
+           cout<<"3 --> Print the list of workers"<<endl;
+           cout<<"4 --> Print the list of clients"<<endl;
+           cout<<"5 --> END"<<endl;
+}
