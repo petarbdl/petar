@@ -1,0 +1,65 @@
+Креирај класа Kvadrat со податоци strana и класа Pravoagolnik со податоци sirina и dolzina.  
+Напиши function template sortirajPole со кој се врши сортирање на поле и function template pecatiPole со 
+кој се врши печатење на поле. Во main креирај две полиња од квадрати и праваголници, 
+прикажи ги со pecatiPole, сортирај ги според плоштина со sortirajPole и повторно отпечати ги.
+
+#include <iostream>
+#include <kvadrat.h>
+#include <pravoagolnik.h>
+
+using namespace std;
+
+template <class T> void sort(T *pole, int count)
+{
+    for(int i=0;i<count;i++)
+    {
+        for(int j=0;j<count;j++)
+        {
+            if(pole[i].getPloshtina()<pole[j].getPloshtina())
+            {
+                T tmp = pole[i];
+                pole[i]=pole[j];
+                pole[j]=tmp;
+            }
+        }
+    }
+}
+
+template <class T> void pecatiPole(T *pole, int count)
+{
+    for(int i=0;i<count;i++)
+    {
+        pole[i].pecati();
+    }
+    cout<<endl;
+}
+
+int main()
+{
+    double s, d;
+    Kvadrat k[5];
+    Pravoagolnik p[5];
+    for(int i=0;i<5;i++)
+    {
+        cout<<"Enter side of Kvadrat"<<endl;
+        cin>>s;
+        k[i]=s;
+    }
+
+    for(int i=0;i<5;i++)
+    {
+        cout<<"Enter weight and length of Pravoagolnik"<<endl;
+        cin>>s;
+        cin>>d;
+        p[i] = Pravoagolnik(s,d);
+    }
+    pecatiPole<Pravoagolnik>(p,5);
+    pecatiPole<Kvadrat>(k, 5);
+
+    sort<Pravoagolnik>(p,5);
+    sort<Kvadrat>(k,5);
+
+    pecatiPole<Pravoagolnik>(p,5);
+    pecatiPole<Kvadrat>(k, 5);
+    return 0;
+}
