@@ -16,6 +16,8 @@ template< class T > void printArray( const T *array, const int count )
 
 } // End of function template printArray
 
+
+//Overlap of printArray function, return number od printed elements
 template <class T> int printArray(const T *array, const int count, const int lowSubscript, const int highSubscript)
 {
     int brojac=0;
@@ -44,14 +46,18 @@ template <class T> int printArray(const T *array, const int count, const int low
 
 int main()
 {
+    int broj;
     int a[10]={1,2,3,4,5,6,7,8,9,0};
     double b[10]={1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,0.5};
     char c[10]={"zdravo"};
-    printArray<int>(a,10, 2,8);
+    broj = printArray<int>(a,10, 2,8);
+    cout<<"Number of printed elements "<<broj;
     printArray(a,10);
-    printArray<double>(b,10, 2,8);
+    broj = printArray<double>(b,10, 2,8);
+    cout<<"Number of printed elements "<<broj;
     printArray(b,10);
-    printArray<char>(c, 7, 2, 5);
+    broj = printArray<char>(c, 7, 2, 5);
+    cout<<"Number of printed elements "<<broj;
     printArray(c,10);
     return 0;
 }
