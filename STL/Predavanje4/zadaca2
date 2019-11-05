@@ -1,0 +1,51 @@
+Напиши програма што определува дали два збора се анаграми. 
+Два збора се нарекуваат анаграми ако се состојат од исти букви (Пр. стакло и слатко). 
+Притоа користи vector. За споредба  на еднаквост на два вектори може да се користи:
+
+      std::equal( v1.begin(), v1.end(), v2.begin() );
+
+која враќа bool вредност.
+
+/*MAIN*/
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+    char *word;
+    word= new char[20];
+    vector< char > temp1;
+    vector< char > temp2;
+    cout<<"Enter first word"<<endl;
+    cin>>word;
+
+    for(int i=0;i<strlen(word);i++)
+    {
+        temp1.push_back(word[i]);
+    }
+    delete [] word;
+
+    cout<<"Enter second word"<<endl;
+    cin>>word;
+
+    for(int i=0;i<strlen(word);i++)
+    {
+        temp2.push_back(word[i]);
+    }
+
+    sort(temp1.begin(),temp1.end());
+    sort(temp2.begin(),temp2.end());
+
+    if(equal(temp1.begin(),temp1.end(),temp2.begin())==1)
+    {
+        cout<<"ANAGRAM!!!"<<endl;
+    }
+    else
+    {
+        cout<<"The words You entered are not Anagrams"<<endl;
+    }
+    return 0;
+}
