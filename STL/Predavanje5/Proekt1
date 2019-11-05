@@ -6,11 +6,13 @@ class Krug
 {
 private:
     double radius;
+    static int numberCircles;
 public:
     Krug();
     Krug(double);
-    double getPloshtina();
+    double getArea();
     void pecati();
+    int getNumber();
 };
 
 #endif // KRUG_H
@@ -24,14 +26,17 @@ class Kvadrat
 {
 private:
     int side;
+    static int numberKvadrati;
 public:
     Kvadrat();
     Kvadrat(int);
-    int getPloshtina();
+    int getArea();
     void pecati();
+    int getNumber();
 };
 
 #endif // KVADRAT_H
+
 
 
 /*pravoagolnik.h*/
@@ -43,89 +48,21 @@ class Pravoagolnik
 private:
     double sideA;
     double sideB;
+    static int numberRectangles;
 public:
     Pravoagolnik();
     Pravoagolnik(double, double);
     double getArea();
     void pecati();
+    int getNumber();
 };
 
 #endif // PRAVOAGOLNIK_H
 
 
-/*krug.cpp*/
-#include <krug.h>
-#include <iostream>
-
-Krug::Krug(){}
-
-Krug::Krug(double r)
-{
-    radius=r;
-}
-
-double Krug::getPloshtina()
-{
-    return radius*radius*3.14;
-}
-
-void Krug::pecati()
-{
-    std::cout<<"Krug with radius "<<radius<<std::endl;
-}
-
-
-/*kvadrat.cpp*/
-#include <kvadrat.h>
-#include <iostream>
-
-Kvadrat::Kvadrat(){}
-
-Kvadrat::Kvadrat(int a)
-{
-    side=a;
-}
-
-int Kvadrat::getPloshtina()
-{
-    return side*side;
-}
-
-void Kvadrat::pecati()
-{
-    std::cout<<"Kvadrat with side "<<side<<std::endl;
-}
-
-
-
-/**pravoagolnik.cpp/
-#include <pravoagolnik.h>
-#include <iostream>
-
-Pravoagolnik::Pravoagolnik(){}
-
-Pravoagolnik::Pravoagolnik(double a, double b)
-{
-    sideA=a;
-    sideB=b;
-}
-
-double Pravoagolnik::getArea()
-{
-    return sideA*sideB;
-}
-
-void Pravoagolnik::pecati()
-{
-    std::cout<<"Krug with side A: "<<sideA<<" and side B: "<<sideB<<std::endl;
-}
-
-
-/MAIN/
-#include <iostream>
-#include <pravoagolnik.h>
-#include <kvadrat.h>
-#include <krug.h>
+/*mnozestvo.h*/
+#ifndef MNOZESTVO_H
+#define MNOZESTVO_H
 #include <list>
 
 using namespace std;
@@ -138,8 +75,134 @@ public:
     Mnozestvo();
     void insertInM(T);
     void findBiggest();
-    list<T> getLista();
+    void printMnozestvo();
+    int getNumber();
 };
+#endif // MNOZESTVO_H
+
+
+
+/*krug.cpp*/
+#include <krug.h>
+#include <iostream>
+
+int Krug::numberCircles=0;
+
+Krug::Krug()
+{
+    numberCircles++;
+}
+
+Krug::Krug(double r)
+{
+    radius=r;
+    numberCircles++;
+}
+
+double Krug::getArea()
+{
+    return radius*radius*3.14;
+}
+
+void Krug::pecati()
+{
+    std::cout<<"Krug with radius "<<radius<<" and Area "<<getArea()<<std::endl;
+}
+
+int Krug::getNumber()
+{
+    return numberCircles;
+}
+
+
+/*kvadrat.cpp*/
+#include <kvadrat.h>
+#include <iostream>
+
+int Kvadrat::numberKvadrati=0;
+
+Kvadrat::Kvadrat()
+{
+    numberKvadrati++;
+}
+
+Kvadrat::Kvadrat(int a)
+{
+    side=a;
+    numberKvadrati++;
+}
+
+int Kvadrat::getArea()
+{
+    return side*side;
+}
+
+void Kvadrat::pecati()
+{
+    std::cout<<"Kvadrat with side "<<side<<" and Area "<<getArea()<<std::endl;
+}
+
+int Kvadrat::getNumber()
+{
+    return numberKvadrati;
+}
+
+
+
+/**pravoagolnik.cpp/
+#include <pravoagolnik.h>
+#include <iostream>
+
+int Pravoagolnik::numberRectangles = 0;
+
+Pravoagolnik::Pravoagolnik()
+{
+    numberRectangles++;
+}
+
+Pravoagolnik::Pravoagolnik(double a, double b)
+{
+    sideA=a;
+    sideB=b;
+    numberRectangles++;
+}
+
+double Pravoagolnik::getArea()
+{
+    return sideA*sideB;
+}
+
+void Pravoagolnik::pecati()
+{
+    std::cout<<"Pravoagolnik with side A: "<<sideA<<" and side B: "<<sideB<<" and Area "<<getArea()<<std::endl;
+}
+
+int Pravoagolnik::getNumber()
+{
+    return numberRectangles;
+}
+
+
+
+/*mnozestvo.cpp*/
+#include <mnozestvo.h>
+#include <list>
+#include <iostream>
+#include <pravoagolnik.h>
+#include <krug.h>
+#include <kvadrat.h>
+
+using namespace std;
+
+template <class T>
+void Mnozestvo<T>::printMnozestvo()
+{
+    typename list<T>::iterator i;
+    for(i = l.begin(); i != l.end(); ++i)
+    {
+        i->pecati();
+    }
+}
 
 template <class T>
 Mnozestvo<T>::Mnozestvo(){}
@@ -154,48 +217,161 @@ template <class T>
 void Mnozestvo<T>::findBiggest()
 {
     double max=0;
+    typename list<T>::iterator tmp;
     typename list<T>::iterator i;
     for(i = l.begin();i != l.end(); ++i)
     {
         if(i->getArea()>max)
         {
+            tmp=i;
             max=i->getArea();
         }
     }
-    cout<<max<<endl;
+    tmp->pecati();
+    cout<<endl;
 }
 
 template <class T>
-list<T> Mnozestvo<T>::getLista()
+int Mnozestvo<T>::getNumber()
 {
-    return l;
+    return l.begin()->getNumber();
 }
 
+template void Mnozestvo<Pravoagolnik>::insertInM(Pravoagolnik);
+template void Mnozestvo<Krug>::insertInM(Krug);
+template void Mnozestvo<Kvadrat>::insertInM(Kvadrat);
+
+template void Mnozestvo<Pravoagolnik>::findBiggest();
+template void Mnozestvo<Krug>::findBiggest();
+template void Mnozestvo<Kvadrat>::findBiggest();
+
+template void Mnozestvo<Pravoagolnik>::printMnozestvo();
+template void Mnozestvo<Kvadrat>::printMnozestvo();
+template void Mnozestvo<Krug>::printMnozestvo();
+
+template Mnozestvo<Pravoagolnik>::Mnozestvo();
+template Mnozestvo<Krug>::Mnozestvo();
+template Mnozestvo<Kvadrat>::Mnozestvo();
+
+template int Mnozestvo<Pravoagolnik>::getNumber();
+template int Mnozestvo<Krug>::getNumber();
+template int Mnozestvo<Kvadrat>::getNumber();
+
+
+
+/MAIN/
+#include <iostream>
+#include <pravoagolnik.h>
+#include <kvadrat.h>
+#include <krug.h>
+#include <list>
+#include <mnozestvo.h>
+
+using namespace std;
+
 template <class T>
-void printMnozestvo(Mnozestvo<T> m)
+void pecatiMnozestvo(Mnozestvo<T> tmp)
 {
-    list<T> l = m.getLista();
-    typename list<T>::iterator i;
-    for(i = l.begin();i != l.end(); ++i)
-        i->pecati();
+    tmp.printMnozestvo();
 }
+
+void menu();
 
 int main()
 {
-    Mnozestvo<Pravoagolnik> m;
-    Mnozestvo<Krug> k;
-    Krug k1(4.4);
-    Krug k2(5.5);
-    k.insertInM(k1);
-    k.insertInM(k2);
-    Pravoagolnik p1(10.11,9.1);
-    Pravoagolnik p(15.5,20.6);
-    m.insertInM(p1);
-    m.insertInM(p);
-    m.findBiggest();
-    printMnozestvo(m);
-    cout<<endl;
-    printMnozestvo(k);
+    Mnozestvo<Pravoagolnik> rectangle;
+    Mnozestvo<Krug> circle;
+    Mnozestvo<Kvadrat> kvadrati;
+    int vlez,flag=0;
+            while(1)
+               {
+                   menu();
+                   cin>>vlez;
+                   switch (vlez) {
+                   case 1:
+                   {
+                        double sideA,sideB;
+                        cout<<"Enter Side A"<<endl;
+                        cin>>sideA;
+                        cout<<"Enter Side B"<<endl;
+                        cin>>sideB;
+                        Pravoagolnik p(sideA,sideB);
+                        rectangle.insertInM(p);
+                        break;
+                   }
+                   case 2:
+                   {
+                       int sideA;
+                       cout<<"Enter Kvadrat Side"<<endl;
+                       cin>>sideA;
+                       Kvadrat k(sideA);
+                       kvadrati.insertInM(k);
+                       break;
+                   }
+                   case 3:
+                   {
+                       double sideA;
+                       cout<<"Enter Radius of Circle"<<endl;
+                       cin>>sideA;
+                       Krug c(sideA);
+                       circle.insertInM(c);
+                       break;
+                   }
+                   case 4:
+                   {
+                       cout<<"Set OF Rectangles"<<endl;
+                       pecatiMnozestvo(rectangle);
+                       break;
+                   }
+                   case 5:
+                   {
+                       cout<<"Set OF Kvadrati"<<endl;
+                       pecatiMnozestvo(kvadrati);
+                       break;
+                   }
+                   case 6:
+                   {
+                       cout<<"Set OF Circles"<<endl;
+                       pecatiMnozestvo(circle);
+                       break;
+                   }
+                   case 7:
+                       cout<<"Biggest element is Set of Rectangles is ";
+                       rectangle.findBiggest();
+                       cout<<"Biggest element is Set of Kvadrati is ";
+                       kvadrati.findBiggest();
+                       cout<<"Biggest element is Set of Circles is ";
+                       circle.findBiggest();
+                       break;
+                   case 8:
+                       cout<<"Number of elements in Set of Rectangles: "<<rectangle.getNumber()<<endl;
+                       cout<<"Number of elements in Set of Kvadrati: "<<kvadrati.getNumber()<<endl;
+                       cout<<"Number of elements in Set of Circles: "<<circle.getNumber()<<endl;
+                       break;
+                   case 9:
+                       flag=1;
+                       break;
+                   default:
+                       cout<<"Wrong Choise"<<endl;
+                       flag=1;
+                       break;
+                   }
+                   if(flag==1)
+                       break;
+               }
     return 0;
 }
 
+void menu()
+{
+        cout<<"Welcome in Main Menu"<<endl;
+           cout<<"1 --> Enter Rectangle"<<endl;
+           cout<<"2 --> Enter Kvadrat"<<endl;
+           cout<<"3 --> Enter Circle"<<endl;
+           cout<<"4 --> Print Rectangle Set"<<endl;
+           cout<<"5 --> Print Kvadrat Set"<<endl;
+           cout<<"6 --> Print Circle Set"<<endl;
+           cout<<"7 --> Show Biggest elements of each Set"<<endl;
+           cout<<"8 --> Show Number of Elements of each Set"<<endl;
+           cout<<"9 --> End"<<endl;
+}
