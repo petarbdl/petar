@@ -1,0 +1,33 @@
+Во еден систем пристигнуваат процеси кои треба да бидат опслужени. Секој процес има идентификационен број и приоритет. 
+Напиши прграма која за внесена листа на процеси и приоритети ќе прикаже по кој редослед тие ќе бидат опслужени.
+
+/*MAIN*/
+#include <iostream>
+#include <map>
+#include <algorithm>
+
+using namespace std;
+
+typedef multimap<int,int, greater<int>> mapa;
+
+int main()
+{
+    int id, prio;
+    mapa pair;
+    while(1)
+    {
+        cout<<"Enter Process Id number"<<endl;
+        cin>>id;
+        cout<<"Enter PID priority"<<endl;
+        cin>>prio;
+        if(id == NULL || prio == NULL)
+            break;
+        pair.insert(mapa::value_type(prio,id));
+    }
+    mapa::iterator i;
+    for(i = pair.begin();i!= pair.end();++i)
+    {
+        cout<<i->second<<" with priority "<<i->first<<endl;
+    }
+    return 0;
+}
