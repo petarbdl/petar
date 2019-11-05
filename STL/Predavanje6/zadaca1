@@ -1,1 +1,128 @@
+Во една банка пристигаат уплати за штедачи. Напиши програма во која ќе се внесуваат податоци за уплати 
+и ќе се прикажува листа и вкупна уплата за даден штедач. Импламентирај класа Uplata која содржи податоци за штедач 
+и големина на уплата. Користи контејнер multimap. Програмата треба да овозможува едноставно мени за внесување и прикажување 
+на уплати.
 
+1.      Додај уплата
+
+2.      Прикажи уплати за даден штедач
+
+3.      Крај
+
+
+/*uplata.h*/
+#ifndef UPLATA_H
+#define UPLATA_H
+#include <string>
+
+class Uplata
+{
+private:
+    char* name;
+    int goleminaNaUplata;
+public:
+    Uplata();
+    Uplata(char*,int);
+    char* getName() const;
+    int getGoleminaNaUplata() const;
+};
+
+#endif // UPLATA_H
+
+
+/*uplata.cpp*/
+#include <uplata.h>
+#include <iostream>
+#include <cassert>
+#include <string>
+
+Uplata::Uplata(){}
+
+Uplata::Uplata(char* n, int g)
+{
+    name = new char[strlen(n)];
+    assert(name != NULL);
+    strcpy(name,n);
+    goleminaNaUplata=g;
+}
+
+char* Uplata::getName() const
+{
+    return name;
+}
+
+int Uplata::getGoleminaNaUplata() const
+{
+    return goleminaNaUplata;
+}
+
+
+/MAIN/
+#include <iostream>
+#include <uplata.h>
+#include <map>
+
+typedef std::multimap<char*, int> mapa;
+
+using namespace std;
+
+void menu();
+
+int main()
+{
+    char* name, *tmp, flag=0;
+    tmp = new char[20];
+    name = new char[20];
+    int uplata, input;
+    mapa pair;
+    while(1)
+    {
+        menu();
+        cin>>input;
+        switch (input) {
+        case 1:
+        {
+            cout<<"Enter name of customer"<<endl;
+            cin>>name;
+            cout<<"Enter vlaue of payment"<<endl;
+            cin>>uplata;
+            Uplata customer(name,uplata);
+            pair.insert(mapa::value_type(customer.getName(),customer.getGoleminaNaUplata()));
+        }
+            break;
+        case 2:
+        {
+            cout<<"Enter coustomer name "<<endl;
+            cin>>tmp;
+            for(mapa::iterator i = pair.begin(); i != pair.end();i++)
+            {
+                if(strcmp(i->first,tmp) == 0)
+                {
+                    cout<<i->second<<" "<<endl;
+                }
+            }
+            delete [] tmp;
+        }
+            break;
+        case 3:
+            flag=1;
+            break;
+        default:
+            cout<<"Pogreshen izbor"<<endl;
+            flag=1;
+            break;
+        }
+        if(flag==1)
+            break;
+    }
+
+
+    return 0;
+}
+
+void menu()
+{
+    cout<<"1 --> Enter peyment"<<endl;
+    cout<<"2 --> Show all payments of given customer"<<endl;
+    cout<<"3 --> END"<<endl;
+}
