@@ -1,0 +1,131 @@
+Напиши класа Imenik којa содржи ime и tel_broj. Креирај телефонски именик користејќи контејнер vector. 
+Прикажи го именикот во абецеден редослед.
+
+/*imenik.h*/
+#ifndef IMENIK_H
+#define IMENIK_H
+
+class Imenik
+{
+private:
+    char *name;
+    int phoneNumber;
+public:
+    Imenik();
+    Imenik(char*, int);
+    void setName(char*);
+    void setNumber(int);
+    char* getName();
+    int getNumber();
+    void print();
+    bool operator<(const Imenik &i) const;
+};
+
+#endif // IMENIK_H
+
+
+/*imenic.cpp*/
+#include <imenik.h>
+#include <iostream>
+#include <cassert>
+
+using namespace std;
+
+Imenik::Imenik(){}
+
+Imenik::Imenik(char *c, int n)
+{
+    name = new char[strlen(c)+1];
+    assert(name != NULL);
+    strcpy(name,c);
+
+    phoneNumber = n;
+}
+
+void Imenik::setName(char* n)
+{
+    name = new char[strlen(n)+1];
+    assert(name != NULL);
+    strcpy(name,n);
+}
+
+void Imenik::setNumber(int n)
+{
+    phoneNumber = n;
+}
+
+char* Imenik::getName()
+{
+    return name;
+}
+
+int Imenik::getNumber()
+{
+    return phoneNumber;
+}
+
+void Imenik::print()
+{
+    cout<<"User Name: "<<getName()<<endl;
+    cout<<"User Phone: "<<getNumber()<<endl;
+}
+
+bool Imenik::operator<(const Imenik &i) const
+{
+    return (strcmp(name,i.name));
+}
+
+
+/*MAIN*/
+#include <iostream>
+#include <imenik.h>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+    int n, number;//Number of Users and phoneNumber
+    char *name;//User Name
+    name  = new char[20];
+    vector<Imenik> imenik;
+    cout<<"Enter Number of Users"<<endl;
+    cin>>n;
+
+    for(int i=0;i<n;i++)
+    {
+        cout<<"Enter User Name"<<endl;
+        cin>>name;
+        cout<<"Enter User Phone Number"<<endl;
+        cin>>number;
+        Imenik l(name,number);
+        imenik.push_back(l);
+    }
+    vector<Imenik>::iterator i;//First iterator
+    vector<Imenik>::iterator i2;//Second iterator
+    //Vector sorting
+    for(i=imenik.begin();i != imenik.end(); ++i)
+    {
+        for(i2=i;i2 != imenik.end(); ++i2)
+        {
+            if(strcmp(i->getName(),i2->getName())>0)
+            {
+                char *tmp=i->getName();
+                int tmp1 = i->getNumber();
+                i->setName(i2->getName());
+                i2->setName(tmp);
+
+                i->setNumber(i2->getNumber());
+                i2->setNumber(tmp1);
+            }
+
+        }
+    }
+    //Vector printing
+    for(i=imenik.begin();i != imenik.end();++i)
+    {
+        i->print();
+    }
+    return 0;
+}
