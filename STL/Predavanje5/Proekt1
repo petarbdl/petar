@@ -1,0 +1,201 @@
+/*krug.h*/
+#ifndef KRUG_H
+#define KRUG_H
+
+class Krug
+{
+private:
+    double radius;
+public:
+    Krug();
+    Krug(double);
+    double getPloshtina();
+    void pecati();
+};
+
+#endif // KRUG_H
+
+
+/*kvadrat.h*/
+#ifndef KVADRAT_H
+#define KVADRAT_H
+
+class Kvadrat
+{
+private:
+    int side;
+public:
+    Kvadrat();
+    Kvadrat(int);
+    int getPloshtina();
+    void pecati();
+};
+
+#endif // KVADRAT_H
+
+
+/*pravoagolnik.h*/
+#ifndef PRAVOAGOLNIK_H
+#define PRAVOAGOLNIK_H
+
+class Pravoagolnik
+{
+private:
+    double sideA;
+    double sideB;
+public:
+    Pravoagolnik();
+    Pravoagolnik(double, double);
+    double getArea();
+    void pecati();
+};
+
+#endif // PRAVOAGOLNIK_H
+
+
+/*krug.cpp*/
+#include <krug.h>
+#include <iostream>
+
+Krug::Krug(){}
+
+Krug::Krug(double r)
+{
+    radius=r;
+}
+
+double Krug::getPloshtina()
+{
+    return radius*radius*3.14;
+}
+
+void Krug::pecati()
+{
+    std::cout<<"Krug with radius "<<radius<<std::endl;
+}
+
+
+/*kvadrat.cpp*/
+#include <kvadrat.h>
+#include <iostream>
+
+Kvadrat::Kvadrat(){}
+
+Kvadrat::Kvadrat(int a)
+{
+    side=a;
+}
+
+int Kvadrat::getPloshtina()
+{
+    return side*side;
+}
+
+void Kvadrat::pecati()
+{
+    std::cout<<"Kvadrat with side "<<side<<std::endl;
+}
+
+
+
+/**pravoagolnik.cpp/
+#include <pravoagolnik.h>
+#include <iostream>
+
+Pravoagolnik::Pravoagolnik(){}
+
+Pravoagolnik::Pravoagolnik(double a, double b)
+{
+    sideA=a;
+    sideB=b;
+}
+
+double Pravoagolnik::getArea()
+{
+    return sideA*sideB;
+}
+
+void Pravoagolnik::pecati()
+{
+    std::cout<<"Krug with side A: "<<sideA<<" and side B: "<<sideB<<std::endl;
+}
+
+
+/MAIN/
+#include <iostream>
+#include <pravoagolnik.h>
+#include <kvadrat.h>
+#include <krug.h>
+#include <list>
+
+using namespace std;
+
+template <class T> class Mnozestvo
+{
+private:
+    list<T> l;
+public:
+    Mnozestvo();
+    void insertInM(T);
+    void findBiggest();
+    list<T> getLista();
+};
+
+template <class T>
+Mnozestvo<T>::Mnozestvo(){}
+
+template <class T>
+void Mnozestvo<T>::insertInM(T newElement)
+{
+    l.push_back(newElement);
+}
+
+template <class T>
+void Mnozestvo<T>::findBiggest()
+{
+    double max=0;
+    typename list<T>::iterator i;
+    for(i = l.begin();i != l.end(); ++i)
+    {
+        if(i->getArea()>max)
+        {
+            max=i->getArea();
+        }
+    }
+    cout<<max<<endl;
+}
+
+template <class T>
+list<T> Mnozestvo<T>::getLista()
+{
+    return l;
+}
+
+template <class T>
+void printMnozestvo(Mnozestvo<T> m)
+{
+    list<T> l = m.getLista();
+    typename list<T>::iterator i;
+    for(i = l.begin();i != l.end(); ++i)
+        i->pecati();
+}
+
+int main()
+{
+    Mnozestvo<Pravoagolnik> m;
+    Mnozestvo<Krug> k;
+    Krug k1(4.4);
+    Krug k2(5.5);
+    k.insertInM(k1);
+    k.insertInM(k2);
+    Pravoagolnik p1(10.11,9.1);
+    Pravoagolnik p(15.5,20.6);
+    m.insertInM(p1);
+    m.insertInM(p);
+    m.findBiggest();
+    printMnozestvo(m);
+    cout<<endl;
+    printMnozestvo(k);
+    return 0;
+}
+
