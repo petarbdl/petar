@@ -1,0 +1,49 @@
+Напиши function template palindrom кој има параметар vector и враќа true ако векторот е палиндром, а false во спротивно.
+
+/**MAIN/
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+template <typename T>
+bool palindrom(vector<T> v)
+{
+    typename vector<T>::iterator i;
+    typename vector<T>::reverse_iterator ri;
+    i=v.begin();
+    ri=v.rbegin();
+    while(i != v.end() && ri != v.rend())
+    {
+        if(*i!=*ri)
+        {
+            return false;
+        }
+        i++;
+        ri++;
+    }
+    return true;
+}
+
+int main()
+{
+    char *word;
+    word= new char [20];
+    vector<char> v;
+    cout<<"Enter word"<<endl;
+    cin>>word;
+    for(int i=0; i<strlen(word);i++)
+    {
+        v.push_back(word[i]);
+    }
+
+    if(palindrom(v))
+    {
+        cout<<"Palindrom!!!"<<endl;
+    }
+    else
+    {
+        cout<<"It's not Palindrom"<<endl;
+    }
+    return 0;
+}
