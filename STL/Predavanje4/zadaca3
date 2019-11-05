@@ -1,0 +1,54 @@
+За текст внесен од тастатура прикажи ги сите зборови од кои се состои текстот по еднаш, во абецеден редослед.
+
+/*MAIN*/
+#include <iostream>
+#include <vector>
+#include <string>
+#include <cstdio>
+#include <algorithm>
+
+using namespace std;
+
+void split(string);
+void print(vector<string>);
+
+int main()
+{
+    string str;
+    getline(cin,str);
+    split(str);
+    return 0;
+}
+
+void split(string s)
+{
+    vector<string> words;
+    string zbor="";
+
+    for(char x : s)
+    {
+        if(x == ' ')
+        {
+            words.push_back(zbor);
+            zbor="";
+        }
+        else
+        {
+            zbor+=x;
+        }
+    }
+    words.push_back(zbor);
+    sort(words.begin(),words.end());
+    unique(words.begin(),words.end());
+    print(words);
+}
+
+void print(vector<string> s)
+{
+    vector<string>::iterator i;
+
+    for(i = s.begin() ; i != s.end(); ++i)
+    {
+        cout<<*i<<endl;
+    }
+}
