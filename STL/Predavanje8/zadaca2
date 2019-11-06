@@ -1,0 +1,119 @@
+Во една фирма платата на вработените се пресметува како производ од број на бодови и вредност на бод. 
+Вредноста на бодот е иста за сите вработени.Имплементирај класа Vraboten која содржи податочни членови ime и bodovi. 
+Напиши програма со која ќе се пресмета вкупната сума за да се исплати месечна плата за целата фирма. 
+Програмата треба да ја прикаже вкупната сума и список на вработените сортиран според бројот на бодови. 
+За пресметување на сумата да се употреби accumulate. За сортирање на листата да се употреби sort.  
+
+/*vraboteni.h*/
+#ifndef VRABOTEN_H
+#define VRABOTEN_H
+
+class Vraboten
+{
+private:
+     char* ime;
+     int bod;
+     int valueBod;
+public:
+     Vraboten();
+     Vraboten(char*, int, int );
+     int getPlata() const ;
+     char* getIme();
+     int getBodovi();
+     bool operator<(Vraboten &);
+};
+
+#endif // VRABOTEN_H
+
+
+/*vraboteni.cpp*/
+#include <vraboten.h>
+#include <cassert>
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+Vraboten::Vraboten(){};
+
+Vraboten::Vraboten(char *i, int b,int vb)
+{
+    ime = new char[strlen(i)];
+    assert(ime != NULL);
+    strcpy(ime,i);
+    valueBod=vb;
+    bod=b;
+}
+
+int Vraboten::getPlata() const
+{
+    return bod*valueBod;
+}
+
+char* Vraboten::getIme()
+{
+    return ime;
+}
+
+int Vraboten::getBodovi()
+{
+    return bod;
+}
+
+bool Vraboten::operator<(Vraboten& v)
+{
+    return bod < v.bod;
+}
+
+
+/*MAIN*/
+#include <iostream>
+#include <vraboten.h>
+#include <string>
+#include <algorithm>
+#include <iterator>
+#include <vector>
+#include <numeric>
+
+using namespace std;
+
+int main()
+{
+    ostream_iterator<int> out (cout," ");
+    vector<Vraboten> vraboteni;
+    char *ime;//Name of Vraboten
+    ime = new char[10];
+    int k, b;//value of one bod and bod
+    cout<<"Enter value of one Bod "<<endl;
+    cin>>k;
+
+    cout<<"Enter Vraboten Name"<<endl;
+    while(cin>>ime)
+    {
+        cout<<"Enter Vraboten Bodovi(end-of-file to exixt)"<<endl;
+        cin>>b;
+        Vraboten v(ime,b,k);
+        vraboteni.push_back(v);
+        cout<<"Enter Vraboten Name(end-of-file to exit)"<<endl;
+    }
+
+    //Sort Vraboteni by Bod value
+    vector<Vraboten>::reverse_iterator j;
+    sort(vraboteni.begin(),vraboteni.end(),[ ](Vraboten &v1, Vraboten &v2){ return v1.getBodovi()<v2.getBodovi();});
+    for(j = vraboteni.rbegin();j != vraboteni.rend(); ++j)
+    {
+        cout<<j->getIme()<<" "<<j->getBodovi()<<endl;
+    }
+
+    //Calculate Sum for Salary
+    int rez=accumulate(vraboteni.begin(),vraboteni.end(),0,[](int tmp, Vraboten v2)
+    {
+        return tmp+v2.getPlata();
+    });//Sum
+    cout<<"Overall sum of money needed for this month's salary is "<<rez<<endl;
+
+    return 0;
+}
+
+
+ 
