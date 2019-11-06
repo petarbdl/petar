@@ -1,0 +1,119 @@
+Напиши програма за играње на едноставна игра со карти која ги има следните правила: 
+шпилот од 52 карти се меша и се делат картите на сите играчи подеднакво. 
+Добива оној играч што има најголем збир.
+б) Вредностите на картите се од 1 до 14 соодветно, А има вредност 1. Картите срце се бројат двојно.
+
+/*MAIN*/
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+#include <ctime>
+#include <algorithm>
+#include <numeric>
+
+using namespace std;
+
+int nextNumber();
+int newRandom(int);
+int dupliraj(int);
+
+int main()
+{
+    int igrac1[13],igrac2[13],igrac3[13],igrac4[13];
+    srand(unsigned (time(nullptr)));
+    ostream_iterator<int> out(cout," ");
+    vector<int> lista(52), printMax(4);
+    generate_n(lista.begin(),52,nextNumber);//Fill vector with numbers 1 to 13
+    //Double the value of 13 elements, this is for Srce cards
+    vector<int>::iterator tmp;
+    tmp=lista.begin();
+    for(int i=0;i<=12;i++)
+    {
+        lista[i] = (*tmp)*2;
+        tmp++;
+    }
+    //copy(lista.begin(),lista.end(),out);
+    random_shuffle(lista.begin(),lista.end(), newRandom);// shuffle deck
+    //Give every player 13 cards
+    tmp=lista.begin();
+    for(int i=0;i<=12;i++)
+    {
+        igrac1[i] = *tmp;
+        tmp++;
+    }
+    for(int i=0;i<=12;i++)
+    {
+        igrac2[i] = *tmp;
+        tmp++;
+    }
+    for(int i=0;i<=12;i++)
+    {
+        igrac3[i] = *tmp;
+        tmp++;
+    }
+    for(int i=0;i<=12;i++)
+    {
+        igrac4[i] = *tmp;
+        tmp++;
+    }
+    //print cards of all four players
+    int player1,player2,player3,player4;
+    cout<<"Cards of Player1: ";
+    copy(igrac1, igrac1+13,out);
+    cout<<endl;
+    player1 = accumulate(igrac1,igrac1+13, 0);
+    cout<<player1<<endl;
+    cout<<"Cards of Player2: ";
+    copy(igrac2, igrac2+13,out);
+    cout<<endl;
+    player2 = accumulate(igrac2,igrac2+13, 0);
+    cout<<player2<<endl;
+    cout<<"Cards of Player3: ";
+    copy(igrac3, igrac3+13,out);
+    cout<<endl;
+    player3 = accumulate(igrac3,igrac3+13, 0);
+    cout<<player3<<endl;
+    cout<<"Cards of Player4: ";
+    copy(igrac4, igrac4+13,out);
+    cout<<endl;
+    player4 = accumulate(igrac4,igrac4+13, 0);
+    cout<<player4<<endl;
+    //Enter sum off all players in new vector, in order to find max value
+    printMax.push_back(player1);
+    printMax.push_back(player2);
+    printMax.push_back(player3);
+    printMax.push_back(player4);
+    int maxElement = *(max_element(printMax.begin(),printMax.end())) ;
+    if(player1 == maxElement)
+    {
+        cout<<"Player1 is WINNER with "<<maxElement<<" points"<<endl;
+    }
+    else
+    {
+        if(player2 == maxElement)
+            cout<<"Player2 is WINNER with "<<maxElement<<" points"<<endl;
+        else
+            if(player3 == maxElement)
+                cout<<"Player3 is WINNER with "<<maxElement<<" points"<<endl;
+        else
+                cout<<"Player4 is WINNER with "<<maxElement<<" points"<<endl;
+    }
+    return 0;
+}
+
+int nextNumber()
+{
+    static int i=0;
+    return (i++%13)+1;
+}
+
+int newRandom(int n)
+{
+    return rand()%n;
+}
+
+int dupliraj(int a)
+{
+    return (a*2);
+}
