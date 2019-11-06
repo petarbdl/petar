@@ -1,0 +1,45 @@
+ Креирај два вектори со случаен број на елементи кој е во интервалот [1, 1000). 
+ Потоа ископирај го вториот вектор во првиот со copy. Претходно провери дали 
+ првиот вектор има големина поголема или еднаква на големината на првиот. 
+ Ако не е, да се изврши фрлање на исклучок пред да се изврши копирањето на векторот. 
+ Постапката да се повторува во циклус во кој е сместена try-catch секвенца.
+ 
+ /*MAIN*/
+ #include <iostream>
+#include <vector>
+#include <ctime>
+#include <algorithm>
+#include <iterator>
+
+using namespace std;
+
+inline bool checkSize(vector<int> &v1, vector<int> &v2)
+{
+    if(v1.size()>=v2.size())
+    {
+        return true;
+    }
+    else
+        throw "Size of Vector1 is smaller than Size of vector2";
+}
+
+int main()
+{
+    ostream_iterator<int> out(cout," ");
+    time_t *t=nullptr;
+    srand(time(t));
+    int size1, size2;
+    size1=rand()%2000+1;
+    size2=rand()%2000+1;
+    vector<int> vektor1(size1), vektor2(size2);
+    try {
+        if(checkSize(vektor1,vektor2))
+        {
+            copy(vektor2.begin(),vektor2.end(),vektor1.begin());
+            copy(vektor1.begin(),vektor1.end(),out);
+        }
+    } catch (const char* message) {
+        cerr<<message<<endl;
+    }
+    return 0;
+}
