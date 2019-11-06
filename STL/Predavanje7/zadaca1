@@ -1,0 +1,74 @@
+#include <iostream>
+#include <algorithm>
+#include <list>
+#include <iterator>
+#include <cstdlib>
+#include <ctime>
+#include <numeric>
+
+using namespace std;
+
+bool parni(int);
+bool less2000(int);
+bool interval1(int);
+bool interval2(int);
+bool interval3(int);
+bool interval4(int);
+
+int main()
+{
+    int element;
+    long long result;
+    list<int> lista;
+    srand(time(nullptr));
+    for(int i=0;i<=10000;i++)
+    {
+        element=(rand()%10000);
+        lista.push_back(element);
+    }
+    result = count_if(lista.begin(),lista.end(),parni);
+    cout<<"Number of even numbers is "<<result;
+    result = count_if(lista.begin(),lista.end(),less2000);
+    cout<<"\nNumber of elements less then 2000 in list is "<<result;
+    result = count_if(lista.begin(),lista.end(),interval1);
+    cout<<"\nNumber of elements within interval [2000,4000) in list is "<<result;
+    result = count_if(lista.begin(),lista.end(),interval2);
+    cout<<"\nNumber of elements within interval [4000,6000) in list is "<<result;
+    result = count_if(lista.begin(),lista.end(),interval3);
+    cout<<"\nNumber of elements within interval [6000,8000) in list is "<<result;
+    result = count_if(lista.begin(),lista.end(),interval4);
+    cout<<"\nNumber of elements within interval [8000,10000) in list is "<<result;
+    cout<<"\nAverage value of the list is "<<(accumulate(lista.begin(),lista.end(),0)/10000)<<endl;
+    list<int>::iterator start;
+    return 0;
+}
+
+bool parni(int number)
+{
+    return (number%2==0);
+}
+
+bool less2000(int number)
+{
+    return number<2000;
+}
+
+bool interval1(int number)
+{
+    return (number>=2000 && number<4000);
+}
+
+bool interval2(int number)
+{
+    return (number>=4000 && number<6000);
+}
+
+bool interval3(int number)
+{
+    return (number>=6000 && number<8000);
+}
+
+bool interval4(int number)
+{
+    return (number>=8000 && number<10000);
+}
