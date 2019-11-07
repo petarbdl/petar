@@ -15,4 +15,282 @@
 
 Определи ја унијата и пресекот на сите правоаголници и унијата и пресекот на сите квадрати што се дефинирани со датотеките.
 
+/*pravoagolnik.h*/
+#ifndef PRAVOAGOLNIK_H
+#define PRAVOAGOLNIK_H
 
+class Pravoagolnik
+{
+private:
+    double sirina;
+    double dolzina;
+public:
+    Pravoagolnik();
+    Pravoagolnik(double,double);
+    void print();
+    double getSideA() const;
+    double getSideB() const;
+};
+
+#endif // PRAVOAGOLNIK_H
+
+
+/*kvadrat.h*/
+#ifndef KVADRAT_H
+#define KVADRAT_H
+
+class Kvadrat
+{
+private:
+    double strana;
+public:
+    Kvadrat();
+    Kvadrat(double);
+    void print();
+    double getSide() const;
+};
+
+#endif // KVADRAT_H
+
+
+/pravoagolnik.cpp/
+#include <pravoagolnik.h>
+#include <iostream>
+
+Pravoagolnik::Pravoagolnik()
+{
+    dolzina=0;
+    sirina=0;
+}
+
+Pravoagolnik::Pravoagolnik(double dolzina, double shirina)
+{
+    Pravoagolnik::dolzina = dolzina;
+    Pravoagolnik::sirina = shirina;
+}
+
+void Pravoagolnik::print()
+{
+    std::cout<<"Pravoagolnik with side A "<<dolzina<<" adn side B "<<sirina<<std::endl;
+}
+
+double Pravoagolnik::getSideA() const
+{
+    return dolzina;
+}
+
+double Pravoagolnik::getSideB() const
+{
+    return sirina;
+}
+
+
+/*kvadrat.cpp*/
+#include <kvadrat.h>
+#include <iostream>
+
+Kvadrat::Kvadrat()
+{
+    strana=0;
+}
+
+Kvadrat::Kvadrat(double strana)
+{
+    Kvadrat::strana=strana;
+}
+
+void Kvadrat::print()
+{
+    std::cout<<"Kvadrat with side "<<strana<<std::endl;
+}
+
+double Kvadrat::getSide() const
+{
+    return strana;
+}
+
+
+/*MAIN*/
+#include <iostream>
+#include <vector>
+#include <pravoagolnik.h>
+#include <kvadrat.h>
+#include <algorithm>
+#include <fstream>
+#include <ctype.h>
+
+using namespace std;
+
+
+inline bool customSquare(const Kvadrat &p1, const Kvadrat &p2)//Function for comparison in Square vector
+{
+    return p1.getSide()<p2.getSide();
+}
+
+inline bool customRectangle(const Pravoagolnik &p1, const Pravoagolnik &p2)//Function for comparison in Reqtangle vector
+{
+     return (p1.getSideA()*p1.getSideB())<(p2.getSideA()*p2.getSideB());
+}
+
+int main()
+{
+    int i;
+    double a, b;
+    vector<Pravoagolnik> rectanglesFromDatOne;
+    vector<Pravoagolnik> rectanglesFromDatTwo;
+    vector<Kvadrat> squaresFromDatOne;
+    vector<Kvadrat> squaresFromDatTwo;
+
+    ifstream inFile("datotekaOne.txt", ios::in);
+    ifstream inFileDatTwo("datotekaTwo.txt", ios::in);
+    //Reading from File One and Inserting elements
+        if(!inFile)
+        {
+            cerr<<"Failed to open file"<<endl;
+            exit(1);
+        }
+        while(inFile>>i)
+        {
+            try
+            {
+            if(isalpha(i))
+            {
+                throw exception();
+            }
+            if(i==2)
+            {
+                inFile>>a;
+                if(isalpha(a))
+                    throw exception();
+                Kvadrat k(a);
+                squaresFromDatOne.push_back(k);
+            }
+            else
+            {
+
+                inFile>>a;
+                inFile>>b;
+                if(isalpha(a)||isalpha(b))
+                    throw exception();
+                Pravoagolnik p(a,b);
+                rectanglesFromDatOne.push_back(p);
+            }
+            }
+            catch(exception &e)
+            {
+                cout<<"Exception is thrown! Entered value is not digit"<<endl;
+            }
+        }
+        //Reading from File Two and inserting elements
+        if(!inFileDatTwo)
+        {
+            cerr<<"Failed to open file"<<endl;
+            exit(1);
+        }
+        while(inFileDatTwo>>i)
+        {
+            try
+            {
+            if(isalpha(i))
+            {
+                throw exception();
+            }
+            if(i==2)
+            {
+                inFileDatTwo>>a;
+                if(isalpha(a))
+                    throw exception();
+                Kvadrat k(a);
+                squaresFromDatTwo.push_back(k);
+            }
+            else
+            {
+                inFile>>a;
+                inFile>>b;
+                if(isalpha(a)||isalpha(b))
+                    throw exception();
+                Pravoagolnik p(a,b);
+                rectanglesFromDatTwo.push_back(p);
+            }
+            }
+            catch(exception &e)
+            {
+                cout<<"Exception is thrown! Entered value is not digit";
+            }
+        }
+    //Rectangle Union and Intersection
+    vector<Pravoagolnik> tmpvector;
+    vector<Pravoagolnik> tmpvectorIntersection;
+    vector<Pravoagolnik>::iterator it;
+    sort(rectanglesFromDatOne.begin(),rectanglesFromDatOne.end(),[](const Pravoagolnik &p1, const Pravoagolnik &p2)//Sorting Rectangle set
+    {
+        return (p1.getSideA()*p1.getSideB())<(p2.getSideA()*p2.getSideB());
+    });
+    sort(rectanglesFromDatTwo.begin(),rectanglesFromDatTwo.end(),[](const Pravoagolnik &p1, const Pravoagolnik &p2)//Sorting Rectangle set two
+    {
+         return (p1.getSideA()*p1.getSideB())<(p2.getSideA()*p2.getSideB());
+    });
+    //Rectangle Union
+    vector<Pravoagolnik>::iterator i1;
+    set_union(rectanglesFromDatOne.begin(),rectanglesFromDatOne.end(),rectanglesFromDatTwo.begin(),rectanglesFromDatTwo.end(),back_inserter(tmpvector), customRectangle);
+    cout<<"Rectangle UNION:"<<endl;
+    for(i1 = tmpvector.begin();i1 != tmpvector.end();i1++)//Printing Rectangle Union
+    {
+        i1->print();
+    }
+    cout<<endl;
+    //Rectangle Intersection
+    cout<<"Rectangle Intersection: "<<endl;
+    set_intersection(rectanglesFromDatOne.begin(),rectanglesFromDatOne.end(),rectanglesFromDatTwo.begin(),rectanglesFromDatTwo.end(),back_inserter(tmpvectorIntersection), customRectangle);
+    if(tmpvectorIntersection.size()==0)//Printing Square Intersection
+    {
+        cout<<"There is no intersection"<<endl;
+    }
+    else
+    {
+    for(i1 = tmpvectorIntersection.begin();i1 != tmpvectorIntersection.end();i1++)
+    {
+        i1->print();
+    }
+    cout<<endl;
+    }
+
+    //Square Union and Intersection
+    //Square Union
+    vector<Kvadrat> tmpvector2;
+    vector<Kvadrat> tmpvectorIntersection2;
+    vector<Kvadrat>::iterator it2;
+    sort(squaresFromDatOne.begin(),squaresFromDatOne.end(),[](const Kvadrat &p1, const Kvadrat &p2)//Sorting Square set
+    {
+        return p1.getSide()<p2.getSide();
+    });
+    sort(squaresFromDatTwo.begin(),squaresFromDatTwo.end(),[](const Kvadrat &p1, const Kvadrat &p2)//Sorting Square set two
+    {
+         return p1.getSide()<p2.getSide();
+    });
+    //Square Union
+    vector<Kvadrat>::iterator i12;
+    set_union(squaresFromDatOne.begin(),squaresFromDatOne.end(),squaresFromDatTwo.begin(),squaresFromDatTwo.end(),back_inserter(tmpvector2), customSquare);
+    cout<<"Square UNION:"<<endl;
+    for(i12 = tmpvector2.begin();i12 != tmpvector2.end();i12++)//Printing Square Union
+    {
+        i12->print();
+    }
+    cout<<endl;
+    //Square Intersection
+    cout<<"Square Intersection: "<<endl;
+    set_intersection(squaresFromDatOne.begin(),squaresFromDatOne.end(),squaresFromDatTwo.begin(),squaresFromDatTwo.end(),back_inserter(tmpvectorIntersection2), customSquare);
+    if(tmpvectorIntersection2.size()==0)//Printing Square Intersection
+    {
+        cout<<"There is no intersection"<<endl;
+    }
+    else
+    {
+    for(i12 = tmpvectorIntersection2.begin();i12 != tmpvectorIntersection2.end();i12++)
+    {
+        i12->print();
+    }
+    cout<<endl;
+    }
+    return 0;
+}
