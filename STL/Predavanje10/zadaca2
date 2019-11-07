@@ -1,0 +1,141 @@
+Креирај класа Garaza во која има Avtomobil што може да има проблеми со својот Motor. 
+Употреби try блок во конструкторот на Garaza за фаќање на исклучокот од Motor кога се иницијализира Avtomobil. 
+Фрли друг исклучок од catch блокот во конструкторот на  Garaza и фати го во main( ).
+
+/*motor.h*/
+#ifndef MOTOR_H
+#define MOTOR_H
+
+class Motor
+{
+private:
+    bool checkEngine;
+public:
+    Motor();
+    Motor(bool);
+};
+
+#endif // MOTOR_H
+
+
+/*avtomobil.h*/
+#ifndef AVTOMOBIL_H
+#define AVTOMOBIL_H
+
+#include <motor.h>
+
+class Avtomobil
+{
+private:
+    Motor m;
+public:
+    Avtomobil();
+    Avtomobil(bool);
+};
+
+#endif // AVTOMOBIL_H
+
+
+/*garaza.h*/
+#ifndef GARAZA_H
+#define GARAZA_H
+#include <avtomobil.h>
+
+class Garaza
+{
+private:
+    Avtomobil a;
+public:
+    Garaza();
+    Garaza(bool);
+};
+
+#endif // GARAZA_H
+
+
+/*motor.cpp*/
+#include <motor.h>
+#include <exception>
+#include <iostream>
+
+using namespace std;
+
+Motor::Motor(){};
+
+Motor::Motor(bool ce)
+{
+    checkEngine=ce;
+    try {
+        if(checkEngine==1)
+        {
+            cout<<"Exception thrown in Motor CLASS"<<endl;
+            throw exception();
+        }
+    } catch (exception &tmp) {
+        cout<<"Exception catched in Motor CLASS and pass again"<<endl;
+        throw ;
+    }
+
+}
+
+
+
+/*avtomobil.cpp*/
+#include <avtomobil.h>
+#include <motor.h>
+#include <exception>
+#include <iostream>
+
+using namespace std;
+
+Avtomobil::Avtomobil(){}
+
+Avtomobil::Avtomobil(bool i)
+{
+    try {
+        m = new Motor(i);
+    } catch (exception &tmp) {
+        cout<<"Exception catched in Avtomobil CLASS and pass again"<<endl;
+        throw;
+    }
+
+}
+
+
+
+/*garaza.cpp*/
+#include <avtomobil.h>
+#include <garaza.h>
+#include <iostream>
+
+using namespace std;
+
+Garaza::Garaza(){}
+
+Garaza::Garaza(bool i)
+{
+    try {
+        a = new Avtomobil(i);
+    } catch (exception &e) {
+        cout<<"Exception Catched in Garaza CLASS and passed again"<<endl;
+        throw;
+    }
+}
+
+
+/*MAIN*/
+#include <iostream>
+#include <garaza.h>
+
+using namespace std;
+
+int main()
+{
+    try {
+       Garaza g = new Garaza(1);
+    } catch (exception &e) {
+        cout<<"Exception Finally catched in main and printed"<<endl;
+    }
+
+    return 0;
+}
