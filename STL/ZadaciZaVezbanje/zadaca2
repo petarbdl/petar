@@ -1,0 +1,129 @@
+Во еден магацин се води евиденција за артикли. Во текстуална датотека inventar.txt се чуваат следните податоци за секој артикл: 
+инвентарен број (int), количество (int) и цена (double) за секој артикл.  
+Креирај класа Inventar која содржи id, kolicestvo и cena.  Напиши програма во која се создава vector од артикли, 
+а потоа прикажува вкупна вредност на артиклите во магацинот и листа на сите артикли за кои количеството е помало од 10. 
+Пресметувањето на вкупната вредност и прикажувањето на артиклите изврши го со STL алгоритми. 
+Ако не постои влезна датотека, програмата да фрли исклучок.
+
+/*inventar.h*/
+#ifndef INVENTAR_H
+#define INVENTAR_H
+
+class Inventar
+{
+private:
+    int id;
+    int sum;
+    double price;
+public:
+    Inventar();
+    Inventar(int,int,double);
+    int getId() const;
+    int getSum() const;
+    double getPrice() const;
+    void print() const;
+};
+
+#endif // INVENTAR_H
+
+
+/*inventar.cpp*/
+#include <inventar.h>
+#include <iostream>
+
+using namespace std;
+
+Inventar::Inventar()
+{
+    id=0;
+    sum=0;
+    price=0;
+}
+
+Inventar::Inventar(int id, int sum, double price)
+{
+    Inventar::id = id;
+    Inventar::sum = sum;
+    Inventar::price = price;
+}
+
+int Inventar::getId() const
+{
+    return id;
+}
+
+int Inventar::getSum() const
+{
+    return sum;
+}
+
+double Inventar::getPrice() const
+{
+    return price;
+}
+
+void Inventar::print() const
+{
+    cout<<"Product ID "<<id<<" Product kolicina: "<<sum<<" Product price: "<<price<<endl;
+}
+
+
+/*MAIN*/
+#include <iostream>
+#include <vector>
+#include <inventar.h>
+#include <algorithm>
+#include <numeric>
+#include <iterator>
+#include <fstream>
+
+using namespace std;
+
+int main()
+{
+    int id, kolicina;
+    double price;
+    vector<Inventar> artikli;
+    try
+    {
+    ifstream myfile("inventar.txt", ios::in);
+    if(!myfile)
+    {
+        throw exception();
+    }
+    while(myfile>>id>>kolicina>>price)
+    {
+        Inventar i(id,kolicina,price);
+        artikli.push_back(i);
+    }
+
+    //Remove articles with kolicina smaller than 10
+    artikli.erase(remove_if(artikli.begin(), artikli.end(), [](const Inventar &tmp)
+    {
+        if(tmp.getSum()>10)
+            return true;
+        return false;
+    }), artikli.end());
+    vector<Inventar>::iterator tmp;
+    for(tmp = artikli.begin(); tmp != artikli.end(); tmp++)
+    {
+        tmp->print();
+    }
+
+    //SUM OF ALL PRICES
+    double rez=0.0;
+    cout<<"Sum of all prices is "<<accumulate(artikli.begin(), artikli.end(), rez,[]( double tmp ,Inventar &tmpI)
+    {
+       return tmp+tmpI.getPrice();
+    })<<endl;
+
+    myfile.close();
+    return 0;
+
+    }
+    catch(exception)
+    {
+        cout<<"Exception catched:\n FILE NOT FOUND!!!"<<endl;
+        return 0;
+    }
+}
