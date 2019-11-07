@@ -1,0 +1,124 @@
+Напиши програма за играње на играта ’бесилка’. Креирај класа која содржи char и bool за индикација дали знак веќе бил погоден.
+Одбери збор и вчитај го во вектор со објекти од таа класа. Менувањето и прикажувањето на елементите од векторот изврши го со 
+STL алгоритми. Играчот во циклус внесува збор кој смее да се состои само од мали букви. Ако зборот содржи и други знаци програмата
+да фрли исклучок. За секој збор се прикажуваат знаците што ги погодил и знак ’-’ за знаците што сеуште не ги погодил. 
+Користи бројач на погодувања. Играчот победува ако го погоди зборот пред бројачот да добие вредност 0.
+
+
+/*zbor.h*/
+#ifndef ZBOR_H
+#define ZBOR_H
+
+class Zbor
+{
+private:
+    char letter;
+    bool yn;
+public:
+    Zbor();
+    Zbor(char);
+    bool getYn();
+    char getLetter();
+    void setYn(bool);
+    void setLetter(char);
+};
+
+#endif // ZBOR_H
+
+
+/*zbor.cpp*/
+#include <iostream>
+#include <zbor.h>
+
+Zbor::Zbor(){}
+
+Zbor::Zbor(char l)
+{
+    letter=l;
+    yn=false;
+}
+
+bool Zbor::getYn()
+{
+    return yn;
+}
+
+char Zbor::getLetter()
+{
+    return letter;
+}
+
+void Zbor::setYn(bool tmp)
+{
+    yn=tmp;
+}
+
+void Zbor::setLetter(char l)
+{
+    letter = l;
+}
+
+
+/*MAIN*/
+#include <vector>
+#include <zbor.h>
+
+using namespace std;
+
+int main()
+{
+    char pom[10]="zdravo";
+    vector<Zbor> zbor;
+    for(int i =0 ;i<strlen(pom);i++)
+    {
+        Zbor z(pom[i]);
+        zbor.push_back(z);
+    }
+    vector<Zbor>::iterator i;
+    int counter=10;
+    char tmp;
+    int flag=0;
+
+    while(counter>0)
+    {
+        for(i=zbor.begin();i != zbor.end();i++)
+        {
+            if(i->getYn() == false)
+            {
+                flag=0;
+                break;
+            }
+            flag=1;
+        }
+        if(flag==0)
+        {
+        for(i=zbor.begin();i != zbor.end();i++)
+        {
+
+            cout<<((i->getYn()==false) ? '-' : i->getLetter());
+        }
+        cout<<"Enter letter"<<endl;
+        cin>>tmp;
+        for(i=zbor.begin();i != zbor.end();i++)
+        {
+            if(i->getLetter()==tmp)
+            {
+                if(i->getYn()==true)
+                    cout<<"You have already entered that letter"<<counter<<" more tries"<<endl;
+                else
+                {
+                    i->setYn(true);
+                    cout<<"HIT!!! "<<counter<<" more tries"<<endl;
+                }
+            }
+        }
+        }
+        else
+        {
+            cout<<"Good Job!!!"<<pom<<endl;
+            break;
+        }
+        counter--;
+    }
+    return 0;
+}
