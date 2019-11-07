@@ -1,0 +1,40 @@
+Напиши програма која демонстрира дека ако е фрлен покажувач на создаден објект, објектот нема да биде уништен.
+
+#include <iostream>
+
+using namespace std;
+
+class ThrowException : public exception
+{
+public:
+    ThrowException():exception("Throw Exception constructor")
+    {
+        cout<<"ThrowException() constructor"<<endl;
+    }
+    ~ThrowException()
+    {
+        cout<<"ThrowException() destructor"<<endl;
+    }
+};
+
+int voidFunction(int i)
+{
+    return i%2==0;
+}
+
+int main()
+{
+    ThrowException *exc = new ThrowException();
+    for(int i=0;i<10;i++)
+    {
+    try {
+     if(voidFunction(i)==0)
+         throw exc;
+
+    } catch (ThrowException &temp) {
+            cout<<"Exception catch in main"<<endl;
+        temp.what();
+    }
+    }
+    return 0;
+}
