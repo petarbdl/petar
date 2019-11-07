@@ -1,0 +1,30 @@
+Напиши програма со која сите зборови од текстуална датотека со големина помала од 10 знаци ќе ги запише во друга текстуална датотека.
+
+/*MAIN*/
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <cstdlib>
+
+using namespace std;
+
+int main()
+{
+    char *word;
+    word = new char[20];
+    ifstream inFile("datoteka.txt", ios::in);
+    if(!inFile)
+    {
+        cerr<<"Failed to open file"<<endl;
+        exit(1);
+    }
+    ofstream outFile("datPomoshna.txt", ios::out);
+    while(inFile >> word)
+    {
+        if(strlen(word)<10)
+        {
+            outFile<<word<<" ";
+        }
+    }
+    return 0;
+}
