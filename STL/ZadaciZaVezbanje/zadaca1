@@ -1,0 +1,123 @@
+Креирај class temlate Pole што реализира поле од било кој тип. 
+Имплементирај function template max за определување на најголем елемент во полето. 
+Во main креирај полиња од int, char и string, 
+пополни ги со по 5 произволни елементи и прикажи најголем елемент за секое поле.
+
+/*pole.h*/
+#ifndef POLE_H
+#define POLE_H
+
+template <class T>
+class Pole
+{
+private:
+    T *pole;
+    int size;
+public:
+    Pole();
+    Pole(T *, int);
+    T findMax();
+    void print();
+};
+
+#endif // POLE_H
+
+
+/*pole.cpp*/
+#include <Pole.h>
+#include <cassert>
+#include <string>
+#include <iostream>
+
+using namespace std;
+
+template <class T>
+Pole<T>::Pole(){}
+
+template <class T>
+Pole<T>::Pole(T *p, int s)
+{
+    pole = new T[s];
+    assert(pole!=NULL);
+    pole=p;
+    size=s;
+}
+
+template <class T>
+T Pole<T>::findMax()
+{
+    T m = pole[0];
+    for(int i = 1; i<size; i++)
+    {
+        if(m<pole[i])
+        {
+            m=pole[i];
+        }
+    }
+    return m;
+}
+
+template <class T>
+void Pole<T>::print()
+{
+    for(int i=0;i<size;i++)
+        cout<<pole[i]<<", ";
+    cout<<endl;
+}
+
+template void Pole<int>::print();
+template void Pole<char>::print();
+template void Pole<string>::print();
+
+template Pole<int>::Pole();
+template Pole<char>::Pole();
+template Pole<string>::Pole();
+
+template Pole<int>::Pole(int*,int);
+template Pole<char>::Pole( char *, int );
+template Pole<string>::Pole( string *, int);
+
+template int Pole<int>::findMax();
+template char Pole<char>::findMax();
+template string Pole<string>::findMax();
+
+
+/*MAIN*/
+#include <iostream>
+#include <Pole.h>
+#include <ctime>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+    srand(time(nullptr));
+    char *charNiza;
+    char n[10]={'a','z','k','l','n','m','t','r','b','v'};
+    int *intNiza;
+    string str[6] = {"Petar", "Badaloski", "QtWin","Elena", "Jovanoska", "QtWim"};
+
+    //Test with INTEGER
+    intNiza = new int[11];
+    for(int i=0;i<10;i++)
+        intNiza[i]=rand()%1000;
+    Pole<int> intPole(intNiza,10);
+    intPole.print();
+    cout<<"MAX element e: "<<intPole.findMax()<<endl;
+
+    //Test with CHAR
+    charNiza=new char[10];
+    charNiza = n;
+    Pole<char> charPole(charNiza, 10);
+    charPole.print();
+    cout<<"MAX element e "<<charPole.findMax()<<endl;
+
+    //Test with STRING
+    Pole<string> stringPole(str,6);
+    stringPole.print();
+    cout<<"MAX element e ";
+    cout<<stringPole.findMax();
+    cout<<endl;
+    return 0;
+}
