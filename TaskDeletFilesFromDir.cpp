@@ -35,10 +35,13 @@ int main()
             //remove first file from the list and from the directory
             if(filesList.size() > 0)
             {
-                myDir.remove(filesList.first().fileName());
-                filesList.removeFirst();
                 //Reduce size by size of the file that was just removed
                 size-=filesList.first().size();
+                //Remove file from directory
+                myDir.remove(filesList.first().fileName());
+                //Remove the first file from fileList 
+                filesList.removeFirst();
+               
             }
         }
     }
