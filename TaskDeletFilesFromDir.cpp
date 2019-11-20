@@ -4,15 +4,17 @@
 #include <QDir>
 #include <QDebug>
 #include <QDateTime>
+#include <QtAlgorithms>
 
 using namespace std;
+
+bool lastRead(const QFileInfo &file1, const QFileInfo &file2);
 
 int main()
 {
     qint64 size = 0;//qint64 to keep size return value
-    int flag = 0;
     //HardCoded path to file
-    QDir myDir("C:/Users/Petar/Downloads/petar-master/petar-master/QtProekt1_corrected");
+    QDir myDir("C:/Users/Petar/Downloads/petar-master (1)/petar-master/QtProekt1_corrected");
     //if Directory exists
     if(myDir.exists())
     {
@@ -23,37 +25,23 @@ int main()
         {
             size += fileInfo.size();
         }
+        QDateTime minTime = filesList.at(0).lastRead();
+        QFileInfo minFile = filesList.at(0);
+        //Sorting nodes in filesLista by lastRead parametar, and returning them to filesLista
+        qStableSort(filesList.begin(),filesList.end(), lastRead);
         //Here Set your limit size
         int limitSize = 1024*1024*2;
         //In this while loop, delete lastRead files till you get to the limit size of Directory
         while(size>limitSize)
         {
-            QDateTime minTime = filesList.at(0).lastRead();
-            QFileInfo minFile = filesList.at(0);
-            //Find the last read file in the directory
-            foreach (QFileInfo fileInfo, filesList)
+            //remove first file from the list and from the directory
+            if(filesList.size() > 0)
             {
-                QDateTime fileDate = fileInfo.lastRead();
-
-                if(minTime>fileDate)
-                {
-                    minTime = fileDate;
-                    minFile = fileInfo;
-                    //set flag to one
-                    flag=1;
-                }
+                myDir.remove(filesList.first().fileName());
+                filesList.removeFirst();
+                //Reduce size by size of the file that was just removed
+                size-=filesList.first().size();
             }
-
-            if(flag && size>limitSize)
-            {
-                //remove minFile from the list and from the directory
-                filesList.removeOne(minFile);
-                myDir.remove(minFile.fileName());
-                //set the flag to zero
-                flag=0;
-            }
-
-            size-=minFile.size();
         }
     }
     else
@@ -63,4 +51,9 @@ int main()
     }
 
     return 0;
+}
+//Function for my sort alghorithm
+bool lastRead(const QFileInfo &file1, const QFileInfo &file2)
+{
+    return file1.lastRead()<file2.lastRead();
 }
