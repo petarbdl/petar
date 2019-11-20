@@ -25,8 +25,6 @@ int main()
         {
             size += fileInfo.size();
         }
-        QDateTime minTime = filesList.at(0).lastRead();
-        QFileInfo minFile = filesList.at(0);
         //Sorting nodes in filesLista by lastRead parametar, and returning them to filesLista
         qStableSort(filesList.begin(),filesList.end(), lastRead);
         //Here Set your limit size
