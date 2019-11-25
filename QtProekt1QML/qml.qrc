@@ -578,6 +578,5 @@
         <file>field_focus.png</file>
         <file>field_normal.png</file>
         <file>countries.txt</file>
-        <file>0.jpg</file>
     </qresource>
 </RCC>
