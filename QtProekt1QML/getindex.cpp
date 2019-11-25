@@ -3,7 +3,6 @@
 GetIndex::GetIndex(QObject *parent) : QObject(parent)
 {
     _list = new QStringList();
-    _list->append("0");
     QFile myFile(":/countries.txt");
     if(myFile.open(QIODevice::ReadOnly))
     {
