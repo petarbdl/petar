@@ -1,5 +1,5 @@
    1, 1    , USA                     , US     
-   2, 93,  , Afghanistan 	     , AF             
+   2, 93   , Afghanistan 	          , AF             
    3, 1907 , Alaska                  , AK             
    4, 355  , Albania                 , AL             
    5, 213  , Algeria                 , DZ             
