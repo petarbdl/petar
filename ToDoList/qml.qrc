@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>ta-daList/tada-mark-bg.gif</file>
+        <file>HomePage.qml</file>
+        <file>ta-daList/b-create_this_list.gif</file>
+        <file>ta-daList/b-add_this_item.gif</file>
+        <file>ListPage.qml</file>
+        <file>EditPage.qml</file>
+        <file>CreatePage.qml</file>
+        <file>ta-daList/drag.gif</file>
+        <file>HomePageHeader.qml</file>
+        <file>MyText.qml</file>
+        <file>HeaderImage.qml</file>
+        <file>HomePageContent.qml</file>
+        <file>HomePageDelegateUncompleted.qml</file>
+        <file>HomePageDelegateCompleted.qml</file>
+        <file>CreatePageHeader.qml</file>
+        <file>ListPageHeader.qml</file>
+        <file>ListPageContent.qml</file>
+        <file>LPMainComponent.qml</file>
+        <file>LPMainCAddItem.qml</file>
+        <file>LPMainCCheckBox.qml</file>
+        <file>LPSecondComponent.qml</file>
+        <file>EditPageHeader.qml</file>
+        <file>EditPageFooter.qml</file>
+        <file>EditPageDeleteCircle.qml</file>
+        <file>DeleteList.qml</file>
+    </qresource>
+</RCC>
