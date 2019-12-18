@@ -90,7 +90,7 @@ void MyMainListModel::readDataFromDB()
         itemlist->setCurrentListIndex(index);
 
         QSqlQuery query2;
-        query2.prepare("SELECT ItemName,ItemDone,ItemPosition FROM ItemTable WHERE ItemID = :index");
+        query2.prepare("SELECT ItemName,ItemDone,ItemPosition FROM ItemTable WHERE ItemID = :index ORDER BY ItemPosition");
         query2.bindValue(":index", index);
         query2.exec();
 
