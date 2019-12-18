@@ -2,16 +2,15 @@
 
 DBConnection::DBConnection(){}
 
-void DBConnection::reorderListInDB(int &listIndex, const QString name, const bool done, const int position)
+void DBConnection::reorderItems(int listIndex,int index1, int index2)
 {
     QSqlQuery query;
-    query.prepare("INSERT INTO ItemTable (ItemId, ItemName, ItemDone, ItemPosition) VALUES (:index, :itemName, :itemDone, :itemPosition)");
-    query.bindValue(":index", listIndex);
-    query.bindValue(":itemName", name);
-    query.bindValue(":itemDone", done);
-    query.bindValue(":itemPosition", position);
+    query.prepare("UPDATE ItemTable SET ItemPosition = CASE ItemPosition WHEN :itemIndex1 THEN :itemIndex2 WHEN :itemIndex2 THEN :itemIndex1 END WHERE ItemId = :listIndex AND ItemPosition IN(:itemIndex1,:itemIndex2)" );
+    query.bindValue(":itemIndex1", index1);
+    query.bindValue(":itemIndex2", index2);
+    query.bindValue(":listIndex", listIndex);
     query.exec();
-}
+}}
 
 void DBConnection::deleteItemsInDB(int &index)
 {
