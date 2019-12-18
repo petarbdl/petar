@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MyModel_t {
-    QByteArrayData data[3];
-    char stringdata0[23];
+    QByteArrayData data[5];
+    char stringdata0[35];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,11 +33,13 @@ struct qt_meta_stringdata_MyModel_t {
 static const qt_meta_stringdata_MyModel_t qt_meta_stringdata_MyModel = {
     {
 QT_MOC_LITERAL(0, 0, 7), // "MyModel"
-QT_MOC_LITERAL(1, 8, 4), // "list"
-QT_MOC_LITERAL(2, 13, 9) // "ItemList*"
+QT_MOC_LITERAL(1, 8, 10), // "resetModel"
+QT_MOC_LITERAL(2, 19, 0), // ""
+QT_MOC_LITERAL(3, 20, 4), // "list"
+QT_MOC_LITERAL(4, 25, 9) // "ItemList*"
 
     },
-    "MyModel\0list\0ItemList*"
+    "MyModel\0resetModel\0\0list\0ItemList*"
 };
 #undef QT_MOC_LITERAL
 
@@ -47,22 +49,35 @@ static const uint qt_meta_data_MyModel[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
-       1,   14, // properties
+       1,   14, // methods
+       1,   20, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // methods: name, argc, parameters, tag, flags
+       1,    0,   19,    2, 0x02 /* Public */,
+
+ // methods: parameters
+    QMetaType::Void,
+
  // properties: name, type, flags
-       1, 0x80000000 | 2, 0x0009510b,
+       3, 0x80000000 | 4, 0x0009510b,
 
        0        // eod
 };
 
 void MyModel::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    if (_c == QMetaObject::RegisterPropertyMetaType) {
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        auto *_t = static_cast<MyModel *>(_o);
+        Q_UNUSED(_t)
+        switch (_id) {
+        case 0: _t->resetModel(); break;
+        default: ;
+        }
+    } else if (_c == QMetaObject::RegisterPropertyMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
         case 0:
@@ -90,7 +105,6 @@ void MyModel::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
     } else if (_c == QMetaObject::ResetProperty) {
     }
 #endif // QT_NO_PROPERTIES
-    Q_UNUSED(_o);
 }
 
 QT_INIT_METAOBJECT const QMetaObject MyModel::staticMetaObject = { {
@@ -121,9 +135,17 @@ int MyModel::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QAbstractListModel::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
-    
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 1)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 1;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 1)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 1;
+    }
 #ifndef QT_NO_PROPERTIES
-    if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
+    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
             || _c == QMetaObject::ResetProperty || _c == QMetaObject::RegisterPropertyMetaType) {
         qt_static_metacall(this, _c, _id, _a);
         _id -= 1;

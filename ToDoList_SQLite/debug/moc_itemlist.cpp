@@ -23,7 +23,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ItemList_t {
     QByteArrayData data[21];
-    char stringdata0[212];
+    char stringdata0[220];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -50,9 +50,9 @@ QT_MOC_LITERAL(14, 143, 5), // "value"
 QT_MOC_LITERAL(15, 149, 14), // "getDescription"
 QT_MOC_LITERAL(16, 164, 14), // "setDescription"
 QT_MOC_LITERAL(17, 179, 9), // "swapItems"
-QT_MOC_LITERAL(18, 189, 4), // "ind1"
-QT_MOC_LITERAL(19, 194, 4), // "ind2"
-QT_MOC_LITERAL(20, 199, 12) // "reorderItems"
+QT_MOC_LITERAL(18, 189, 6), // "index1"
+QT_MOC_LITERAL(19, 196, 6), // "index2"
+QT_MOC_LITERAL(20, 203, 16) // "reorderItemsInDB"
 
     },
     "ItemList\0preItemAppend\0\0postItemAppend\0"
@@ -60,7 +60,7 @@ QT_MOC_LITERAL(20, 199, 12) // "reorderItems"
     "appendItem\0itemName\0deleteItem\0"
     "modelIndex\0position\0getName\0setName\0"
     "value\0getDescription\0setDescription\0"
-    "swapItems\0ind1\0ind2\0reorderItems"
+    "swapItems\0index1\0index2\0reorderItemsInDB"
 };
 #undef QT_MOC_LITERAL
 
@@ -135,7 +135,7 @@ void ItemList::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
         case 9: _t->setDescription((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 10: _t->swapItems((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 11: _t->reorderItems(); break;
+        case 11: _t->reorderItemsInDB(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
