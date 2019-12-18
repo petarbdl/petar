@@ -22,14 +22,6 @@ Page {
         ListPageContent {
             id:content
         }
-        Loader {
-            id:componentLoader
-            width: 85
-            height: 34
-            Layout.leftMargin: 20
-            Layout.topMargin: 10
-            sourceComponent: content.mainComponent
-        }
         Rectangle {
             height: 1
             width: 620
