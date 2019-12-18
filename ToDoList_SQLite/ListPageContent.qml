@@ -24,9 +24,12 @@ ColumnLayout{
     }
     LPMainComponent {
         id:mainComp
+        Layout.leftMargin: 20
+        Layout.topMargin: 10
     }
     LPOrderComponent{
         id:secComp
+        Layout.leftMargin: 20
         visible: false
     }
 }
