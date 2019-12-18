@@ -57,21 +57,11 @@ int ItemList::itemsUnchecked()//Return quantity of unchecked items, goes to MyMa
 void ItemList::swapItems(int ind1, int ind2)
 {
     _items.swapItemsAt(ind1,ind2);
-}
-//This function reorders items in the database, first it deletes all items from the list then it adds repositioned items back in the database
-void ItemList::reorderItems()
-{
     int listIndex = getCurrentListIndex();
-    _database.deleteItemsInDB(listIndex);
-    if(!_items.isEmpty())
+    if(index1 != index2)
     {
-        for(int i=0;i<_items.size();i++)
-        {
-            _database.reorderListInDB(listIndex,_items.at(i).Name, _items.at(i).Done, _items.at(i).position);
-        }
+        _database.reorderItems(listIndex,index1,index2);
     }
-    else
-        qDebug()<<"Item List is empty !!!";
 }
 
 //This function is called from virtual function(setData) from class MyModel
