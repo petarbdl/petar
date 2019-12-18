@@ -72,8 +72,10 @@ RowLayout{
                 onClicked: {
                     textDoneReordering.visible = false
                     textReorder.visible = true
-                    mainListModel.list.reorderItems();
-                    componentLoader.sourceComponent = content.mainComponent
+                    myPageLoader.active = false
+                    myPageLoader.active = true
+                    content.secondComponent.visible =false
+                    content.mainComponent.visible = true
                     rootRectangle.width = 350
                 }
             }
