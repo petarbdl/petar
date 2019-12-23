@@ -19,7 +19,7 @@ This <sourceLanguage> is actually the language in witch Qt generates the Ts file
 5.You can get Google Translate API from the official google cloud site(https://cloud.google.com/).
 	-First You need to login and create free trial account.
 	-Then follow this tutorial on how to get the Google Translate API (https://help.memsource.com/hc/en-us/articles/115003461051-Google-Translate-API-Key)
-	-Google-Translate-API-Key looks like this (AIzaSyBlgFpBMsXeSh8W9S95Hx4QWGnNkDxIxkU), this is real Google-Translate-API-Key
+	-Google-Translate-API-Key looks like this (AIzaSyBlgFpBMsXeSh8W9S95Hx4QWXXXXXXXXXXXXXX), this is real Google-Translate-API-Key
 	
 6.Next get the all the .Ts files that you want to translate. Put them in local folder ex.(test/simple/unfinished, in parent directory i18n-translate-qt-ts\source, so the whole path will be: C:\Users\Petar\i18n-translate-qt-ts\source\test/simple/unfinished)
 
@@ -31,7 +31,7 @@ This <sourceLanguage> is actually the language in witch Qt generates the Ts file
 8.To tell the script which lines you want to be translated change <translation>*...*</translation> to <translation type="unfinished"></translation> in the .TS file
  
 9. In Node.js Commpand Prompt call the script
-	node index.js AIzaSyBlgFpBMsXeSh8W9S95Hx4QWGnNkDxIxkU test/simple/unfinished en
+	node index.js AIzaSyBlgFpBMsXeSh8W9S95Hx4QWXXXXXXXXXXXXXXXXX test/simple/unfinished en
 	
 10. When I tested this script I noticed that if <translation></translation> segment haves "html expresions" the script fires Warning and it doesn't translates the line
  
