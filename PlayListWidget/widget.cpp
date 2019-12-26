@@ -69,7 +69,7 @@ QString Widget::getNextFile()
         }
         else
         {
-            return nextIndex.data(Qt::DisplayRole).toString();
+            return ui->tableView->model()->data(nextIndex,Qt::DisplayRole).toString();
         }
     }
 }
