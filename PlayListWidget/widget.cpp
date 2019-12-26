@@ -59,7 +59,7 @@ QString Widget::getNextFile()
     else
     {
         QModelIndex currentIndex = ui->tableView->currentIndex();
-        QModelIndex nextIndex = ui->tableView->currentIndex().model()->index(currentIndex.row()+1,currentIndex.column(),QModelIndex());
+        QModelIndex nextIndex = ui->tableView->currentIndex().model()->index(currentIndex.row()+1,0,QModelIndex());
         //If segment evaluates to true only if  the last item from the list is reached, it return file name of the first item in the list
         if(!nextIndex.isValid())
         {
