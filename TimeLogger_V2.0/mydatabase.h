@@ -17,7 +17,7 @@ public:
     static MyDatabase *instance();
     static void destroyInstance();
 
-    QStringList getUsersQuery();
+    bool getUsersQuery(int flag);
 
     void closeConnection();
     bool openConnection();
@@ -38,23 +38,19 @@ public:
 
     bool setBarChartQuery(QDate firstDayOfWeek,QDate lastDayOfWeek);
 
+    bool getHoursQuery(QString projectName,QDate firstDayOfWeek,QDate lastDayOfWeek,int j);
+
     bool getProjectQuery(int flag);
     bool getProjectCountQuery();
-
-    bool getUserProjects();
+    bool createProjectsRowQuery(QString projectName,QString projectDescription,QString startDate,QString endDate,QString companyName,QString clientName,QString projectWorker);
+    bool projectNameCheckQuery(QString projectName);
 
     bool getReportsQuery(QDate firstDayOfWeek,QDate lastDayOfWeek);
     bool getReportsCountQuery(QDate firstDayOfWeek,QDate lastDayOfWeek);
-
-    bool getHoursQuery(QString projectName,QDate firstDayOfWeek,QDate lastDayOfWeek,int j);
-
     bool createReportsRowQuery(QString person, QString project, QString time, QString description, QString date);
     bool updateReportsRowQuery(QString person,QString project,QString time,QString description,QString date);
     bool deleteRowReportsQuery(QString user,QString project,QString date);
-
-    bool projectNameCheckQuery(QString projectName);
-
-    bool createProjectsRowQuery(QString projectName,QString projectDescription,QString startDate,QString endDate,QString companyName,QString clientName,QString projectWorker);
+    bool getAllUserReportsCountQuery(QString user, QString projectName);
 
     int getProjectCount() const;
     int getReportsCount() const;
@@ -63,8 +59,6 @@ public:
     void setIsAdmin(int isAdmin);
 
     bool getWorkerProjects(QString workerName);
-
-    bool getAllUserReportsCountQuery(QString user, QString projectName);
 
     int getAllReportsCount() const;
 
@@ -96,6 +90,9 @@ signals:
     void setCheckBoxProjects(QString text);
     void dataUpdatedAdmin();
     void setReportsInGetUserDialog(int m, int k, QString report);
+    void setComboBoxUsers(QString user);
+    void setComboBoxUsersMainW(QString user);
+    void setComboBoxGetUserReport(QString user);
 
 public slots:
 

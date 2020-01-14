@@ -35,6 +35,7 @@ AdminMode::AdminMode(QWidget *parent) :
     connect(MyDatabase::instance(), SIGNAL(setProjectsAdmin(QString ,int )), this, SLOT(onSetProjects (QString ,int )));
     connect(MyDatabase::instance(), SIGNAL(setHoursAdmin(QString ,QString, int )), this, SLOT(onSetHours (QString , QString, int )));
     connect(MyDatabase::instance(), SIGNAL(setReportsAdmin(int , int , QString )), this, SLOT(onSetReports (int  ,int , QString )));
+    connect(MyDatabase::instance(), SIGNAL(setComboBoxUsersMainW(QString)),this,SLOT(onSetComboBoxUsersMainW(QString)));
 
     m_firstDayOfWeek = currentDate.addDays(-(currentDate.dayOfWeek()) + 1);
     m_lastDayOfWeek = m_firstDayOfWeek.addDays(6);
@@ -72,9 +73,9 @@ AdminMode::~AdminMode()
 //Set values in ComboBox for the users
 void AdminMode::updateComboBoxUsers()
 {
-    QStringListModel *model = new QStringListModel();
-    model->setStringList(MyDatabase::instance()->getUsersQuery());
-    ui->comboBoxUsers->setModel(model);
+    int flag=1;
+    if(!MyDatabase::instance()->getUsersQuery(flag))
+        qDebug()<<"Admin's ComboBox fail to setup";
 }
 
 void AdminMode::setAdminLabel()
@@ -106,7 +107,6 @@ void AdminMode::on_buttonPreviousWeek_clicked()
 
 void AdminMode::onDataUpdatedAdmin()
 {
-    //ui->labelChooseUser->setText("Current User: "+MyDatabase::instance()->getCurrentUser());
     setDonutChart();
     setBarChart();
     setProjectDetails();
@@ -314,4 +314,9 @@ void AdminMode::on_buttonGetReport_clicked()
     m_getUserReportDialog.setValues();
     m_getUserReportDialog.setWindowTitle("Report Window");
     m_getUserReportDialog.exec();
+}
+
+void AdminMode::onSetComboBoxUsersMainW(QString user)
+{
+    ui->comboBoxUsers->addItem(user);
 }

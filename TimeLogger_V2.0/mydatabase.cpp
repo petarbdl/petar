@@ -45,9 +45,9 @@ void MyDatabase::setIsUser(int isUser)
 
 
 //This Query return String List of all Users in Database
-QStringList MyDatabase::getUsersQuery()
+bool MyDatabase::getUsersQuery(int flag)
 {
-    QStringList list;
+    bool isOkay=false;
     //Query for getting the name of the user so it can be set to the table
     QSqlQuery getWorkers(m_myDatabase);
     getWorkers.prepare("select workeruser from workers");
@@ -57,14 +57,37 @@ QStringList MyDatabase::getUsersQuery()
     }
     else
     {
-        while(getWorkers.next())
+        if(flag==1)
         {
-            QString text;
-            text = getWorkers.value(0).toString();
-            list.append(text);
+            while(getWorkers.next())
+            {
+                QString text;
+                text = getWorkers.value(0).toString();
+                emit setComboBoxUsersMainW(text);
+            }
         }
+        else
+            if(flag==2)
+            {
+                while(getWorkers.next())
+                {
+                    QString text;
+                    text = getWorkers.value(0).toString();
+                    emit setComboBoxUsers(text);
+                }
+            }
+        else if(flag==3)
+            {
+                while(getWorkers.next())
+                {
+                    QString text;
+                    text = getWorkers.value(0).toString();
+                    emit setComboBoxGetUserReport(text);
+                }
+            }
+        isOkay = true;
     }
-    return list;
+    return isOkay;
 }
 //Method used to open a connection to the database
 bool MyDatabase::openConnection()
@@ -704,7 +727,6 @@ bool MyDatabase::getAllUserProjects(QString user)
         }
         isOkay = true;
     }
-
     return isOkay;
 }
 

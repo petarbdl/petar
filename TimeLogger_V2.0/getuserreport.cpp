@@ -6,6 +6,7 @@ GetUserReport::GetUserReport(QWidget *parent) : QDialog(parent),ui(new Ui::GetUs
     ui->setupUi(this);
     connect(MyDatabase::instance(), SIGNAL(setCheckBoxProjects(QString)), this, SLOT(onSetCheckBoxProjects(QString)));
     connect(MyDatabase::instance(), SIGNAL(setReportsInGetUserDialog(int,int,QString)), this, SLOT(onSetReportDetails (int  ,int , QString )));
+    connect(MyDatabase::instance(), SIGNAL(setComboBoxGetUserReport(QString)), this, SLOT(onSetComboBoxGetUserReport(QString)));
 }
 
 GetUserReport::~GetUserReport()
@@ -16,9 +17,11 @@ GetUserReport::~GetUserReport()
 void GetUserReport::setValues()
 {
     ui->comboBoxProject->clear();
-    QStringListModel *model = new QStringListModel();
-    model->setStringList(MyDatabase::instance()->getUsersQuery());
-    ui->comboBoxPerson->setModel(model);
+    ui->comboBoxPerson->clear();
+
+    int flag = 3;
+    if(!MyDatabase::instance()->getUsersQuery(flag))
+        qDebug()<<"Fail to setup GetUserReport ComboBox";
 
     setProjectValues();
     setReportDetails();
@@ -106,4 +109,9 @@ void GetUserReport::on_comboBoxProject_currentIndexChanged(int index)
     Q_UNUSED(index)
 
     setReportDetails();
+}
+
+void GetUserReport::onSetComboBoxGetUserReport(QString user)
+{
+    ui->comboBoxPerson->addItem(user);
 }

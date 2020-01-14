@@ -40,6 +40,8 @@ private slots:
 
     void on_comboBoxProject_currentIndexChanged(int index);
 
+    void onSetComboBoxGetUserReport(QString user);
+
 private:
     Ui::GetUserReport *ui;
 };

@@ -8,6 +8,8 @@ AssignProjectDialog::AssignProjectDialog(QWidget *parent) :
     ui->setupUi(this);
     ui->dateEditEnd->setDate(QDate::currentDate());
     ui->dateEditStart->setDate(QDate::currentDate());
+
+    connect(MyDatabase::instance(),SIGNAL(setComboBoxUsers(QString)), this, SLOT(onSetComboBoxUsers(QString)));
 }
 
 AssignProjectDialog::~AssignProjectDialog()
@@ -23,13 +25,13 @@ void AssignProjectDialog::setValues()
     ui->textEditProjectDescription->setText("");
     ui->dateEditEnd->setDate(QDate::currentDate());
     ui->dateEditStart->setDate(QDate::currentDate());
+    ui->comboBoxUsers->clear();
 
-    QStringListModel *model = new QStringListModel();
-    model->setStringList(MyDatabase::instance()->getUsersQuery());
-    ui->comboBoxUsers->setModel(model);
+    int flag=2;
+    if(!MyDatabase::instance()->getUsersQuery(flag))
+        qDebug()<<"Fail to setup Assign Project ComboBox...";
 
     qDebug()<<"Assign Project Dialog values are set...";
-
 }
 //when clicked on this button, a new project is added in the project table, it uses the information provided by the user to create a new project
 void AssignProjectDialog::on_buttonCreateProject_clicked()
@@ -100,6 +102,11 @@ void AssignProjectDialog::on_lineEditClientName_textChanged(const QString &arg1)
     Q_UNUSED(arg1)
 
     validateInfo();
+}
+
+void AssignProjectDialog::onSetComboBoxUsers(QString user)
+{
+    ui->comboBoxUsers->addItem(user);
 }
 
 void AssignProjectDialog::validateInfo()

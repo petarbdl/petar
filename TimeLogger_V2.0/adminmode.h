@@ -48,6 +48,8 @@ private slots:
 
     void onSetReports (int m ,int k, QString text);
 
+    void onSetComboBoxUsersMainW(QString user);
+
     void setDonutChart();
 
     void setBarChart();
@@ -60,7 +62,7 @@ private slots:
 
     void on_buttonAssignProject_clicked();
 
-    void on_buttonGetReport_clicked();
+    void on_buttonGetReport_clicked();   
 
 private:
     Ui::AdminMode *ui;

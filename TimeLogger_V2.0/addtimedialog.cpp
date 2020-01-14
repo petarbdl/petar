@@ -9,6 +9,7 @@ AddTimeDialog::AddTimeDialog(QWidget *parent) :
     ui->setupUi(this);
     QValidator *validator = new QIntValidator(0, 24, this);
     ui->lineEditTime->setValidator(validator);
+
     connect(MyDatabase::instance(), SIGNAL(setCheckBox(QString)), this, SLOT(onSetCheckBox(QString)));
 }
 //used for setting the initial values when the window is opened
@@ -19,6 +20,7 @@ void AddTimeDialog::setValues()
     ui->comboBoxProject->clear();
     ui->lineEditTime->setText("");
     ui->textEditDescription->setText("");
+
     int flag=2;
     MyDatabase::instance()->getProjectQuery(flag);
 }
