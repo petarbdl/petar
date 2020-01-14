@@ -76,7 +76,7 @@ void AddTimeDialog::on_buttonAddTime_clicked()
         else
         {
             QMessageBox messageBox;
-            messageBox.warning(this,"Issue", "Cannot add more than one report for same day");
+            messageBox.warning(this,"Issue", "Cannot add more than one report for the same day and the same project");
         }
         setValues();
     }
