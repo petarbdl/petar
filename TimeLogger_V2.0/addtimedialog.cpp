@@ -21,12 +21,18 @@ void AddTimeDialog::setValues()
     ui->lineEditTime->setText("");
     ui->textEditDescription->setText("");
 
+    if(MyDatabase::instance()->getAction() == 0)
+    {
+        ui->comboBoxProject->setEnabled(true);
+    }
+
     int flag=2;
     MyDatabase::instance()->getProjectQuery(flag);
 }
 //used for setting the values when the window is opened through the edit button in the table rows
 void AddTimeDialog::setUpdateValues(QDate date, QString project, QString description, QString hours)
 {
+    ui->comboBoxProject->setEnabled(false);
     ui->lineEditPerson->setText(MyDatabase::instance()->getCurrentUser());
     ui->dateEditDate->setDate(date);
     ui->comboBoxProject->clear();
@@ -76,7 +82,7 @@ void AddTimeDialog::on_buttonAddTime_clicked()
         else
         {
             QMessageBox messageBox;
-            messageBox.warning(this,"Issue", "Cannot add more than one report for the same day and the same project");
+            messageBox.warning(this,"Issue", "Cannot add more than one report for same day");
         }
         setValues();
     }
